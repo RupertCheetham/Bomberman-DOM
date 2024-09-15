@@ -1,17 +1,14 @@
-import { createHeader } from "./components/createHeader";
-import { createMain } from "./components/createMain";
-import { createFooter } from './components/createFooter';
+import { createGameMap } from "./components/createGameMap";
 
-export const createVApp = (toDoList) => {
+export const createVApp = () => {
     return {
         tagName: 'div',
         attrs: {
             id: 'root',
-            class: 'todoapp',
+            class: 'bomberman',
         },
         children: [
-            createHeader(),
-            createMain([...toDoList]),  // Create a new array to ensure immutability
-            ...(toDoList.length > 0 ? [createFooter(toDoList.length)] : [])], //Only runs createFooter if toDoList has a length, this acts to hide the footer unless it's needed
+            createGameMap()
+        ]
     };
 };
