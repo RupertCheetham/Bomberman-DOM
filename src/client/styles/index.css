@@ -1,5 +1,12 @@
 @charset "utf-8";
 
+/* Global reset */
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
 body,
 html {
 	margin: 0;
@@ -7,36 +14,51 @@ html {
 	height: 100%;
 	display: flex;
 	justify-content: center;
-	/* Horizontal centering */
 	align-items: center;
-	/* Vertical centering */
+	background-color: #f0f0f0;
+	/* Optional: neutral background for the page */
+	font-family: Arial, sans-serif;
+	/* Optional: set a font family */
 }
 
 .gameMap {
-	width: 600px;
-	/* Width of the game map */
-	height: 600px;
-	/* Height of the game map */
-	display: flex;
-	flex-wrap: wrap;
-	/* Allows wrapping of wall blocks */
-	background-color: #f0f0f0;
-	/* Optional: background color for game map */
-	border: 2px solid #333;
-	/* Optional: border for the game map */
+    width: 600px; /* Total width of the map */
+    height: 600px; /* Total height of the map */
+    display: grid;
+    grid-template-columns: repeat(15, 1fr); /* 15 equal-width columns */
+    grid-template-rows: repeat(15, 1fr); /* 15 equal-height rows */
+    background-color: #0a7b30; /* Optional: background color for game map */
+    border: 2px solid #333; /* Optional: border for the game map */
 }
 
-.wall-block {
-	width: 50px;
-	/* Width of the wall block */
-	height: 50px;
-	/* Height of the wall block */
-	background-color: #b22222;
-	/* Brick-red color */
-	border: 3px solid #8b0000;
-	/* Darker border to give a brick effect */
+.banner, .hard-block, .soft-block, .ground {
+    width: 100%; /* Full width of each grid cell */
+    height: 100%; /* Full height of each grid cell */
+}
+
+
+
+.banner {
+	background-color: #f78300;
+}
+
+.hard-block {
+	background-color: #858385;
+	border: 3px solid #858385;
 	box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
-	/* Shadow to add depth */
-	display: inline-block;
-	/* To align the blocks in a grid layout */
+}
+
+.soft-block {
+	background-color: #b22222;
+	border: 3px solid #8b0000;
+	box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+	cursor: pointer;
+	/* Soft blocks can be destroyed, so making them interactive */
+	transition: background-color 0.2s ease;
+	/* Smooth transition for effects */
+}
+
+.soft-block:hover {
+	background-color: #ff6347;
+	/* Optional: color change on hover */
 }
