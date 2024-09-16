@@ -1,4 +1,4 @@
-import { getVApp, setVApp, $rootEl, updateRootEl } from "../main";
+import { getVApp, setVApp, $rootEl, updateRootEl } from "..";
 import { createVApp } from "./createVApp";
 import diff from "./diff";
 

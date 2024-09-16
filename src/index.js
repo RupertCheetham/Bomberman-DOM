@@ -3,16 +3,8 @@ import mount from './vdom/mount';
 import { createVApp } from './vdom/createVApp';
 import { handleEvent } from './vdom/events/eventHelpers/handleEvent';
 import { registerEvent } from './vdom/events/eventHelpers/registerEvent';
-import { handleEnterKeySubmit } from './vdom/events/handleEnterKeySubmit';
-import { handleClickDelete } from './vdom/events/handleClickDelete';
-import { handleClickToggleCompleted } from './vdom/events/handleClickToggleCompleted';
-import { handleClickClearCompleted } from './vdom/events/handleClickClearCompleted';
-import { handleClickToggleCompletedAll } from './vdom/events/handleClickToggleCompletedAll';
-import { handleDoubleClickEdit } from './vdom/events/handleDoubleClickEdit';
-import { routing } from './vdom/routing/routing';
 
 // Application State
-export let toDoList = [];
 export let $rootEl;
 let vApp;
 
@@ -24,22 +16,20 @@ export const setVApp = (newVApp) => {
 
 // Initialize Application
 const initializeApp = () => {
-  setVApp(createVApp(toDoList)); // Create initial VApp
+  setVApp(createVApp()); // Create initial VApp
   $rootEl = mount(render(vApp), document.getElementById('root')); // Mount the initial app
 
-  // start up routing functionality
-  routing(...toDoList)
-
+console.log("here")
   // Register events
   // Keydown
-  registerEvent('keydown', handleEnterKeySubmit); // Keydown for Enter key to add items
-  // Click
-  registerEvent('click', (event) => handleClickDelete(event, toDoList))
-  registerEvent('click', (event) => handleClickToggleCompleted(event))
-  registerEvent('click', (event) => handleClickClearCompleted(event, toDoList))
-  registerEvent('click', (event) => handleClickToggleCompletedAll(event))
-  // Double Click
-  registerEvent('dblclick', (event) => handleDoubleClickEdit(event, toDoList)); // example double click event
+  // registerEvent('keydown', handleEnterKeySubmit); // Keydown for Enter key to add items
+  // // Click
+  // registerEvent('click', (event) => handleClickDelete(event, toDoList))
+  // registerEvent('click', (event) => handleClickToggleCompleted(event))
+  // registerEvent('click', (event) => handleClickClearCompleted(event, toDoList))
+  // registerEvent('click', (event) => handleClickToggleCompletedAll(event))
+  // // Double Click
+  // registerEvent('dblclick', (event) => handleDoubleClickEdit(event, toDoList)); // example double click event
 
   // Activate event handlers
   window.onkeydown = handleEvent; // Global event handler

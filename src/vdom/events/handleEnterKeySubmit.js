@@ -1,4 +1,4 @@
-import { toDoList } from "../../main";
+import { toDoList } from "../..";
 import { createListItem } from "../components/createListItem";
 import { routing } from "../routing/routing";
 import { updateVApp } from "../updateVApp";

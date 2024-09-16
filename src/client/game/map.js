@@ -1,7 +1,7 @@
-import createElement from "../createElement";
+import createElement from "../../vdom/createElement"
 
 // Function to create the footer element
-export const createGameMap = () => createElement("div", {
+export const gameMap = () => createElement("div", {
     attrs: {
         class: "gameMap",
     },

@@ -1,48 +1,51 @@
-# 🚀 Mini-Framework
-
-#  If it still says Mini-Framework then I haven't gotten around to updating the README yet
-
-##  Special thanks to:
-Rodrigo Pombo  
-[Build Your Own React](https://pomb.us/build-your-own-react/)
-
-Welcome to Mini-Framework, a lightweight and powerful JavaScript framework for building modern web applications. Designed with simplicity and performance in mind, Mini-Framework empowers developers to create dynamic, responsive, and efficient web experiences.
-
-## ✨ Features
-
-- 🌳 Virtual DOM for optimal rendering performance
-- 🧭 Intuitive routing system for seamless navigation
-- 🗃️ Robust state management for complex applications
-- 🎭 Custom event handling for interactive UIs
-- 🛠️ Minimal setup, maximum flexibility
-
-## 🗂️ Project Structure
-```mini-framework/
+bomberman-dom/
 │
-├── src/                  # Framework source code
-│   ├── core/             # Core modules
-│   │   ├── dom.js        # DOM abstraction layer
-│   │   ├── router.js     # Routing system
-│   │   ├── state.js      # State management
-│   │   └── events.js     # Event handling
+├── public/
+│   ├── index.html                # Entry point for the game
+│   └── assets/                   # Static assets like images, sounds, etc.
+│       ├── images/
+│       └── sounds/
+│
+├── src/
+│   ├── client/
+│   │   ├── components/           # UI components
+│   │   ├── game/                 # Game logic and state management
+│   │   │   ├── map.js            # Map generation and management
+│   │   │   ├── player.js         # Player logic
+│   │   │   ├── powerups.js       # Power-up logic
+│   │   │   └── game.js           # Main game logic
+│   │   ├── utils/                # Utility functions
+│   │   ├── websocket/            # WebSocket handling (client-side)
+│   │   │   └── chat.js           # Chat logic
+│   │   ├── styles/               # CSS or other styling files
+│   │   └── index.js              # Main entry point for the client-side code
 │   │
-│   ├── utils/            # Utility functions
-│   │   └── helpers.js
+│   ├── server/
+│   │   ├── main.go               # Main entry point for the server
+│   │   ├── websocket/            # WebSocket handling (server-side)
+│   │   │   ├── server.go         # Server-side WebSocket logic
+│   │   │   └── game_manager.go   # Game state and player management
+│   │   └── utils/                # Utility functions for the server
 │   │
-│   └── index.js          # Main entry point
+│   └── config/                   # Configuration files (e.g., port numbers)
 │
-├── examples/             # Example projects
-│   └── todo-mvc/         # TodoMVC implementation
-│       ├── index.html
-│       ├── app.js
-│       └── styles.css
+├── tests/                        # Unit and integration tests
+│   ├── client/
+│   └── server/
 │
-├── docs/                 # Documentation
-│   ├── API.md            # Detailed API documentation
-│   └── GUIDE.md          # User guide and tutorials
-│
-├── tests/                # Unit and integration tests
-│
-├── package.json          # Project configuration
-├── README.md             # You are here! 👋
-└── .gitignore```
+├── .gitignore                     # Git ignore file
+├── package.json                  # Project dependencies and scripts (if applicable)
+└── README.md                     # Project documentation
+
+
+
+Symbols for map gen:
+
+1. H - Hard Block/Wall
+2. S - Softblock/destructible wall
+3. + - Banner at top
+4. @ - Player
+
+
+5. b - Bombs, dropped by players, not on map
+6. * - explosion, caused by bomb, not on map
