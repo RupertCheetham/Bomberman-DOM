@@ -11,6 +11,21 @@ export const createGameMap = () => createElement("div", {
                 class: "wall-block"
             },
         }),
+        createElement("div", {
+            attrs: {
+                class: "wall-block"
+            },
+        }),
+        createElement("div", {
+            attrs: {
+                class: "wall-block"
+            },
+        }),
+        createElement("div", {
+            attrs: {
+                class: "wall-block"
+            },
+        }),
     ],
 
 }
