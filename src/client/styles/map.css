@@ -1,0 +1,93 @@
+@charset "utf-8";
+
+/* Global reset */
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+body,
+html {
+	margin: 0;
+	padding: 0;
+	height: 100%;
+	display: flex;
+	flex-direction: column;  /* Arrange children in a column */
+    justify-content: space-between;
+	align-items: center;
+	background-color: #000000;
+	font-family: Arial, sans-serif;
+	color: azure;
+}
+
+footer.info {
+	background-color: #111;
+	/* Footer background */
+	color: #ffffff;
+	/* Footer text color */
+	text-align: center;
+	padding: 10px;
+	width: 100%;
+}
+
+#root {
+	flex-grow: 1;
+	/* Allow this element to grow and take up remaining space */
+}
+
+footer.info a {
+	color: #ffffff;
+	/* Ensure links in the footer are white */
+	text-decoration: none;
+	/* Remove underline */
+}
+
+footer.info a:hover {
+	text-decoration: underline;
+	/* Underline on hover */
+}
+
+.gameMap {
+	width: 600px;
+	/* Total width of the map */
+	height: 600px;
+	/* Total height of the map */
+	display: grid;
+	grid-template-columns: repeat(15, 1fr);
+	/* 15 equal-width columns */
+	grid-template-rows: repeat(15, 1fr);
+	/* 15 equal-height rows */
+	background-color: #0a7b30;
+	/* Optional: background color for game map */
+	border: 2px solid #333;
+	/* Optional: border for the game map */
+}
+
+.banner,
+.hard-block,
+.soft-block,
+.ground {
+	width: 100%;
+	/* Full width of each grid cell */
+	height: 100%;
+	/* Full height of each grid cell */
+}
+
+
+
+.banner {
+	background-color: #f78300;
+}
+
+.hard-block {
+	background-color: #858385;
+	border: 3px solid #858385;
+	box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+.soft-block {
+	background-color: #b22222;
+	border: 3px solid #8b0000;
+	box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+}

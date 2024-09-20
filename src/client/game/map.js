@@ -4,9 +4,9 @@ const map = `
 +++++++++++++++
 +++++++++++++++
 HHHHHHHHHHHHHHH
-H.............H
-H.S.S.S.S.S.S.H
-H.............H
+H@..S.........H
+H.S.H.S.S.S.S.H
+H...S.........H
 H.S.S.S.S.S.S.H
 H.............H
 H.S.S.S.S.H.S.H
@@ -23,8 +23,9 @@ const levelChars = {
     "H": "hard-block",
     "S": "soft-block",
     ".": "ground",
-    "@": "player",
+    "@": "player-bomberman",
 }
+
 // Function to create the gameMap element
 export const gameMap = () => {
 

@@ -1,0 +1,19 @@
+.player-bomberman {
+ 
+    position: relative;
+    background-color: #ffffff;
+    border-radius: 50%;
+    border: 2px solid #000000;
+}
+
+/* Visor */
+.player-bomberman::after {
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: 15px;
+    width: 20px;
+    height: 10px;
+    background-color: #000000;
+    border-radius: 10px;
+}
