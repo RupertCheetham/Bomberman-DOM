@@ -1,4 +1,4 @@
-.player-bomberman {
+.xxxxplayer-bomberman {
  
     position: relative;
     background-color: #ffffff;
@@ -7,7 +7,7 @@
 }
 
 /* Visor */
-.player-bomberman::after {
+.xxxxplayer-bomberman::after {
     content: '';
     position: absolute;
     top: 10px;
@@ -16,4 +16,26 @@
     height: 10px;
     background-color: #000000;
     border-radius: 10px;
+}
+
+.player1, .player2, .player3, .player4 {
+	border: 3px solid #333;
+	box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+    border-radius: 50%;  /* This makes it round */
+}
+
+.player1 {
+	background-color: #f0f0f0;
+}
+
+.player2 {
+	background-color: #f9f511;
+}
+
+.player3 {
+	background-color: #e55caa;
+}	
+
+.player4 {
+	background-color: #11aff9;
 }

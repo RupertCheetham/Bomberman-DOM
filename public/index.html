@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -19,7 +19,70 @@
         </p>
     </footer>
 
+    <script src="../src/index.js"></script> 
+</body>
+
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bomberman-DOM</title>
+    <link href="../src/client/styles/map.css" rel="stylesheet">
+    <link href="../src/client/styles/player.css" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Bomberman Game Container -->
+    <div id="root"></div>
+
+    <!-- Chat Section -->
+    <div id="chat-container" style="border-top: 1px solid #ccc; padding-top: 10px; margin-top: 20px;">
+        <h2>Chat</h2>
+        <div id="chat" style="height: 200px; overflow-y: auto; border: 1px solid #333; padding: 10px;"></div>
+        <input type="text" id="message" placeholder="Type a message" style="width: 80%;">
+        <button onclick="sendMessage()">Send</button>
+    </div>
+
+    <!-- Footer -->
+    <footer class="info">
+        <p>Created by
+            <a href="https://github.com/RupertCheetham" target="_blank" rel="noopener noreferrer">Rupert</a>,
+            <a href="https://github.com/m-fenton" target="_blank" rel="noopener noreferrer">Martin</a>, and
+            <a href="https://github.com/kn1ko1/" target="_blank" rel="noopener noreferrer">Knikoi</a>
+        </p>
+    </footer>
+
+    <!-- Game Logic Script -->
     <script src="../src/index.js"></script> <!-- Adjusted path -->
+
+    <!-- WebSocket Chat Logic -->
+    <script>
+        const ws = new WebSocket("ws://localhost:8080/ws");
+
+        // Receive message from WebSocket and display it in chat
+        ws.onmessage = function(event) {
+            const chat = document.getElementById("chat");
+            const message = document.createElement("p");
+            message.innerText = event.data;
+            chat.appendChild(message);
+            chat.scrollTop = chat.scrollHeight; // Auto-scroll to the bottom
+        };
+
+        // Send message via WebSocket
+        function sendMessage() {
+            const input = document.getElementById("message");
+            const message = input.value.trim();
+
+            if (message !== "") {
+                ws.send(message);
+                input.value = ''; // Clear input field
+            }
+        }
+    </script>
 </body>
 
 </html>

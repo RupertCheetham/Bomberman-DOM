@@ -63,24 +63,3 @@ html {
 	/* Optional: color change on hover */
 }
 
-.player1, .player2, .player3, .player4 {
-	border: 3px solid #333;
-	box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
-    border-radius: 50%;  /* This makes it round */
-}
-
-.player1 {
-	background-color: #f0f0f0;
-}
-
-.player2 {
-	background-color: #f9f511;
-}
-
-.player3 {
-	background-color: #e55caa;
-}	
-
-.player4 {
-	background-color: #11aff9;
-}

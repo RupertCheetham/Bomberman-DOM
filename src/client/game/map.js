@@ -4,7 +4,7 @@ const map = `
 +++++++++++++++
 +++++++++++++++
 HHHHHHHHHHHHHHH
-H.............H
+H1............H
 H.H.H.H.H.H.H.H
 H.............H
 H.H.H.H.H.H.H.H
