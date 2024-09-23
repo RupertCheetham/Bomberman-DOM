@@ -4,6 +4,9 @@ import { createVApp } from './vdom/createVApp';
 import { handleEvent } from './vdom/events/eventHelpers/handleEvent';
 import { registerEvent } from './vdom/events/eventHelpers/registerEvent';
 
+import { handleKeyPress } from './client/game/game.js';
+
+
 // Application State
 export let $rootEl;
 let vApp;
@@ -20,7 +23,22 @@ const initializeApp = () => {
   setVApp(createVApp()); // Create initial VApp
   $rootEl = mount(render(vApp), document.getElementById('root')); // Mount the initial app
 
-  // Register event handlers
+console.log("here")
+
+  // Register events
+  // Keydown
+   registerEvent('keydown', handleKeyPress); // Keydown for Enter key to add items
+  // // Click
+  // registerEvent('click', (event) => handleClickDelete(event, toDoList))
+  // registerEvent('click', (event) => handleClickToggleCompleted(event))
+  // registerEvent('click', (event) => handleClickClearCompleted(event, toDoList))
+  // registerEvent('click', (event) => handleClickToggleCompletedAll(event))
+  // // Double Click
+  // registerEvent('dblclick', (event) => handleDoubleClickEdit(event, toDoList)); // example double click event
+
+  // Activate event handlers
+
+
   window.onkeydown = handleEvent; // Global event handler
   window.onclick = handleEvent; // Global event handler
   window.ondblclick = handleEvent; // Global event handler
@@ -74,3 +92,4 @@ export function updateRootEl(newRootEl) {
 
 // Initialize the application
 initializeApp();
+

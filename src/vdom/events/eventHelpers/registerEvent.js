@@ -6,4 +6,5 @@ export const registerEvent = (eventType, handler) => {
     eventRegistry[eventType] = []; // Initialize if not already initialized
   }
   eventRegistry[eventType].push(handler); // Store handler for the event type
+
 };

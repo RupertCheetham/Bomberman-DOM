@@ -4,16 +4,16 @@ const map = `
 +++++++++++++++
 +++++++++++++++
 HHHHHHHHHHHHHHH
-H@..S.........H
-H.S.H.S.S.S.S.H
-H...S.........H
-H.S.S.S.S.S.S.H
 H.............H
-H.S.S.S.S.H.S.H
+H.H.H.H.H.H.H.H
 H.............H
-H.S.S.S.S.S.S.H
+H.H.H.H.H.H.H.H
 H.............H
-H.S.S.S.S.S.S.H
+H.H.H.H.H.H.H.H
+H.............H
+H.H.H.H.H.H.H.H
+H.............H
+H.H.H.H.H.H.H.H
 H.............H
 HHHHHHHHHHHHHHH
 `;
@@ -23,7 +23,10 @@ const levelChars = {
     "H": "hard-block",
     "S": "soft-block",
     ".": "ground",
-    "@": "player-bomberman",
+    "1": "player1",
+    "2": "player2",
+    "3": "player3",
+    "4": "player4",
 }
 
 // Function to create the gameMap element
