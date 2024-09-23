@@ -43,7 +43,7 @@ console.log("here")
   window.onclick = handleEvent; // Global event handler
   window.ondblclick = handleEvent; // Global event handler
 
-  registerEvent('keydown', handlePlayer1)
+  // registerEvent('keydown', handlePlayer1)
   // Start the game loop
   requestAnimationFrame(gameLoop);
 };
