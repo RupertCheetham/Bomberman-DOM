@@ -62,6 +62,12 @@ footer.info a:hover {
 	/* Optional: background color for game map */
 	border: 2px solid #333;
 	/* Optional: border for the game map */
+	position: relative;    /* Set the position to relative */
+}
+
+.cell {
+    width: 40px;
+    height: 40px;
 }
 
 .banner,

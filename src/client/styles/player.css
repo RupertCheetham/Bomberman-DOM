@@ -22,6 +22,8 @@
 	border: 3px solid #333;
 	box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
     border-radius: 50%;  /* This makes it round */
+    position: relative;
+    transition: transform 0.2s; /* Smooth transition for movement */
 }
 
 .player1 {
