@@ -9,6 +9,9 @@ import diff from './vdom/diff.js';
 
 
 // Application State
+let playerNum = 3
+
+
 export let $rootEl;
 let vApp;
 let lastTime = 0;  // To track the time difference for game updates
@@ -20,7 +23,6 @@ export const setVApp = (newVApp) => {
 };
 
 
-let playerNum = 3
 
 // Initialize Application
 const initializeApp = () => {
