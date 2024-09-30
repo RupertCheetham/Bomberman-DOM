@@ -5,6 +5,7 @@ import { handleEvent } from './vdom/events/eventHelpers/handleEvent';
 import { registerEvent } from './vdom/events/eventHelpers/registerEvent';
 
 import { handleKeyPress } from './client/game/game.js';
+import diff from './vdom/diff.js';
 
 
 // Application State
@@ -30,12 +31,9 @@ const initializeApp = () => {
 
   // Register events
   // Keydown
-   registerEvent('keydown', handleKeyPress); // Keydown for Enter key to add items
+  registerEvent('keydown', handleKeyPress); // Keydown for Enter key to add items
   // // Click
   // registerEvent('click', (event) => handleClickDelete(event, toDoList))
-  // registerEvent('click', (event) => handleClickToggleCompleted(event))
-  // registerEvent('click', (event) => handleClickClearCompleted(event, toDoList))
-  // registerEvent('click', (event) => handleClickToggleCompletedAll(event))
   // // Double Click
   // registerEvent('dblclick', (event) => handleDoubleClickEdit(event, toDoList)); // example double click event
 
@@ -44,7 +42,6 @@ const initializeApp = () => {
   window.onclick = handleEvent; // Global event handler
   window.ondblclick = handleEvent; // Global event handler
 
-  registerEvent('keydown', handlePlayer1)
   // Start the game loop
   requestAnimationFrame(gameLoop);
 };
@@ -53,7 +50,6 @@ const initializeApp = () => {
 const gameLoop = (timestamp) => {
   const deltaTime = timestamp - lastTime; // Calculate the time difference
   lastTime = timestamp;
-
   updateGameState(deltaTime);  // Update the game state
   renderFrame();  // Re-render the virtual DOM
 
@@ -71,11 +67,15 @@ const updateGameState = (deltaTime) => {
   // player.update(deltaTime);
 };
 
+
 // Function to render the current frame
 const renderFrame = () => {
+  let currentVApp = getVApp()
   const newVApp = createVApp(); // Create new virtual DOM representation based on updated state
+  let patch = diff(currentVApp, newVApp)
+
+  const newRootEl = patch($rootEl);
   setVApp(newVApp);  // Update the virtual DOM
-  const newRootEl = render(newVApp);  // Render the new virtual DOM to a real DOM element
   updateRootEl(newRootEl);  // Update the DOM
 };
 
