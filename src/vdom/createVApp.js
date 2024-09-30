@@ -1,6 +1,6 @@
 import { gameMap } from "../client/game/map";
 
-export const createVApp = () => {
+export const createVApp = (playerNum) => {
     return {
         tagName: 'div',
         attrs: {
@@ -8,7 +8,7 @@ export const createVApp = () => {
             class: 'bomberman',
         },
         children: [
-            gameMap()
+            gameMap(playerNum)
         ]
     };
 };

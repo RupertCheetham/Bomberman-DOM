@@ -4,7 +4,7 @@ const map = `
 +++++++++++++++
 +++++++++++++++
 HHHHHHHHHHHHHHH
-H1............H
+H1...........4H
 H.H.H.H.H.H.H.H
 H.............H
 H.H.H.H.H.H.H.H
@@ -14,7 +14,7 @@ H.............H
 H.H.H.H.H.H.H.H
 H.............H
 H.H.H.H.H.H.H.H
-H.............H
+H3...........2H
 HHHHHHHHHHHHHHH
 `;
 
@@ -30,7 +30,7 @@ const levelChars = {
 }
 
 // Function to create the gameMap element
-export const gameMap = () => {
+export const gameMap = (playerNum) => {
 
     // Split the map into rows and columns
     let rows = map.trim().split("\n").map((line) => [...line]);
@@ -39,7 +39,12 @@ export const gameMap = () => {
     const mapElements = rows.flatMap((row) =>
         row.map((cell) => {
             let className = levelChars[cell]
-
+            if (playerNum < 4) {
+                if (className == "player4") {className = "ground"}
+            }
+            if (playerNum < 3) {
+                if (className == "player3") {className = "ground"}
+            } 
             // Create the individual cell
             return createElement("div", {
                 attrs: {

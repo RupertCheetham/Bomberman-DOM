@@ -18,12 +18,15 @@ export const setVApp = (newVApp) => {
   vApp = newVApp;
 };
 
+
+let playerNum = 3
+
 // Initialize Application
 const initializeApp = () => {
-  setVApp(createVApp()); // Create initial VApp
+
+  setVApp(createVApp(playerNum)); // Create initial VApp
   $rootEl = mount(render(vApp), document.getElementById('root')); // Mount the initial app
 
-console.log("here")
 
   // Register events
   // Keydown
@@ -37,8 +40,6 @@ console.log("here")
   // registerEvent('dblclick', (event) => handleDoubleClickEdit(event, toDoList)); // example double click event
 
   // Activate event handlers
-
-
   window.onkeydown = handleEvent; // Global event handler
   window.onclick = handleEvent; // Global event handler
   window.ondblclick = handleEvent; // Global event handler
