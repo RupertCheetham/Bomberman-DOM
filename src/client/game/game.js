@@ -86,6 +86,15 @@ const movePlayer = (player, direction, players) => {
 
 // Function to handle key presses
 export const handleKeyPress = (event) => {
+  switch (event.key) {
+    case 'ArrowUp':
+    case 'ArrowDown':
+    case 'ArrowLeft':
+    case 'ArrowRight':
+        event.preventDefault(); // Prevent the browser's default scrolling behavior
+        break;
+  }
+
     switch (event.key) {
       case 'ArrowUp':
         movePlayer(player1, 'up', players);
