@@ -51,9 +51,6 @@ export const updatePlayerPosition = (player) => {
   }
 };
 
-
-
-
 // Move player with collision detection
 const movePlayer = (player, direction, players) => {
     let newX = player.x;
@@ -120,16 +117,16 @@ export const handleKeyPress = (event) => {
 
       // Player 2 Controls (WASD + F for bomb)
       case 'w':
-        movePlayer(player2, 'up');
+        movePlayer(player2, 'up', players);
         break;
       case 's':
-        movePlayer(player2, 'down');
+        movePlayer(player2, 'down', players);
         break;
       case 'a':
-        movePlayer(player2, 'left');
+        movePlayer(player2, 'left', players);
         break;
       case 'd':
-        movePlayer(player2, 'right');
+        movePlayer(player2, 'right', players);
         break;
       case 'f':
         dropBomb(player2);
@@ -137,16 +134,16 @@ export const handleKeyPress = (event) => {
 
       // Player 3 Controls (IJKL + ; for bomb)
       case 'i':
-        movePlayer(player3, 'up');
+        movePlayer(player3, 'up', players);
         break;
       case 'k':
-        movePlayer(player3, 'down');
+        movePlayer(player3, 'down', players);
         break;
       case 'j':
-        movePlayer(player3, 'left');
+        movePlayer(player3, 'left', players);
         break;
       case 'l':
-        movePlayer(player3, 'right');
+        movePlayer(player3, 'right', players);
         break;
       case ';':
         dropBomb(player3);
@@ -154,16 +151,16 @@ export const handleKeyPress = (event) => {
 
       // Player 4 Controls (5RTY + U for bomb)
       case '5':
-        movePlayer(player4, 'up');
+        movePlayer(player4, 'up', players);
         break;
       case 't':
-        movePlayer(player4, 'down');
+        movePlayer(player4, 'down', players);
         break;
       case 'r':
-        movePlayer(player4, 'left');
+        movePlayer(player4, 'left', players);
         break;
       case 'y':
-        movePlayer(player4, 'right');
+        movePlayer(player4, 'right', players);
         break;
       case 'u':
         dropBomb(player4);
