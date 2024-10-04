@@ -13,6 +13,44 @@ const player2 = { x: 13, y: 13, id: 'player2', lives: 3 };
 const player3 = { x: 1, y: 13, id: 'player3', lives: 3 };
 const player4 = { x: 13, y: 3, id: 'player4', lives: 3 };
 
+// Function to start the game timer on page load
+const startGameTimer = (duration) => {
+  const timerDisplay = document.querySelector('.game-timer');
+  let timeRemaining = duration;
+
+  const countdownInterval = setInterval(() => {
+      // Update the timer display
+      const minutes = Math.floor(timeRemaining / 60);
+      const seconds = timeRemaining % 60;
+
+      // Format minutes and seconds (e.g., 1:05)
+      timerDisplay.innerHTML = `Time Remaining: ${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+
+      if (timeRemaining <= 0) {
+          clearInterval(countdownInterval);
+          timerDisplay.innerHTML = "Time's up! Game Over!";
+          
+          // Trigger any game-ending logic here
+          endGame();
+      }
+
+      timeRemaining -= 1;
+  }, 1000);
+};
+
+// Function to handle game end
+const endGame = () => {
+  console.log("Game over!");
+  // Add any additional logic like disabling movement, displaying results, etc.
+};
+
+// Start the game timer for 5 minutes (300 seconds) when the page loads
+window.onload = () => {
+  const gameDuration = 300; // 5 minutes in seconds
+  startGameTimer(gameDuration);
+};
+
+
 export const players = [player1, player2, player3, player4]; // Define an array of players
 
 export const createLivesDisplay = (player) => {
