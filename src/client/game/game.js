@@ -1,5 +1,7 @@
 // # Main game logic
 
+import { spawnBomb } from "./events";
+
 /*
 player 3 actions 'i' up, 'k' down, 'j' left, 'l' right, ';' drop bomb
 player 4 actions '5' up, 't' down, 'r' left, 'y' right, 'u' drop bomb
@@ -95,6 +97,7 @@ export const handleKeyPress = (event) => {
   const handleBombSpaceKey = (event) => {
       // logic needs to be added to actually make specific player character move around the map
       if (event.key === ' ') {
+        spawnBomb()
         console.log('Player 1 dropped a bomb!');
       } else if
         (event.key === 'f') {
