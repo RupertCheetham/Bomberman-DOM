@@ -12,6 +12,10 @@ export function spawnBomb(player) {
     })
     const bomb = render(vBomb)
     document.querySelector('.gameMap').appendChild(bomb);
-
+    // Remove the bomb after 3 seconds
+    setTimeout(() => {
+        bomb.remove();  // This removes the bomb from the DOM
+        console.log("Bomb removed after 3 seconds");
+    }, 3000);  // Delay of 3 seconds
 
 }
