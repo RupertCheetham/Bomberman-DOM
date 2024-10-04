@@ -7,11 +7,10 @@ import { handleKeyPress } from './client/game/game.js';
 import { spawnPlayers } from './client/game/game.js';
 import diff from './vdom/diff.js';
 import { spawnSoftBlocks } from './client/game/map.js';
-import { playerNum } from './client/game/gameVariables.js';
 
 
 // Application State
-
+let playerNum = 3
 
 
 export let $rootEl;
