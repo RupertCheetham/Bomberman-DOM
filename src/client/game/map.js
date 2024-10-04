@@ -47,8 +47,6 @@ export const gameMap = (playerNum) => {
         })
     );
 
-    console.log("This is map elements:", mapElements)
-
     // Create the full map container with direct child cells
     return createElement("div", {
         attrs: {
