@@ -8,12 +8,25 @@ import createElement from "../../vdom/createElement";
 import render from '../../vdom/render';
 
 // Define player objects with x and y coordinates
-const player1 = { x: 1, y: 3, id: 'player1' };  // Starting position for player 1
-const player2 = { x: 13, y: 13, id: 'player2' }; // Starting position for player 2
-const player3 = { x: 1, y: 13, id: 'player3' };  // Starting position for player 3
-const player4 = { x: 13, y: 3, id: 'player4' };  // Starting position for player 4
+const player1 = { x: 1, y: 3, id: 'player1', lives: 3 };  // Add lives
+const player2 = { x: 13, y: 13, id: 'player2', lives: 3 };
+const player3 = { x: 1, y: 13, id: 'player3', lives: 3 };
+const player4 = { x: 13, y: 3, id: 'player4', lives: 3 };
 
 export const players = [player1, player2, player3, player4]; // Define an array of players
+
+export const createLivesDisplay = (player) => {
+  const livesElement = createElement("div", {
+      attrs: {
+          class: `${player.id}-lives`,  // Unique class for each player's lives display
+          style: 'margin: 10px;'  // You can customize the style as needed
+      },
+      children: [`Player ${player.id} Lives: ${player.lives}`]  // Display initial lives
+  });
+
+  const livesDOMElement = render(livesElement);
+  document.querySelector('.lives-display').appendChild(livesDOMElement);
+};
 
 // Function to create and spawn players
 export const spawnPlayers = (playerNum) => {
@@ -30,6 +43,26 @@ export const spawnPlayers = (playerNum) => {
       const playerElement = render(vPlayerElement)
       // Append the player element to the game map
       document.querySelector('.gameMap').appendChild(playerElement);
+
+       // Create lives display for each player
+       createLivesDisplay(player);
+  }
+};
+
+export const updateLivesDisplay = (player) => {
+  const livesElement = document.querySelector(`.${player.id}-lives`);
+  if (livesElement) {
+      livesElement.innerHTML = `Player ${player.id} Lives: ${player.lives}`;
+  }
+};
+
+// Example of reducing lives and updating display
+export const loseLife = (player) => {
+  if (player.lives > 0) {
+      player.lives -= 1;
+      updateLivesDisplay(player);
+  } else {
+      console.log(`${player.id} is out of lives!`);
   }
 };
 
