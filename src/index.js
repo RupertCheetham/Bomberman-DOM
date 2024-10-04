@@ -6,6 +6,7 @@ import { registerEvent } from './vdom/events/eventHelpers/registerEvent';
 import { handleKeyPress } from './client/game/game.js';
 import { spawnPlayers } from './client/game/game.js';
 import diff from './vdom/diff.js';
+import { spawnSoftBlocks } from './client/game/map.js';
 
 
 // Application State
@@ -34,6 +35,7 @@ const initializeApp = () => {
   // players.forEach((player) => updatePlayerPosition(player));
 
   spawnPlayers(playerNum);
+  spawnSoftBlocks();
 
   // Register events
   // Keydown
@@ -49,7 +51,7 @@ const initializeApp = () => {
   window.ondblclick = handleEvent; // Global event handler
 
   // Start the game loop
-  requestAnimationFrame(gameLoop);
+  //requestAnimationFrame(gameLoop);
 };
 
 // Game loop function using requestAnimationFrame
