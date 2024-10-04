@@ -3,6 +3,7 @@ import render from "../../vdom/render";
 
 //export function handlePlayer1(){
 export function spawnBomb(player) {
+    console.log("player", player)
     const vBomb = createElement("div", {
         attrs: {
             class: "bomb",

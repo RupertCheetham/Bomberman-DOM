@@ -91,6 +91,7 @@ export const handleKeyPress = (event) => {
     case 'ArrowDown':
     case 'ArrowLeft':
     case 'ArrowRight':
+      case ' ':
         event.preventDefault(); // Prevent the browser's default scrolling behavior
         break;
   }
