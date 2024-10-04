@@ -4,8 +4,6 @@ const map = `
 +++++++++++++++
 +++++++++++++++
 HHHHHHHHHHHHHHH
-H1...........4H
-H.H.H.H.H.H.H.H
 H.............H
 H.H.H.H.H.H.H.H
 H.............H
@@ -14,7 +12,9 @@ H.............H
 H.H.H.H.H.H.H.H
 H.............H
 H.H.H.H.H.H.H.H
-H3...........2H
+H.............H
+H.H.H.H.H.H.H.H
+H.............H
 HHHHHHHHHHHHHHH
 `;
 
@@ -23,14 +23,9 @@ const levelChars = {
     "H": "hard-block",
     "S": "soft-block",
     ".": "ground",
-    "1": "player1",
-    "2": "player2",
-    "3": "player3",
-    "4": "player4",
 }
 
 const walkableChars = ['.'];  // Only the ground is walkable
-
 
 // Parse the map into a 2D array
 const parsedMap = map.trim().split("\n").map((line) => [...line]);
@@ -52,6 +47,8 @@ export const gameMap = (playerNum) => {
         })
     );
 
+    console.log("This is map elements:", mapElements)
+
     // Create the full map container with direct child cells
     return createElement("div", {
         attrs: {
@@ -65,6 +62,9 @@ export const gameMap = (playerNum) => {
 // export const isWalkable = (x, y, players = []) => {
     export const isWalkable = (x, y, players) => {
 
+       // console.log("this is players variable:", players)
+       console.log("This is the parsed map length:", parsedMap.length)
+
     // Ensure the coordinates are within the bounds of the map
     if (x < 0 || y < 0 || y >= parsedMap.length || x >= parsedMap[0].length) {
         console.log(`Out of bounds: (${x}, ${y})`);
@@ -77,20 +77,9 @@ export const gameMap = (playerNum) => {
         return false;
     }
 
-     // Check if players is an array before iterating
-    //  if (Array.isArray(players)) {
-        // Check if the tile is occupied by another player
-        for (const player of players) {
-            if (player.x === x && player.y === y) {
-                console.log(`Tile occupied by another player at (${x}, ${y})`); // Log collision
-                return false; // Tile occupied by another player
-            }
-    //     }
-    // } else {
-    //     console.warn('players is not an array or is undefined');
-    // }
-
     console.log(`Tile is walkable at (${x}, ${y})`); // Log successful check
     return true; // Tile is walkable
 };
-    }
+    
+
+

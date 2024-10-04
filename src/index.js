@@ -3,8 +3,8 @@ import mount from './vdom/mount';
 import { createVApp } from './vdom/createVApp';
 import { handleEvent } from './vdom/events/eventHelpers/handleEvent';
 import { registerEvent } from './vdom/events/eventHelpers/registerEvent';
-
 import { handleKeyPress } from './client/game/game.js';
+import { spawnPlayers } from './client/game/game.js';
 
 
 // Application State
@@ -27,6 +27,10 @@ const initializeApp = () => {
   setVApp(createVApp(playerNum)); // Create initial VApp
   $rootEl = mount(render(vApp), document.getElementById('root')); // Mount the initial app
 
+  // Initialize player positions
+  // players.forEach((player) => updatePlayerPosition(player));
+
+  spawnPlayers(playerNum);
 
   // Register events
   // Keydown
