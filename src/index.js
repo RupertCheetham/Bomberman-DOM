@@ -58,7 +58,6 @@ const gameLoop = (timestamp) => {
   lastTime = timestamp;
   updateGameState(deltaTime);  // Update the game state
   renderFrame();  // Re-render the virtual DOM
-
   // Recursively call gameLoop for the next frame
   requestAnimationFrame(gameLoop);
 };

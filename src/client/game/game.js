@@ -84,12 +84,6 @@ const movePlayer = (player, direction, players) => {
 }
 };
 
-// Bomb dropping logic for players
-const dropBomb = (player) => {
-    console.log(`Player at (${player.x}, ${player.y}) dropped a bomb!`);
-    // Add your bomb placement logic here
-};
-
 // Function to handle key presses
 export const handleKeyPress = (event) => {
     switch (event.key) {
@@ -106,7 +100,7 @@ export const handleKeyPress = (event) => {
         movePlayer(player1, 'right', players);
         break;
       case ' ':
-        dropBomb(player1);
+        spawnBomb(player1);
         break;
 
       // Player 2 Controls (WASD + F for bomb)
@@ -123,7 +117,7 @@ export const handleKeyPress = (event) => {
         movePlayer(player2, 'right');
         break;
       case 'f':
-        dropBomb(player2);
+        spawnBomb(player2);
         break;
 
       // Player 3 Controls (IJKL + ; for bomb)
@@ -140,7 +134,7 @@ export const handleKeyPress = (event) => {
         movePlayer(player3, 'right');
         break;
       case ';':
-        dropBomb(player3);
+        spawnBomb(player3);
         break;
 
       // Player 4 Controls (5RTY + U for bomb)
@@ -157,7 +151,7 @@ export const handleKeyPress = (event) => {
         movePlayer(player4, 'right');
         break;
       case 'u':
-        dropBomb(player4);
+        spawnBomb(player4);
         break;
 
       default:
