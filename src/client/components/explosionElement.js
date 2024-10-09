@@ -9,6 +9,8 @@ export function spawnExplosion(x, y) {
     // Center explosion
     const explosionMidElement = explosionMid(x, y);
     gameMap.appendChild(explosionMidElement);
+     // Remove the center explosion after 200ms
+     setTimeout(() => explosionMidElement.remove(), 200);
 
     const explosionRange = 2; // Explosion range can be adjusted
 
@@ -18,8 +20,7 @@ export function spawnExplosion(x, y) {
     handleExplosionInDirection(x, y, explosionRange, 'up', gameMap);
     handleExplosionInDirection(x, y, explosionRange, 'down', gameMap);
 
-    // Remove the center explosion after 200ms
-    setTimeout(() => explosionMidElement.remove(), 200);
+   
 }
 
 function handleExplosionInDirection(x, y, range, direction, gameMap) {
@@ -46,7 +47,7 @@ function handleExplosionInDirection(x, y, range, direction, gameMap) {
         // Check for collision, including soft blocks
         if (checkCollision(newX, newY)) {
             // If it's a soft block, destroy it and stop the explosion in this direction
-            const softBlock = softBlocks.find(block => block.x === newX && block.y === newY);
+            const softBlock = softBlocks.find(block => block.x+1 === newX && block.y+1 === newY);
             if (softBlock) {
                 destroySoftBlock(softBlock, gameMap);
             }
@@ -60,8 +61,8 @@ function handleExplosionInDirection(x, y, range, direction, gameMap) {
 
         gameMap.appendChild(explosionElement);
         
-        // Remove the explosion element after 200ms
-      //  setTimeout(() => explosionElement.remove(), 200);
+   //     Remove the explosion element after 200ms
+       setTimeout(() => explosionElement.remove(), 200);
     }
 }
 
