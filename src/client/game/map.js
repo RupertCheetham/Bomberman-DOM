@@ -25,10 +25,10 @@ const levelChars = {
     ".": "ground",
 }
 
-const walkableChars = ['.'];  // Only the ground is walkable
+export const walkableChars = ['.'];  // Only the ground is walkable
 
 // Parse the map into a 2D array
-const parsedMap = map.trim().split("\n").map((line) => [...line]);
+export const parsedMap = map.trim().split("\n").map((line) => [...line]);
 
 // Function to create the gameMap element
 export const gameMap = (playerNum) => {
@@ -123,6 +123,6 @@ export const spawnSoftBlocks = () => {
     }
 };
 
-const isPositionWalkableBySoftBlocks = (x, y) => {
+export const isPositionWalkableBySoftBlocks = (x, y) => {
     return !softBlocks.some(block => block.x === x && block.y === y && !block.walkable);
 };
