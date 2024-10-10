@@ -3,7 +3,7 @@ import mount from './vdom/mount';
 import { createVApp } from './vdom/createVApp';
 import { handleEvent } from './vdom/events/eventHelpers/handleEvent';
 import { registerEvent } from './vdom/events/eventHelpers/registerEvent';
-import { handleKeyPress } from './client/game/game.js';
+import { handleKeyPress, spawnBarPlayers } from './client/game/game.js';
 import { spawnPlayers } from './client/game/game.js';
 import diff from './vdom/diff.js';
 import { spawnSoftBlocks } from './client/game/map.js';
@@ -36,6 +36,8 @@ const initializeApp = () => {
 
   spawnPlayers(playerNum);
   spawnSoftBlocks();
+  spawnBarPlayers(playerNum);
+  
 
   // Register events
   // Keydown

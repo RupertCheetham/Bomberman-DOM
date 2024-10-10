@@ -62,8 +62,8 @@ export const createLivesDisplay = (player) => {
       children: [`Player ${player.id} Lives: ${player.lives}`]  // Display initial lives
   });
 
-  const livesDOMElement = render(livesElement);
-  document.querySelector('.lives-display').appendChild(livesDOMElement);
+  // const livesDOMElement = render(livesElement);
+  // document.querySelector('.lives-display').appendChild(livesDOMElement);
 };
 
 // Function to create and spawn players
@@ -237,3 +237,39 @@ export const handleKeyPress = (event) => {
         break;
     }
 };
+
+const barPlayer1 = {x:0, y: 0, id: 'player1', lives: 3};
+const barPlayer2 = {x:0, y: 1, id: 'player2', lives: 3}; 
+const barPlayer3 = {x:9, y: 0, id: 'player3', lives: 3};
+const barPlayer4 = {x:9, y: 2, id: 'player4', lives: 3};
+
+export const barPlayers = [barPlayer1, barPlayer2, barPlayer3, barPlayer4];
+
+export const spawnBarPlayers = (playerNum) => {
+  for (let i = 0; i < playerNum; i++) {
+      const player = barPlayers[i];
+      const vPlayerElement = createElement("div", {
+          attrs: {
+              class: `${player.id}`, // Give the player a unique class
+              style: `grid-column-start: ${player.x + 1}; grid-row-start: ${player.y + 1};` // Set the grid position
+          },      
+      });
+      
+      // Create the lives text element, positioned one space to the right (x + 2)
+      const vLivesText = createElement("div", {
+        attrs: {
+            class: `${player.id}-lives`, // Unique class for the lives text
+            style: `grid-column-start: ${player.x + 2}; grid-row-start: ${player.y + 1}; position: absolute;` // Position the text one column to the right
+        },
+        children: [`Player ${player.id[6]} - Lives: ${player.lives}`]  // Display initial lives
+    });
+
+    // Render and append both player and lives elements to the game map
+    const playerElement = render(vPlayerElement);
+    const livesTextElement = render(vLivesText);
+
+    document.querySelector('.gameMap').appendChild(playerElement);
+    document.querySelector('.gameMap').appendChild(livesTextElement);
+}
+};
+
