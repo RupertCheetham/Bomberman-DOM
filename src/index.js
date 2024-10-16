@@ -7,11 +7,10 @@ import { handleKeyPress, spawnBarPlayers } from './client/game/game.js';
 import { spawnPlayers } from './client/game/game.js';
 import diff from './vdom/diff.js';
 import { spawnSoftBlocks } from './client/game/map.js';
-
+import { waitingRoomElement } from './client/components/waitingRoom.js';
 
 // Application State
 let playerNum = 3
-
 
 export let $rootEl;
 let vApp;
@@ -24,12 +23,14 @@ export const setVApp = (newVApp) => {
 };
 
 
-
 // Initialize Application
 const initializeApp = () => {
-
+let $rootEl = document.getElementById('root')
   setVApp(createVApp(playerNum)); // Create initial VApp
-  $rootEl = mount(render(vApp), document.getElementById('root')); // Mount the initial app
+
+  $rootEl = mount(waitingRoomElement(), $rootEl)
+ // renderWaitingRoom
+  //$rootEl = mount(render(vApp), $rootEl); // Mount the initial app
 
   // Initialize player positions
   // players.forEach((player) => updatePlayerPosition(player));
@@ -55,6 +56,7 @@ const initializeApp = () => {
   // Start the game loop
   //requestAnimationFrame(gameLoop);
 };
+
 
 // Game loop function using requestAnimationFrame
 const gameLoop = (timestamp) => {
