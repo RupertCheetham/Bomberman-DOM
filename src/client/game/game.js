@@ -87,22 +87,22 @@ export const spawnPlayers = (playerNum) => {
   }
 };
 
-export const updateLivesDisplay = (player) => {
-  const livesElement = document.querySelector(`.${player.id}-lives`);
-  if (livesElement) {
-      livesElement.innerHTML = `Player ${player.id} Lives: ${player.lives}`;
-  }
-};
+// export const updateLivesDisplay = (player) => {
+//   const livesElement = document.querySelector(`.${player.id}-lives`);
+//   if (livesElement) {
+//       livesElement.innerHTML = `Player ${player.id} Lives: ${player.lives}`;
+//   }
+// };
 
 // Example of reducing lives and updating display
-export const loseLife = (player) => {
-  if (player.lives > 0) {
-      player.lives -= 1;
-      updateLivesDisplay(player);
-  } else {
-      console.log(`${player.id} is out of lives!`);
-  }
-};
+// export const loseLife = (player) => {
+//   if (player.lives > 0) {
+//       player.lives -= 1;
+//       updateLivesDisplay(player);
+//   } else {
+//       console.log(`${player.id} is out of lives!`);
+//   }
+// };
 
 export const updatePlayerPosition = (player) => {
   const playerElement = document.querySelector(`.${player.id}`);
@@ -154,89 +154,92 @@ const movePlayer = (player, direction, players) => {
 
 // Function to handle key presses
 export const handleKeyPress = (event) => {
-  switch (event.key) {
-    case 'ArrowUp':
-    case 'ArrowDown':
-    case 'ArrowLeft':
-    case 'ArrowRight':
-      case ' ':
-        event.preventDefault(); // Prevent the browser's default scrolling behavior
-        break;
+  // Prevent default scrolling behavior for specific keys
+  if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', ' '].includes(event.key)) {
+    event.preventDefault();
   }
 
-    switch (event.key) {
-      case 'ArrowUp':
-        movePlayer(player1, 'up', players);
-        break;
-      case 'ArrowDown':
-        movePlayer(player1, 'down', players);
-        break;
-      case 'ArrowLeft':
-        movePlayer(player1, 'left', players);
-        break;
-      case 'ArrowRight':
-        movePlayer(player1, 'right', players);
-        break;
-      case ' ':
-        spawnBomb(player1);
-        break;
+  // Check if the player is present in the players array and on the map
+  const isPlayer1Active = players.some(p => p.id === 'player1');
+  const isPlayer2Active = players.some(p => p.id === 'player2');
+  const isPlayer3Active = players.some(p => p.id === 'player3');
+  const isPlayer4Active = players.some(p => p.id === 'player4');
 
-      // Player 2 Controls (WASD + F for bomb)
-      case 'w':
-        movePlayer(player2, 'up', players);
-        break;
-      case 's':
-        movePlayer(player2, 'down', players);
-        break;
-      case 'a':
-        movePlayer(player2, 'left', players);
-        break;
-      case 'd':
-        movePlayer(player2, 'right', players);
-        break;
-      case 'f':
-        spawnBomb(player2);
-        break;
+  switch (event.key) {
+    // Player 1 Controls
+    case 'ArrowUp':
+      if (isPlayer1Active) movePlayer(player1, 'up', players);
+      break;
+    case 'ArrowDown':
+      if (isPlayer1Active) movePlayer(player1, 'down', players);
+      break;
+    case 'ArrowLeft':
+      if (isPlayer1Active) movePlayer(player1, 'left', players);
+      break;
+    case 'ArrowRight':
+      if (isPlayer1Active) movePlayer(player1, 'right', players);
+      break;
+    case ' ':
+      if (isPlayer1Active) spawnBomb(player1);
+      break;
 
-      // Player 3 Controls (IJKL + ; for bomb)
-      case 'i':
-        movePlayer(player3, 'up', players);
-        break;
-      case 'k':
-        movePlayer(player3, 'down', players);
-        break;
-      case 'j':
-        movePlayer(player3, 'left', players);
-        break;
-      case 'l':
-        movePlayer(player3, 'right', players);
-        break;
-      case ';':
-        spawnBomb(player3);
-        break;
+    // Player 2 Controls (WASD + F for bomb)
+    case 'w':
+      if (isPlayer2Active) movePlayer(player2, 'up', players);
+      break;
+    case 's':
+      if (isPlayer2Active) movePlayer(player2, 'down', players);
+      break;
+    case 'a':
+      if (isPlayer2Active) movePlayer(player2, 'left', players);
+      break;
+    case 'd':
+      if (isPlayer2Active) movePlayer(player2, 'right', players);
+      break;
+    case 'f':
+      if (isPlayer2Active) spawnBomb(player2);
+      break;
 
-      // Player 4 Controls (5RTY + U for bomb)
-      case '5':
-        movePlayer(player4, 'up', players);
-        break;
-      case 't':
-        movePlayer(player4, 'down', players);
-        break;
-      case 'r':
-        movePlayer(player4, 'left', players);
-        break;
-      case 'y':
-        movePlayer(player4, 'right', players);
-        break;
-      case 'u':
-        spawnBomb(player4);
-        break;
+    // Player 3 Controls (IJKL + ; for bomb)
+    case 'i':
+      if (isPlayer3Active) movePlayer(player3, 'up', players);
+      break;
+    case 'k':
+      if (isPlayer3Active) movePlayer(player3, 'down', players);
+      break;
+    case 'j':
+      if (isPlayer3Active) movePlayer(player3, 'left', players);
+      break;
+    case 'l':
+      if (isPlayer3Active) movePlayer(player3, 'right', players);
+      break;
+    case ';':
+      if (isPlayer3Active) spawnBomb(player3);
+      break;
 
-      default:
-        console.log(`Key "${event.key}" pressed, but no action is assigned.`);
-        break;
-    }
+    // Player 4 Controls (5RTY + U for bomb)
+    case '5':
+      if (isPlayer4Active) movePlayer(player4, 'up', players);
+      break;
+    case 't':
+      if (isPlayer4Active) movePlayer(player4, 'down', players);
+      break;
+    case 'r':
+      if (isPlayer4Active) movePlayer(player4, 'left', players);
+      break;
+    case 'y':
+      if (isPlayer4Active) movePlayer(player4, 'right', players);
+      break;
+    case 'u':
+      if (isPlayer4Active) spawnBomb(player4);
+      break;
+
+    default:
+      console.log(`Key "${event.key}" pressed, but no action is assigned.`);
+      break;
+  }
 };
+
 
 const barPlayer1 = {x:0, y: 0, id: 'player1', lives: 3};
 const barPlayer2 = {x:0, y: 1, id: 'player2', lives: 3}; 
@@ -273,3 +276,38 @@ export const spawnBarPlayers = (playerNum) => {
 }
 };
 
+// function to remove player lives if hit by explosion, if all lives lost then removal from map
+// also updates the scoreboard and players array
+export function removeLife(player, gameMap) {
+  // Find the player in the players array
+  const playerIndex = players.findIndex(p => p.id === player.id);
+
+  if (playerIndex !== -1) {
+      // Decrease the player's lives
+      players[playerIndex].lives--;
+
+      // Update the player's lives display on the scoreboard
+      const playerLivesElement = document.querySelector(`.${player.id}-lives`);
+      if (playerLivesElement) {
+           // Update the lives text inside the element, keeping the format
+           playerLivesElement.textContent = `Player ${player.id[6]} - Lives: ${players[playerIndex].lives}`;
+      }
+
+      // Check if the player's lives are zero
+      if (players[playerIndex].lives <= 0) {
+          // Remove the player from the game map if lives are zero
+          const playerElement = gameMap.querySelector(`.${player.id}`);
+          if (playerElement) {
+              playerElement.remove();
+          }
+
+          // Optionally remove the player's lives display as well
+          // if (playerLivesElement) {
+          //     playerLivesElement.remove();
+          // }
+
+          //Remove the player from the players array
+          players.splice(playerIndex, 1); // If you want to completely remove the player
+      }
+  }
+}

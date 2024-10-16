@@ -2,6 +2,8 @@ import createElement from "../../vdom/createElement";
 import render from "../../vdom/render";
 import { checkCollision } from "../game/checkCollision";
 import { softBlocks } from "../game/map";
+import { players } from "../game/game";
+import { removeLife } from "../game/game";
 
 export function spawnExplosion(x, y) {
     const gameMap = document.querySelector('.gameMap');
@@ -53,6 +55,14 @@ function handleExplosionInDirection(x, y, range, direction, gameMap) {
             }
             break; // Stop the explosion in this direction
         }
+
+         // Check if any player is within the explosion's range
+         const hitPlayer = players.find(player => player.x+1 === newX && player.y+1 === newY);
+         if (hitPlayer) {
+             removeLife(hitPlayer, gameMap);
+             break; // Stop the explosion in this direction
+         }
+        
 
         // Create and append the explosion element
         const explosionElement = (direction === 'up' || direction === 'down') 
@@ -112,3 +122,5 @@ function destroySoftBlock(softBlock, gameMap) {
         softBlocks.splice(index, 1);
     }
 }
+
+
