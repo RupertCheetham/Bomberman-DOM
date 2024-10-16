@@ -18,13 +18,17 @@ var upgrader = websocket.Upgrader{
 
 // Client manager to store and broadcast messages
 type Client struct {
-	conn *websocket.Conn
+	conn     *websocket.Conn
+	playerId int
 }
 
 var clients = make(map[*Client]bool)
 var broadcast = make(chan string)
+var maxClients = 4                         // Maximum number of clients
+var availablePlayerIds = []int{1, 2, 3, 4} // List of available player IDs
 
 func main() {
+
 	// Start WebSocket server on /ws endpoint
 	http.HandleFunc("/ws", handleConnections)
 
@@ -41,6 +45,11 @@ func main() {
 
 // Handle incoming WebSocket connections
 func handleConnections(w http.ResponseWriter, r *http.Request) {
+	if len(clients) >= maxClients {
+		http.Error(w, "Server full", http.StatusForbidden)
+		return // Reject new connections if max clients reached
+	}
+
 	// Upgrade initial GET request to a WebSocket
 	ws, err := upgrader.Upgrade(w, r, nil)
 	if err != nil {
@@ -48,9 +57,22 @@ func handleConnections(w http.ResponseWriter, r *http.Request) {
 	}
 	defer ws.Close()
 
+	// Assign an available player ID
+	var playerId int
+	if len(availablePlayerIds) > 0 {
+		playerId = availablePlayerIds[0]            // Get the first available ID
+		availablePlayerIds = availablePlayerIds[1:] // Remove it from the list
+	} else {
+		// Should not happen if we check maxClients properly
+		return
+	}
+
 	// Register the new client
-	client := &Client{conn: ws}
+	client := &Client{conn: ws, playerId: playerId}
 	clients[client] = true
+
+	// Log the connection
+	log.Printf("Player %d connected", playerId)
 
 	// Listen for messages
 	for {
@@ -58,6 +80,8 @@ func handleConnections(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			log.Printf("error: %v", err)
 			delete(clients, client)
+			availablePlayerIds = append(availablePlayerIds, playerId) // Make the ID available again
+
 			break
 		}
 		// Send the received message to the broadcast channel
@@ -72,11 +96,13 @@ func handleMessages() {
 		msg := <-broadcast
 		// Send the message to every client connected
 		for client := range clients {
+			//log.Println("clients", clients)
 			err := client.conn.WriteMessage(websocket.TextMessage, []byte(msg))
 			if err != nil {
 				log.Printf("error: %v", err)
 				client.conn.Close()
 				delete(clients, client)
+				availablePlayerIds = append(availablePlayerIds, client.playerId) // Make the ID available again
 			}
 		}
 	}
