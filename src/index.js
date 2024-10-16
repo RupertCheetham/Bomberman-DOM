@@ -28,9 +28,9 @@ const initializeApp = () => {
 let $rootEl = document.getElementById('root')
   setVApp(createVApp(playerNum)); // Create initial VApp
 
-  $rootEl = mount(waitingRoomElement(), $rootEl)
+  //$rootEl = mount(waitingRoomElement(), $rootEl)
  // renderWaitingRoom
-  //$rootEl = mount(render(vApp), $rootEl); // Mount the initial app
+  $rootEl = mount(render(vApp), $rootEl); // Mount the initial app
 
   // Initialize player positions
   // players.forEach((player) => updatePlayerPosition(player));

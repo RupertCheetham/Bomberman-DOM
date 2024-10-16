@@ -10,6 +10,6 @@ export function bombElement(x, y){
         }
     })
 
-    const bomb = render(vBomb)
-    return bomb
+    const bombElement = render(vBomb)
+    return bombElement
 }

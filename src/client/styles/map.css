@@ -48,6 +48,20 @@ footer.info a:hover {
 	/* Underline on hover */
 }
 
+.waitingRoom {
+	width: 600px;
+	/* Total width of the map */
+	height: 600px;
+	/* Total height of the map */
+	
+	background-color: #333;
+	/* Optional: background color for game map */
+	border: 2px solid #333;
+	/* Optional: border for the game map */
+	position: relative;    /* Set the position to relative */
+}
+
+
 .gameMap {
 	width: 600px;
 	/* Total width of the map */
