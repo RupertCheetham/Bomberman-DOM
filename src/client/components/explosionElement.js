@@ -5,6 +5,8 @@ import { softBlocks } from "../game/map";
 import { players } from "../game/game";
 import { removeLife } from "../game/game";
 
+import { bombLocations } from "../game/events";
+
 export function spawnExplosion(x, y) {
     const gameMap = document.querySelector('.gameMap');
 
@@ -122,5 +124,6 @@ function destroySoftBlock(softBlock, gameMap) {
         softBlocks.splice(index, 1);
     }
 }
+
 
 

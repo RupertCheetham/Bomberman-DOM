@@ -122,7 +122,7 @@ export const updatePlayerPosition = (player) => {
   }
 };
 
-// Move player with collision detection
+//Move player with collision detection
 const movePlayer = (player, direction, players) => {
     let newX = player.x;
     let newY = player.y;
