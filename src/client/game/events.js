@@ -18,17 +18,12 @@ export function spawnBomb(player) {
     const bomb = bombElement(x, y)
     document.querySelector('.gameMap').appendChild(bomb);
 
-      // Check if the bomb's coordinates are the same as the player's coordinates
-      if (player.x === bombLocation.x && player.y === bombLocation.y) {
-        console.log("true")
-        setTimeout(() => {
-            removeLife(player, gameMap); // Call removeLife if coordinates match
-        }, 3000);
-        
-    }
-
     // Remove the bomb after 3 seconds
     setTimeout(() => {
+        if (player.x === bombLocation.x && player.y === bombLocation.y) {
+            console.log("true")
+            removeLife(player, gameMap);
+        }
         bomb.remove();  // This removes the bomb from the DOM
         bombLocations.pop()
         console.log("Bomb removed after 3 seconds");
