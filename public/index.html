@@ -59,8 +59,17 @@ const ws = new WebSocket("ws://localhost:8080/ws");
 let currentPlayerId; // Declare without initializing
 
 function displayMessage(messageData, messageType) {
-    const messageText = messageData.text || ''; // Default to an empty string if undefined
-    const messageSender = messageData.playerId || ''; // Default to an empty string if undefined
+    // Parse messageData.text if it's in stringified JSON format
+    let parsedMessage;
+    try {
+        parsedMessage = JSON.parse(messageData.text); // Expecting {"playerId": 1, "text": "Hello World"}
+    } catch (e) {
+        console.warn("Message is not in JSON format:", messageData.text);
+        parsedMessage = { playerId: messageData.playerId, text: messageData.text }; // Fallback to use messageData directly
+    }
+
+    const playerId = parsedMessage.playerId || messageData.playerId;
+    const messageText = parsedMessage.text || messageData.text;
 
     // Prevent displaying empty messages
     if (!messageText.trim()) {
@@ -72,15 +81,27 @@ function displayMessage(messageData, messageType) {
     const message = document.createElement("div");
     message.classList.add("message", messageType); // Use messageType for styling
 
+    // Create a bold playerId element (e.g., "Player 1:")
+    const playerIdElement = document.createElement("strong");
+    playerIdElement.innerText = `Player ${playerId}:`;
+
+    // Add a line break for better formatting
+    const lineBreak = document.createElement("br");
+
+    // Create the message content element
     const messageContent = document.createElement("p");
     messageContent.innerText = messageText;
 
+    // Append player ID, line break, and message content to the message div
+    message.appendChild(playerIdElement);
+    message.appendChild(lineBreak);
     message.appendChild(messageContent);
+
     chat.appendChild(message);
     chat.scrollTop = chat.scrollHeight; // Auto-scroll to the bottom
 
     // Log details for debugging
-    console.log(`Message displayed [${messageType}]:`, messageText);
+    console.log(`Message displayed [${messageType}]:`, `Player ${playerId}: ${messageText}`);
 }
 
 
