@@ -3,6 +3,7 @@ import { bombElement } from "../components/bombElement";
 import { spawnExplosion } from "../components/explosionElement";
 import { gameMap } from "./map";
 import { removeLife } from "../game/game"; 
+import { initializeApp } from "../..";
 
 export const bombLocations = []
 
@@ -33,3 +34,7 @@ export function spawnBomb(player) {
 
 }
 
+export function handleStartGame(){
+    let playerNum = 3
+    initializeApp(playerNum)
+}

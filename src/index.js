@@ -8,6 +8,7 @@ import { spawnPlayers } from './client/game/game.js';
 import diff from './vdom/diff.js';
 import { spawnSoftBlocks } from './client/game/map.js';
 import { waitingRoomElement } from './client/components/waitingRoom.js';
+import { handleStartGame } from './client/game/events.js';
 
 // Application State
 let playerNum = 3
@@ -21,24 +22,33 @@ export const getVApp = () => vApp;
 export const setVApp = (newVApp) => {
   vApp = newVApp;
 };
+const initializeWaitingRoom = () => {
 
+  $rootEl = mount(waitingRoomElement(), $rootEl);
+  registerEvent('click', handleStartGame);
+  // Activate event handlers
+  window.onkeydown = handleEvent; // Global event handler
+  window.onclick = handleEvent; // Global event handler
+  window.ondblclick = handleEvent; // Global event handler
+}
 
 // Initialize Application
-const initializeApp = () => {
-// let $rootEl = document.getElementById('root')
+export const initializeApp = (playerNum) => {
+  // let $rootEl = document.getElementById('root')
   setVApp(createVApp(playerNum)); // Create initial VApp
 
   //$rootEl = mount(waitingRoomElement(), $rootEl)
- // renderWaitingRoom
+  // renderWaitingRoom
   $rootEl = mount(render(vApp), $rootEl); // Mount the initial app
 
   // Initialize player positions
   // players.forEach((player) => updatePlayerPosition(player));
 
   spawnPlayers(playerNum);
+  console.log("playerNum", playerNum)
   spawnSoftBlocks();
   spawnBarPlayers(playerNum);
-  
+
 
   // Register events
   // Keydown
@@ -48,10 +58,7 @@ const initializeApp = () => {
   // // Double Click
   // registerEvent('dblclick', (event) => handleDoubleClickEdit(event, toDoList)); // example double click event
 
-  // Activate event handlers
-  window.onkeydown = handleEvent; // Global event handler
-  window.onclick = handleEvent; // Global event handler
-  window.ondblclick = handleEvent; // Global event handler
+
 
   // Start the game loop
   requestAnimationFrame(gameLoop);
@@ -103,5 +110,5 @@ export function updateRootEl(newRootEl) {
 }
 
 // Initialize the application
-initializeApp();
+initializeWaitingRoom()
 
