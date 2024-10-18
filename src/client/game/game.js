@@ -313,13 +313,11 @@ export function removeLife(player, gameMap, x ,y) {
 
               playerElement.remove();
           }
-
-   
-
-
           //Remove the player from the players array
           players.splice(playerIndex, 1); // If you want to completely remove the player
       }
+
+      console.log("players array length", players.length);
   }
 
 
