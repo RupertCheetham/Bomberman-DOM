@@ -1,7 +1,6 @@
 
 import { bombElement } from "../components/bombElement";
 import { spawnExplosion } from "../components/explosionElement";
-import { gameMap } from "./map";
 import { removeLife } from "../game/game"; 
 
 export const bombLocations = []
@@ -16,7 +15,9 @@ export function spawnBomb(player) {
     console.log("Bomb location:", bombLocation); 
     bombLocations.unshift(bombLocation)
     const bomb = bombElement(x, y)
-    document.querySelector('.gameMap').appendChild(bomb);
+   const gameMap =  document.querySelector('.gameMap')
+   
+   gameMap.appendChild(bomb);
 
     // Remove the bomb after 3 seconds
     setTimeout(() => {
