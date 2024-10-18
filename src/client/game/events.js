@@ -2,6 +2,7 @@
 import { bombElement } from "../components/bombElement";
 import { spawnExplosion } from "../components/explosionElement";
 import { removeLife } from "../game/game"; 
+import { initializeApp } from "../..";
 
 export const bombLocations = []
 
@@ -34,7 +35,10 @@ export function spawnBomb(player) {
 
 }
 
-// export function handleGameEnd() {
+export function handleStartGame(){
+    let playerNum = 3
+    initializeApp(playerNum)
+}// export function handleGameEnd() {
 
 //     //case 1
 //     // if timer = 0 check player array for who has the most lives

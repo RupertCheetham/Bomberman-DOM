@@ -307,7 +307,7 @@ export function removeLife(player, gameMap, x ,y) {
       // Check if the player's lives are zero
       if (players[playerIndex].lives <= 0) {
           // Remove the player from the game map if lives are zero
-          const playerElement = gameMap.querySelector(`.${player.id}`);
+          const playerElement = document.querySelector(`.${player.id}`);
           if (playerElement) { 
             //add playerHit(x, y) and it's styling and setTimeout(() => , 200);
 

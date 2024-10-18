@@ -13,8 +13,9 @@ html {
 	padding: 0;
 	height: 100%;
 	display: flex;
-	flex-direction: column;  /* Arrange children in a column */
-    justify-content: space-between;
+	flex-direction: column;
+	/* Arrange children in a column */
+	justify-content: space-between;
 	align-items: center;
 	background-color: #000000;
 	font-family: Arial, sans-serif;
@@ -53,12 +54,17 @@ footer.info a:hover {
 	/* Total width of the map */
 	height: 600px;
 	/* Total height of the map */
-	
+	display: grid;
+	grid-template-columns: repeat(15, 1fr);
+	/* 15 equal-width columns */
+	grid-template-rows: repeat(15, 1fr);
+	/* 15 equal-height rows */
 	background-color: #333;
 	/* Optional: background color for game map */
 	border: 2px solid #333;
 	/* Optional: border for the game map */
-	position: relative;    /* Set the position to relative */
+	position: relative;
+	/* Set the position to relative */
 }
 
 
@@ -76,12 +82,13 @@ footer.info a:hover {
 	/* Optional: background color for game map */
 	border: 2px solid #333;
 	/* Optional: border for the game map */
-	position: relative;    /* Set the position to relative */
+	position: relative;
+	/* Set the position to relative */
 }
 
 .cell {
-    width: 40px;
-    height: 40px;
+	width: 40px;
+	height: 40px;
 }
 
 .banner,
