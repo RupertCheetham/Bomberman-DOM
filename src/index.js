@@ -12,7 +12,7 @@ import { waitingRoomElement } from './client/components/waitingRoom.js';
 // Application State
 let playerNum = 3
 
-export let $rootEl;
+let $rootEl = document.getElementById('root');
 let vApp;
 let lastTime = 0;  // To track the time difference for game updates
 
@@ -25,7 +25,7 @@ export const setVApp = (newVApp) => {
 
 // Initialize Application
 const initializeApp = () => {
-let $rootEl = document.getElementById('root')
+// let $rootEl = document.getElementById('root')
   setVApp(createVApp(playerNum)); // Create initial VApp
 
   //$rootEl = mount(waitingRoomElement(), $rootEl)
@@ -54,7 +54,7 @@ let $rootEl = document.getElementById('root')
   window.ondblclick = handleEvent; // Global event handler
 
   // Start the game loop
-  //requestAnimationFrame(gameLoop);
+  requestAnimationFrame(gameLoop);
 };
 
 
@@ -92,7 +92,7 @@ const renderFrame = () => {
 
 // Update the root element in the DOM
 export function updateRootEl(newRootEl) {
-  $rootEl = newRootEl; // Update the reference
+  let $rootEl = newRootEl; // Update the reference
   const oldRoot = document.getElementById('root');
 
   if (oldRoot && oldRoot.parentNode) {
