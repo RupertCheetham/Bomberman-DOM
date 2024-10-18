@@ -9,7 +9,7 @@ import render from '../../vdom/render';
 
 import { playerNum } from "../game/gameVariables"
 
-//export let playerNum = 3
+export let gameResults = '';
 
 // Define player objects with x and y coordinates
 const player1 = { x: 1, y: 3, id: 'player1', lives: 3 };  // Add lives
@@ -68,9 +68,12 @@ const endGame = () => {
     // If no active players, all have been eliminated
     if (activePlayers.length === 0) {
         console.log("Game over! All players have been eliminated. It's a draw!");
+        gameResults += ("Game over! All players have been eliminated. It's a draw!");
+
     } else if (activePlayers.length === 1) {
         // If there's only one active player, they win
         console.log(`Game over! Player ${activePlayers[0].id[6]} wins!`);
+        gameResults += ("Game over! Player " + activePlayers[0].id[6] + " wins!");
     } else {
         // Check if all active players have the same number of lives
         const sameLives = activePlayers.every(player => player.lives === activePlayers[0].lives);
@@ -79,6 +82,7 @@ const endGame = () => {
             // All active players draw
             const playerIds = activePlayers.map(player => `Player ${player.id[6]}`).join(", ");
             console.log(`Game over! All players draw!`);
+            gameResults += ("Game over! All players draw!");
         } else {
             // Find the player(s) with the highest number of lives
             const highestLives = Math.max(...activePlayers.map(player => player.lives));
@@ -86,10 +90,12 @@ const endGame = () => {
             
             if (winners.length === 1) {
                 console.log(`Game over! Player ${winners[0].id[6]} wins!`);
+                gameResults += ("Game over! Player " + winners[0].id[6] + " wins!");
             } else {
                 // Specific players who draw with the highest lives
                 const playerIds = winners.map(player => `Player ${player.id[6]}`).join(" and ");
                 console.log(`Game over! ${playerIds} draw!`);
+                gameResults += ("Game over! " + playerIds + " draw!");
             }
         }
 
@@ -101,7 +107,7 @@ const endGame = () => {
     }
 
 
-
+    announceResults(gameResults);
 
   //analyse players.lives
   // Add any additional logic like disabling movement, displaying results, etc.
@@ -382,6 +388,9 @@ export function removeLife(player, gameMap, x ,y) {
           console.log("playerIndex", playerIndex);
           if (playerIndex === 1) {
             console.log(`Game over! Player ${players[0].id[6]} wins!`);
+            gameResults += (`Game over! Player ${players[0].id[6]} wins!`);
+            announceResults(gameResults);
+
             //eventually will call function to spawn something over gamemap?
           }
       }
@@ -402,6 +411,40 @@ function playerHit(x, y) {
   return playerHit;
 }
 
+
+function announceResults(results) {
+  // Create a div to display the results
+  const resultsDiv = document.createElement("div");
+  resultsDiv.style.position = "absolute";
+  resultsDiv.style.top = "50%";
+  resultsDiv.style.left = "50%";
+  resultsDiv.style.transform = "translate(-50%, -50%)";
+  resultsDiv.style.backgroundColor = "white";
+  resultsDiv.style.padding = "20px";
+  resultsDiv.style.boxShadow = "0 0 10px rgba(0, 0, 0, 0.5)";
+  resultsDiv.style.zIndex = "1000"; // Ensure it appears above the game map
+  resultsDiv.style.textAlign = "center";
+  
+   // Create a paragraph for results text
+   const resultsText = document.createElement("p");
+   resultsText.innerHTML = results; // Use innerHTML to preserve line breaks
+   resultsText.style.color = "black"; // Change to desired color for results text
+   resultsText.style.fontSize = "20px"; // Font size
+   resultsText.style.fontWeight = "bold"; // Make it bold
+
+   // Append the results text to the results div
+     resultsDiv.appendChild(resultsText);
+    
+     // Append the results div to the body
+     document.body.appendChild(resultsDiv);
+ 
+     // Remove the results div after 10 seconds
+     setTimeout(() => {
+         document.body.removeChild(resultsDiv); // Remove after 10 seconds
+         // Optionally restart the game or redirect here
+         // need to add restart game here
+     }, 10000);
+}
 
 
 
