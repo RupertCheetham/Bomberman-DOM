@@ -281,7 +281,6 @@ export const spawnBarPlayers = (playerNum) => {
 export function removeLife(player, gameMap, x ,y) {
   // Find the player in the players array
   const playerIndex = players.findIndex(p => p.id === player.id);
-  console.log("playerIndex" , playerIndex);
 
   if (playerIndex !== -1) {
       // Decrease the player's lives
@@ -289,10 +288,6 @@ export function removeLife(player, gameMap, x ,y) {
 
       x = players[playerIndex].x;   
       y = players[playerIndex].y;
-
-      //needs to be x = 1, y = 13
-
-      console.log("x", x, "y", y);
 
                   //add playerHit(x, y) and it's styling and setTimeout(() => , 200);
                   const hitElement = playerHit(players[playerIndex].x + 1, players[playerIndex].y + 1);
