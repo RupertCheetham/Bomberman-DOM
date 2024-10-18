@@ -33,6 +33,7 @@ export const parsedMap = map.trim().split("\n").map((line) => [...line]);
 
 // Function to create the gameMap element
 export const gameMap = (playerNum) => {
+    
     // Generate the map elements based on the symbols
     const mapElements = parsedMap.flatMap((row) =>
         row.map((cell) => {

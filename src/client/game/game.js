@@ -7,11 +7,17 @@ import { isWalkable } from './map.js';
 import createElement from "../../vdom/createElement";
 import render from '../../vdom/render';
 
+import { playerNum } from "../game/gameVariables"
+
+//export let playerNum = 3
+
 // Define player objects with x and y coordinates
 const player1 = { x: 1, y: 3, id: 'player1', lives: 3 };  // Add lives
 const player2 = { x: 13, y: 13, id: 'player2', lives: 3 };
 const player3 = { x: 1, y: 13, id: 'player3', lives: 3 };
 const player4 = { x: 13, y: 3, id: 'player4', lives: 3 };
+
+export const players = [player1, player2, player3, player4]; // Define an array of players
 
 // Function to start the game timer on page load
 const startGameTimer = (duration) => {
@@ -40,18 +46,75 @@ const startGameTimer = (duration) => {
 
 // Function to handle game end
 const endGame = () => {
-  console.log("Game over!");
+  console.log("playerNum", playerNum);
+
+  // Declare spawnedPlayers variable outside the if statements
+  let spawnedPlayers;
+  
+  // Determine the spawnedPlayers based on playerNum
+  if (playerNum === 4) {
+      spawnedPlayers = players; // All players
+  } else if (playerNum === 3) {
+      spawnedPlayers = players.slice(0, 3); // First 3 players
+  } else if (playerNum === 2) {
+      spawnedPlayers = players.slice(0, 2); // First 2 players
+  }
+  
+    // Filter out players who still have lives
+    const activePlayers = spawnedPlayers.filter(player => player.lives > 0);
+    console.log("Active players:", activePlayers);
+    const eliminatedPlayers = players.filter(player => player.lives === 0);
+
+    // If no active players, all have been eliminated
+    if (activePlayers.length === 0) {
+        console.log("Game over! All players have been eliminated. It's a draw!");
+    } else if (activePlayers.length === 1) {
+        // If there's only one active player, they win
+        console.log(`Game over! Player ${activePlayers[0].id[6]} wins!`);
+    } else {
+        // Check if all active players have the same number of lives
+        const sameLives = activePlayers.every(player => player.lives === activePlayers[0].lives);
+
+        if (sameLives) {
+            // All active players draw
+            const playerIds = activePlayers.map(player => `Player ${player.id[6]}`).join(", ");
+            console.log(`Game over! All players draw!`);
+        } else {
+            // Find the player(s) with the highest number of lives
+            const highestLives = Math.max(...activePlayers.map(player => player.lives));
+            const winners = activePlayers.filter(player => player.lives === highestLives);
+            
+            if (winners.length === 1) {
+                console.log(`Game over! Player ${winners[0].id[6]} wins!`);
+            } else {
+                // Specific players who draw with the highest lives
+                const playerIds = winners.map(player => `Player ${player.id[6]}`).join(" and ");
+                console.log(`Game over! ${playerIds} draw!`);
+            }
+        }
+
+        // Announce players who have been eliminated
+        if (eliminatedPlayers.length > 0) {
+            const eliminatedIds = eliminatedPlayers.map(player => `Player ${player.id[6]}`).join(", ");
+            console.log(`Eliminated: ${eliminatedIds}`);
+        }
+    }
+
+
+
+
+  //analyse players.lives
   // Add any additional logic like disabling movement, displaying results, etc.
 };
 
 // Start the game timer for 5 minutes (300 seconds) when the page loads
 window.onload = () => {
-  const gameDuration = 300; // 5 minutes in seconds
+  const gameDuration = 20; // 5 minutes in seconds
   startGameTimer(gameDuration);
 };
 
 
-export const players = [player1, player2, player3, player4]; // Define an array of players
+
 
 export const createLivesDisplay = (player) => {
   const livesElement = createElement("div", {
@@ -282,6 +345,7 @@ export function removeLife(player, gameMap, x ,y) {
   // Find the player in the players array
   const playerIndex = players.findIndex(p => p.id === player.id);
 
+
   if (playerIndex !== -1) {
       // Decrease the player's lives
       players[playerIndex].lives--;
@@ -315,9 +379,14 @@ export function removeLife(player, gameMap, x ,y) {
           }
           //Remove the player from the players array
           players.splice(playerIndex, 1); // If you want to completely remove the player
+          console.log("playerIndex", playerIndex);
+          if (playerIndex === 1) {
+            console.log(`Game over! Player ${players[0].id[6]} wins!`);
+            //eventually will call function to spawn something over gamemap?
+          }
       }
 
-      console.log("players array length", players.length);
+      
   }
 
 
