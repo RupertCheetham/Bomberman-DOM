@@ -278,13 +278,29 @@ export const spawnBarPlayers = (playerNum) => {
 
 // function to remove player lives if hit by explosion, if all lives lost then removal from map
 // also updates the scoreboard and players array
-export function removeLife(player, gameMap) {
+export function removeLife(player, gameMap, x ,y) {
   // Find the player in the players array
   const playerIndex = players.findIndex(p => p.id === player.id);
+  console.log("playerIndex" , playerIndex);
 
   if (playerIndex !== -1) {
       // Decrease the player's lives
       players[playerIndex].lives--;
+
+      x = players[playerIndex].x;   
+      y = players[playerIndex].y;
+
+      //needs to be x = 1, y = 13
+
+      console.log("x", x, "y", y);
+
+                  //add playerHit(x, y) and it's styling and setTimeout(() => , 200);
+                  const hitElement = playerHit(players[playerIndex].x + 1, players[playerIndex].y + 1);
+                  gameMap.appendChild(hitElement);
+                  setTimeout(() => {
+                      hitElement.remove(); // Remove the hit effect after 200ms
+                  }, 200);
+      }
 
       // Update the player's lives display on the scoreboard
       const playerLivesElement = document.querySelector(`.${player.id}-lives`);
@@ -297,17 +313,33 @@ export function removeLife(player, gameMap) {
       if (players[playerIndex].lives <= 0) {
           // Remove the player from the game map if lives are zero
           const playerElement = gameMap.querySelector(`.${player.id}`);
-          if (playerElement) {
+          if (playerElement) { 
+            //add playerHit(x, y) and it's styling and setTimeout(() => , 200);
+
               playerElement.remove();
           }
 
-          // Optionally remove the player's lives display as well
-          // if (playerLivesElement) {
-          //     playerLivesElement.remove();
-          // }
+   
+
 
           //Remove the player from the players array
           players.splice(playerIndex, 1); // If you want to completely remove the player
       }
   }
+
+
+
+function playerHit(x, y) {
+  const vPlayerHit = createElement("div", {
+      attrs: {
+          class: "hit",
+          style: `grid-column-start: ${x}; grid-row-start: ${y};` // Set the grid position
+      }
+  });
+  const playerHit = render(vPlayerHit);
+  return playerHit;
 }
+
+
+
+
