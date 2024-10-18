@@ -38,19 +38,4 @@ export function spawnBomb(player) {
 export function handleStartGame(){
     let playerNum = 3
     initializeApp(playerNum)
-}// export function handleGameEnd() {
-
-//     //case 1
-//     // if timer = 0 check player array for who has the most lives
-//     //console.log("that player wins")
-//     //if it's a draw then 
-//     //console.log("it's a draw")
-
-//     //case 2
-//     //if player array.length === 1 then 
-//     //console.log("that player wins")
-
-//     //add function to removeLife so that if any life is lost then we run the function to check the array length
-    
-    
-// }
+}
