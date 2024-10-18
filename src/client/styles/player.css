@@ -84,10 +84,46 @@
     position: absolute;
 }
 
-.hit {
+/* .hit {
     position:absolute;
     background-color: #040404;
     width: 40px;
     height: 40px; 
     border-radius: 50%;  
+} */
+
+.hit {
+    position: absolute;
+    background-color: rgba(255, 0, 0, 0.8); /* Red explosion color */
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    box-shadow: 0 0 15px rgba(255, 0, 0, 0.8), 
+                0 0 30px rgba(255, 165, 0, 0.5); /* Red and orange glow */
+    animation: explode 0.4s ease-out forwards, fadeOut 0.4s ease-out forwards;
+    z-index: 10; /* Make sure it appears on top */
+}
+
+@keyframes explode {
+    0% {
+        transform: scale(0.2); /* Small at first */
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.2); /* Expanding */
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1); /* Back to normal size */
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
 }

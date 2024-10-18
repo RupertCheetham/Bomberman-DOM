@@ -21,18 +21,69 @@
 }
 
 .explosion {
-    position:absolute;
-    background-color: #ffd900;
+    position: absolute;
+    background-color: rgba(255, 217, 0, 0.8); /* Yellow explosion core */
     width: 40px;
-    height: 40px;   
+    height: 40px;
+    border-radius: 50%;
+    box-shadow: 0 0 15px rgba(255, 217, 0, 0.8), 
+                0 0 30px rgba(255, 165, 0, 0.6); /* Glow effect */
+    animation: explode 0.5s ease-out forwards, fadeOut 0.5s ease-out forwards;
+    z-index: 9; /* Slightly behind the hit effect */
+}
+
+.explosionX, .explosionY {
+    position: absolute;
+    background-color: rgba(255, 217, 0, 0.6); /* Slightly transparent yellow for horizontal/vertical explosion */
+    animation: expand 0.4s ease-out forwards, fadeOut 0.4s ease-out forwards;
+    box-shadow: 0 0 20px rgba(255, 165, 0, 0.5); /* Orange glow for explosion beams */
 }
 
 .explosionX {
-    border-top: 3px solid #ff9500;
-    border-bottom: 3px solid #ff9500;
+    border-top: 3px solid rgba(255, 149, 0, 0.8);
+    border-bottom: 3px solid rgba(255, 149, 0, 0.8);
+    width: 100px; /* Extend horizontally */
+    height: 40px;
 }
 
 .explosionY {
-    border-left: 3px solid #ff9500;
-    border-right: 3px solid #ff9500;
+    border-left: 3px solid rgba(255, 149, 0, 0.8);
+    border-right: 3px solid rgba(255, 149, 0, 0.8);
+    width: 40px;
+    height: 100px; /* Extend vertically */
+}
+
+@keyframes explode {
+    0% {
+        transform: scale(0.3); /* Small at first */
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.2); /* Expansion effect */
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1); /* Back to normal size */
+        opacity: 1;
+    }
+}
+
+@keyframes expand {
+    0% {
+        transform: scale(0.5); /* Shrunk initially */
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1.2); /* Expands slightly */
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
 }
