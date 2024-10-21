@@ -19,8 +19,6 @@ export const chatContainerElement = () => {
                 overflow-y: auto; 
                 background-color: #fff; 
                 border-radius: 8px; 
-                padding: 15px; 
-                margin-bottom: 15px; 
                 border: 1px solid #ddd; 
                 box-shadow: inset 0 1px 5px rgba(0, 0, 0, 0.05); 
                 color: #333;
@@ -76,6 +74,8 @@ export const chatContainerElement = () => {
         attrs: {
             id: "chat-container",
             style: `
+            width: 600px;
+	height: 600px;
                 border-top: 1px solid #ccc; 
                 padding: 15px; 
                 background-color: #f9f9f9; 
