@@ -22,7 +22,7 @@ export const getVApp = () => vApp;
 export const setVApp = (newVApp) => {
   vApp = newVApp;
 };
-export const initializeWaitingRoom = () => {
+const initializeWaitingRoom = () => {
 
   $rootEl = mount(waitingRoomElement(), $rootEl);
   registerEvent('click', handleStartGame);
@@ -34,21 +34,13 @@ export const initializeWaitingRoom = () => {
 
 // Initialize Application
 export const initializeApp = (playerNum) => {
-  // let $rootEl = document.getElementById('root')
   setVApp(createVApp(playerNum)); // Create initial VApp
-
-  //$rootEl = mount(waitingRoomElement(), $rootEl)
-  // renderWaitingRoom
   $rootEl = mount(render(vApp), $rootEl); // Mount the initial app
-
-  // Initialize player positions
-  // players.forEach((player) => updatePlayerPosition(player));
 
   spawnPlayers(playerNum);
   console.log("playerNum", playerNum)
   spawnSoftBlocks();
   spawnBarPlayers(playerNum);
-
 
   // Register events
   // Keydown
