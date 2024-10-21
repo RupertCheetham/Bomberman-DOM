@@ -11,7 +11,6 @@ import { playerNum } from "../game/gameVariables";
 import { initializeWaitingRoom } from "../../index.js";
 
 export let gameResults = "";
-export let countdownInterval; // Declare the interval globally
 
 // Define player objects with x and y coordinates
 const player1 = { x: 1, y: 3, id: "player1", lives: 3 }; // Add lives
@@ -21,33 +20,7 @@ const player4 = { x: 13, y: 3, id: "player4", lives: 3 };
 
 export const players = [player1, player2, player3, player4]; // Define an array of players
 
-// Function to start the game timer on page load
-const startGameTimer = (duration) => {
-  const timerDisplay = document.querySelector(".game-timer");
-  let timeRemaining = duration;
 
-  countdownInterval = setInterval(() => {
-    // Update the timer display
-    const minutes = Math.floor(timeRemaining / 60);
-    const seconds = timeRemaining % 60;
-
-    // Format minutes and seconds (e.g., 1:05)
-    timerDisplay.innerHTML = `Time Remaining: ${minutes}:${
-      seconds < 10 ? "0" : ""
-    }${seconds}`;
-
-    if (timeRemaining <= 0) {
-      clearInterval(countdownInterval);
-      timerDisplay.innerHTML = "Time's up! Game Over!";
-
-      // Trigger any game-ending logic here
-      endGame();
-      initializeWaitingRoom();
-    }
-
-    timeRemaining -= 1;
-  }, 1000);
-};
 
 // Function to handle game end
 const endGame = () => {
@@ -125,11 +98,7 @@ const endGame = () => {
   announceResults(gameResults);
 };
 
-// Start the game timer for 5 minutes (300 seconds) when the page loads
-window.onload = () => {
-  const gameDuration = 20; // 5 minutes in seconds
-  startGameTimer(gameDuration);
-};
+
 
 export const createLivesDisplay = (player) => {
   const livesElement = createElement("div", {

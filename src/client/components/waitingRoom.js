@@ -1,5 +1,6 @@
 import createElement from "../../vdom/createElement";
 import render from "../../vdom/render";
+import { chatContainerElement } from "./chatContainerElement";
 
 const waitingRoomMap = `
 +++++++++++++++
@@ -47,7 +48,7 @@ export const waitingRoomElement = () => {
         attrs: {
             class: "waitingRoom",
         },
-        children: mapElements,
+        children: mapElements, 
     });
 
     // Wrap the waiting room inside the main root container
@@ -56,7 +57,7 @@ export const waitingRoomElement = () => {
             id: "root",
             class: "bomberman",
         },
-        children: [vWaitingRoom],
+        children: [vWaitingRoom, chatContainerElement()],
     }));
 
     return $waitingRoomElement;

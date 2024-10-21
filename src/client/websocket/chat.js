@@ -23,11 +23,19 @@ function displayMessage(messageData, messageType) {
         return; // Exit the function if the message is empty
     }
 
-    const chat = document.getElementById("chat");
+
+   // const vChat = createElement("div", { attrs: { class: "chat" } })
+   // const $Chat = render(vChat)
+    const chat = document.getElementsByClassName("chat")[0];
+
+   // const vMessage = createElement("div", { attrs: { class: "message" } })
+   // const $Message = render(vMessage)
     const message = document.createElement("div");
     message.classList.add("message", messageType); // Use messageType for styling
 
     // Create a bold playerId element (e.g., "Player 1:")
+    //const vPlayerIdElement = createElement("strong", { attrs: { class: "chat" }, children: [`Player ${playerId}:`] })
+    //const $PlayerIdElement = render(vPlayerIdElement)
     const playerIdElement = document.createElement("strong");
     playerIdElement.innerText = `Player ${playerId}:`;
 
@@ -51,7 +59,7 @@ function displayMessage(messageData, messageType) {
 }
 
 
-ws.onmessage = function(event) {
+ws.onmessage = function (event) {
     const messageData = JSON.parse(event.data); // Expecting { "playerId": 1, "text": "Hello" }
     console.log("Message received:", messageData); // Log the incoming message
 
@@ -97,10 +105,10 @@ function sendMessage() {
     console.log("Sending message:", messageData);
     ws.send(JSON.stringify(messageData)); // Send the message as a JSON object
 
-     // Store the last message sent
-     //lastSentMessage = messageText;
+    // Store the last message sent
+    //lastSentMessage = messageText;
 
-     //This is displayMessage that caused the issue of double messages
+    //This is displayMessage that caused the issue of double messages
     // Display the message locally as "sent"
     //displayMessage(messageData, "sent"); 
     input.value = ''; // Clear input field
