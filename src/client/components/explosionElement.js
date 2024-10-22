@@ -7,8 +7,15 @@ import { removeLife } from "../game/game";
 
 import { bombLocations } from "../game/events";
 
-export function spawnExplosion(x, y) {
+export function spawnExplosion(player, x, y) {
+    console.log("this is player", player.id)
     const gameMap = document.querySelector('.gameMap');
+
+    // Check if the player has the flame power-up
+    const explosionRange = player.hasPowerUpFlames ? 4 : 2;  // Default range is 2, extended to 4 if power-up is active
+    console.log(`${player.id} has flame power-up: ${player.hasPowerUpFlames}. Explosion range: ${explosionRange}`);
+
+    // Center explosion
 
     // Center explosion
     const explosionMidElement = explosionMid(x, y);
@@ -16,7 +23,7 @@ export function spawnExplosion(x, y) {
      // Remove the center explosion after 200ms
      setTimeout(() => explosionMidElement.remove(), 200);
 
-    const explosionRange = 2; // Explosion range can be adjusted
+    //const explosionRange = 2; // Explosion range can be adjusted
 
     // Handle explosions in each direction
     handleExplosionInDirection(x, y, explosionRange, 'left', gameMap);

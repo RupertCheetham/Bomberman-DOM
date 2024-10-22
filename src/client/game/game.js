@@ -13,10 +13,10 @@ import { initializeWaitingRoom } from "../../index.js";
 export let gameResults = "";
 
 // Define player objects with x and y coordinates
-const player1 = { x: 1, y: 3, id: "player1", lives: 3 }; // Add lives
-const player2 = { x: 13, y: 13, id: "player2", lives: 3 };
-const player3 = { x: 1, y: 13, id: "player3", lives: 3 };
-const player4 = { x: 13, y: 3, id: "player4", lives: 3 };
+const player1 = { x: 1, y: 3, id: "player1", lives: 3, hasPowerUpBomb:false, hasPowerUpFlames:false, hasPowerUpSpeed:false };
+const player2 = { x: 13, y: 13, id: "player2", lives: 3, hasPowerUpBomb:false, hasPowerUpFlames:false, hasPowerUpSpeed:false };
+const player3 = { x: 1, y: 13, id: "player3", lives: 3, hasPowerUpBomb:false, hasPowerUpFlames:false, hasPowerUpSpeed:false };
+const player4 = { x: 13, y: 3, id: "player4", lives: 3, hasPowerUpBomb:false, hasPowerUpFlames:false, hasPowerUpSpeed:false };
 
 export const players = [player1, player2, player3, player4]; // Define an array of players
 
