@@ -70,7 +70,7 @@ export function spawnBomb(player) {
         bomb.remove();  // This removes the bomb from the DOM
         bombLocations.pop()
         console.log("Bomb removed after 3 seconds");
-        spawnExplosion(x, y)
+        spawnExplosion(player, x, y)
 
     }, 3000);  // Delay of 3 seconds
 
