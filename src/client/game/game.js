@@ -186,35 +186,54 @@ export const updatePlayerPosition = (player) => {
   }
 };
 
+// Default movement cooldowns (in milliseconds)
+const baseMovementCooldown = 200; // 200ms without power-up
+const speedPowerUpCooldown = 100; // 100ms with power-up
+
+// This object tracks the last move time for each player
+const lastMoveTimes = {};
+
 //Move player with collision detection
 const movePlayer = (player, direction, players) => {
-  let newX = player.x;
-  let newY = player.y;
+  const currentTime = Date.now();
+  
+  // Determine cooldown based on whether the player has the speed power-up
+  const cooldown = player.hasPowerUpSpeed ? speedPowerUpCooldown : baseMovementCooldown;
 
-  // Determine the new position based on the direction
-  switch (direction) {
-    case "up":
-      newY -= 1;
-      break;
-    case "down":
-      newY += 1;
-      break;
-    case "left":
-      newX -= 1;
-      break;
-    case "right":
-      newX += 1;
-      break;
-  }
+  // Check if the player is allowed to move (based on cooldown)
+  if (!lastMoveTimes[player.id] || currentTime - lastMoveTimes[player.id] >= cooldown) {
+    let newX = player.x;
+    let newY = player.y;
 
-  // Check if the new position is walkable
-  if (isWalkable(newX, newY, players)) {
-    // Move the player if the new position is valid
-    player.x = newX;
-    player.y = newY;
-    updatePlayerPosition(player); // Update DOM to reflect new position
+    // Determine the new position based on the direction
+    switch (direction) {
+      case "up":
+        newY -= 1;
+        break;
+      case "down":
+        newY += 1;
+        break;
+      case "left":
+        newX -= 1;
+        break;
+      case "right":
+        newX += 1;
+        break;
+    }
+
+    // Check if the new position is walkable
+    if (isWalkable(newX, newY, players)) {
+      // Move the player if the new position is valid
+      player.x = newX;
+      player.y = newY;
+      updatePlayerPosition(player); // Update DOM to reflect new position
+      
+      // Update the last move time for this player
+      lastMoveTimes[player.id] = currentTime;
+    }
   }
 };
+
 
 // Function to handle key presses
 export const handleKeyPress = (event) => {
