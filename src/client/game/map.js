@@ -113,8 +113,10 @@ export const softBlocks = [
     softBlock9, softBlock10
 ];
 
-// Function to spawn soft blocks on top of the map
 export const spawnSoftBlocks = () => {
+    // Assign power-ups to 3 random soft blocks
+    const blocksWithPowerUps = assignPowerUpsToSoftBlocks();
+
     // Loop through the softBlocks array and add softBlocks to the game map 
     for (const block of softBlocks) {
         const vBlockElement = createElement("div", {
@@ -125,11 +127,95 @@ export const spawnSoftBlocks = () => {
         });
 
         const blockElement = render(vBlockElement);
-        // Append the soft block element to the game map
         document.querySelector('.gameMap').appendChild(blockElement);
+        
+        // Listen for soft block destruction and reveal power-up
+        blockElement.addEventListener('destroyed', () => {
+            // Check if this block had a power-up
+            if (blocksWithPowerUps.includes(block)) {
+                const powerUpElement = createPowerUpElement(block.powerUp, block.x, block.y);
+                document.querySelector('.gameMap').appendChild(powerUpElement);
+            }
+        });
     }
 };
 
+
+// Function to spawn soft blocks on top of the map
+// export const spawnSoftBlocks = () => {
+//     // Loop through the softBlocks array and add softBlocks to the game map 
+//     for (const block of softBlocks) {
+//         const vBlockElement = createElement("div", {
+//             attrs: {
+//                 class: `soft-block ${block.id}`, // Use 'soft-block' class for styling
+//                 style: `grid-column-start: ${block.x + 1}; grid-row-start: ${block.y + 1};` // Set the grid position
+//             }
+//         });
+
+//         const blockElement = render(vBlockElement);
+//         // Append the soft block element to the game map
+//         document.querySelector('.gameMap').appendChild(blockElement);
+//     }
+// };
+
 export const isPositionWalkableBySoftBlocks = (x, y) => {
     return !softBlocks.some(block => block.x === x && block.y === y && !block.walkable);
+};
+
+// Array to store power-up types
+const powerUps = ['hasPowerUpBomb', 'hasPowerUpFlames', 'hasPowerUpSpeed'];
+
+// Function to randomly assign power-ups to 3 soft blocks
+export const assignPowerUpsToSoftBlocks = () => {
+    // Shuffle the softBlocks array and pick the first 3 blocks
+    const shuffledBlocks = softBlocks.sort(() => Math.random() - 0.5);
+    const selectedBlocks = shuffledBlocks.slice(0, 3); // Pick 3 random soft blocks
+
+    // Assign each block a power-up
+    selectedBlocks.forEach((block, index) => {
+        block.powerUp = powerUps[index]; // Assign one of the power-ups
+    });
+
+    console.log("Power-ups assigned to soft blocks:", selectedBlocks);
+    return selectedBlocks; // Return blocks with power-ups
+};
+
+
+// Function to create a power-up element based on the type
+export const createPowerUpElement = (powerUpType, x, y) => {
+    const powerUpElement = createElement("div", {
+        attrs: {
+            class: `power-up ${powerUpType}`, // Use a specific class for each power-up
+            style: `grid-column-start: ${x + 1}; grid-row-start: ${y + 1};` // Set the grid position
+        }
+    });
+
+    return render(powerUpElement); // Render and return the power-up element
+};
+
+export const spawnPowerUps = () => {
+    // Randomly pick 3 different soft blocks to hide the power-ups
+    const chosenSoftBlocks = pickRandomSoftBlocks(3);
+
+    // Loop through the selected blocks to place the power-ups
+    chosenSoftBlocks.forEach((softBlock, index) => {
+        const powerUpElement = document.createElement("div");
+        powerUpElement.classList.add("power-up");
+
+        // Assign the correct power-up type and styling
+        if (index === 0) {
+            powerUpElement.classList.add("hasPowerUpBomb"); // Bomb power-up styling
+        } else if (index === 1) {
+            powerUpElement.classList.add("hasPowerUpFlames"); // Flames power-up styling
+        } else if (index === 2) {
+            powerUpElement.classList.add("hasPowerUpSpeed"); // Speed power-up styling
+        }
+
+        // Position the power-up in the same location as the soft block
+        powerUpElement.style.gridColumnStart = softBlock.x + 1;
+        powerUpElement.style.gridRowStart = softBlock.y + 1;
+
+        // Append the power-up to the game map
+        document.querySelector('.gameMap').appendChild(powerUpElement);
+    });
 };

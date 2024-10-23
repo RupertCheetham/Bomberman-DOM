@@ -87,3 +87,72 @@
         opacity: 0;
     }
 }
+
+
+/* General Power-Up Styling */
+.power-up {
+    width: 40px;
+    height: 40px;
+    display: inline-block;
+    position: absolute;
+    border-radius: 50%; /* Circular shape */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Shadow for visual depth */
+  }
+  
+  /* Bomb Power-Up */
+  .power-up.hasPowerUpBomb {
+    background-color: #333; /* Dark color to represent a bomb */
+    border: 3px solid #ff0000; /* Red border for a dangerous look */
+    animation: pulse 1s infinite; /* Pulsating animation */
+  }
+  
+  /* Flames Power-Up */
+  .power-up.hasPowerUpFlames {
+    background-color: #ff8c00; /* Orange color representing flames */
+    border: 3px solid #ff4500; /* Darker orange-red border */
+    animation: flicker 0.5s infinite; /* Flickering flames effect */
+  }
+  
+  /* Speed Power-Up */
+  .power-up.hasPowerUpSpeed {
+    background-color: #00ff00; /* Green color representing speed */
+    border: 3px solid #006400; /* Darker green for contrast */
+    animation: spin 1s infinite linear; /* Spinning effect to suggest speed */
+  }
+  
+  /* Pulsating Bomb Animation */
+  @keyframes pulse {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.1);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  
+  /* Flickering Flames Animation */
+  @keyframes flicker {
+    0% {
+      opacity: 0.8;
+    }
+    50% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0.8;
+    }
+  }
+  
+  /* Spinning Speed Animation */
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
