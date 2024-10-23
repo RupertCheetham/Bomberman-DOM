@@ -7,7 +7,6 @@ import { isWalkable } from "./map.js";
 import createElement from "../../vdom/createElement";
 import render from "../../vdom/render";
 
-import { playerNum } from "../game/gameVariables";
 import { initializeWaitingRoom } from "../../index.js";
 
 export let gameResults = "";
@@ -19,11 +18,6 @@ const player3 = { x: 1, y: 13, id: "player3", lives: 3 };
 const player4 = { x: 13, y: 3, id: "player4", lives: 3 };
 
 export const players = [player1, player2, player3, player4]; // Define an array of players
-
-
-
-
-
 
 export const createLivesDisplay = (player) => {
   const livesElement = createElement("div", {
