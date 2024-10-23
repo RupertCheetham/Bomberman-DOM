@@ -127,7 +127,7 @@ const endGame = () => {
 
 // Start the game timer for 5 minutes (300 seconds) when the page loads
 window.onload = () => {
-  const gameDuration = 20; // 5 minutes in seconds
+  const gameDuration = 60; // 5 minutes in seconds
   startGameTimer(gameDuration);
 };
 

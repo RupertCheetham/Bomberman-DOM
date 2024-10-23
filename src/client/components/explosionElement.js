@@ -4,6 +4,7 @@ import { checkCollision } from "../game/checkCollision";
 import { softBlocks } from "../game/map";
 import { players } from "../game/game";
 import { removeLife } from "../game/game";
+import { createPowerUpElement } from "../game/map";
 
 import { bombLocations } from "../game/events";
 
@@ -118,6 +119,20 @@ function explosionY(x, y) {
     return explosionY;
 }
 
+// function destroySoftBlock(softBlock, gameMap) {
+//     // Find and remove the soft block element
+//     const softBlockElement = gameMap.querySelector(`.soft-block.${softBlock.id}`);
+//     if (softBlockElement) {
+//         softBlockElement.remove();
+//     }
+    
+//     // Update the softBlocks array
+//     const index = softBlocks.findIndex(block => block.id === softBlock.id);
+//     if (index !== -1) {
+//         softBlocks.splice(index, 1);
+//     }
+// }
+
 function destroySoftBlock(softBlock, gameMap) {
     // Find and remove the soft block element
     const softBlockElement = gameMap.querySelector(`.soft-block.${softBlock.id}`);
@@ -125,12 +140,23 @@ function destroySoftBlock(softBlock, gameMap) {
         softBlockElement.remove();
     }
     
-    // Update the softBlocks array
+    // Update the softBlocks array by removing the destroyed block
     const index = softBlocks.findIndex(block => block.id === softBlock.id);
     if (index !== -1) {
         softBlocks.splice(index, 1);
     }
-}
 
+    // Check if the destroyed soft block contains a power-up
+    if (softBlock.powerUp) {
+        // Create the power-up element
+        const powerUpElement = createPowerUpElement(softBlock.powerUp, softBlock.x, softBlock.y);
+        
+        // Append the power-up to the game map
+        gameMap.appendChild(powerUpElement);
+    }
+
+    // Update the walkable property so that the player can walk over the destroyed block
+    softBlock.walkable = true;
+}
 
 
