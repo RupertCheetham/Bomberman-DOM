@@ -2,7 +2,7 @@ import { spawnBomb } from "./events";
 import { isWalkable } from "./map.js";
 import createElement from "../../vdom/createElement";
 import render from "../../vdom/render";
-import { playerNum } from "../game/gameVariables";
+
 import { initializeWaitingRoom } from "../../index.js";
 import { handlePowerUpCollection } from "./checkCollision.js";
 
