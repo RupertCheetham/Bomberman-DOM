@@ -10,12 +10,15 @@ export let gameResults = "";
 let playerNum = 3
 
 // Define player objects with x and y coordinates
-const player1 = { x: 1, y: 3, id: "player1", lives: 3, hasPowerUpBomb:false, hasPowerUpFlames:false, hasPowerUpSpeed:false };
-const player2 = { x: 13, y: 13, id: "player2", lives: 3, hasPowerUpBomb:false, hasPowerUpFlames:false, hasPowerUpSpeed:false };
-const player3 = { x: 1, y: 13, id: "player3", lives: 3, hasPowerUpBomb:false, hasPowerUpFlames:false, hasPowerUpSpeed:false };
-const player4 = { x: 13, y: 3, id: "player4", lives: 3, hasPowerUpBomb:false, hasPowerUpFlames:false, hasPowerUpSpeed:false };
+const player1 = { x: 1, y: 3, id: "player1", lives: 3, hasPowerUpBomb: false, hasPowerUpFlames: false, hasPowerUpSpeed: false };
+const player2 = { x: 13, y: 13, id: "player2", lives: 3, hasPowerUpBomb: false, hasPowerUpFlames: false, hasPowerUpSpeed: false };
+const player3 = { x: 1, y: 13, id: "player3", lives: 3, hasPowerUpBomb: false, hasPowerUpFlames: false, hasPowerUpSpeed: false };
+const player4 = { x: 13, y: 3, id: "player4", lives: 3, hasPowerUpBomb: false, hasPowerUpFlames: false, hasPowerUpSpeed: false };
 
-export const players = [player1, player2, player3, player4]; // Define an array of players
+const allPlayers = [player1, player2, player3, player4];
+
+// Use slice to limit the array to the number of players defined by playerNum
+export const players = allPlayers.slice(0, playerNum);
 let countdownInterval
 // Function to start the game timer on page load
 export const startGameTimer = (duration) => {
@@ -28,9 +31,8 @@ export const startGameTimer = (duration) => {
     const seconds = timeRemaining % 60;
 
     // Format minutes and seconds (e.g., 1:05)
-    timerDisplay.innerHTML = `Time Remaining: ${minutes}:${
-      seconds < 10 ? "0" : ""
-    }${seconds}`;
+    timerDisplay.innerHTML = `Time Remaining: ${minutes}:${seconds < 10 ? "0" : ""
+      }${seconds}`;
 
     if (timeRemaining <= 0) {
       clearInterval(countdownInterval);
@@ -145,9 +147,8 @@ export const spawnPlayers = (playerNum) => {
     const vPlayerElement = createElement("div", {
       attrs: {
         class: `${player.id}`, // Give the player a unique class
-        style: `grid-column-start: ${player.x + 1}; grid-row-start: ${
-          player.y + 1
-        };`, // Set the grid position
+        style: `grid-column-start: ${player.x + 1}; grid-row-start: ${player.y + 1
+          };`, // Set the grid position
       },
     });
 
@@ -194,7 +195,7 @@ const movePlayer = (player, direction, players) => {
 
   const gameMap = document.querySelector('.gameMap');
   const currentTime = Date.now();
-  
+
   // Determine cooldown based on whether the player has the speed power-up
   const cooldown = player.hasPowerUpSpeed ? speedPowerUpCooldown : baseMovementCooldown;
 
@@ -225,7 +226,7 @@ const movePlayer = (player, direction, players) => {
       player.x = newX;
       player.y = newY;
       updatePlayerPosition(player); // Update DOM to reflect new position
-      
+
       // Update the last move time for this player
       lastMoveTimes[player.id] = currentTime;
       handlePowerUpCollection(player, gameMap);
@@ -337,9 +338,8 @@ export const spawnBarPlayers = (playerNum) => {
     const vPlayerElement = createElement("div", {
       attrs: {
         class: `${player.id}`, // Give the player a unique class
-        style: `grid-column-start: ${player.x + 1}; grid-row-start: ${
-          player.y + 1
-        };`, // Set the grid position
+        style: `grid-column-start: ${player.x + 1}; grid-row-start: ${player.y + 1
+          };`, // Set the grid position
       },
     });
 
@@ -347,9 +347,8 @@ export const spawnBarPlayers = (playerNum) => {
     const vLivesText = createElement("div", {
       attrs: {
         class: `${player.id}-lives`, // Unique class for the lives text
-        style: `grid-column-start: ${player.x + 2}; grid-row-start: ${
-          player.y + 1
-        }; position: absolute;`, // Position the text one column to the right
+        style: `grid-column-start: ${player.x + 2}; grid-row-start: ${player.y + 1
+          }; position: absolute;`, // Position the text one column to the right
       },
       children: [`Player ${player.id[6]} - Lives: ${player.lives}`], // Display initial lives
     });
