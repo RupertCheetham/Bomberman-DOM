@@ -140,24 +140,6 @@ export const spawnSoftBlocks = () => {
     }
 };
 
-
-// Function to spawn soft blocks on top of the map
-// export const spawnSoftBlocks = () => {
-//     // Loop through the softBlocks array and add softBlocks to the game map 
-//     for (const block of softBlocks) {
-//         const vBlockElement = createElement("div", {
-//             attrs: {
-//                 class: `soft-block ${block.id}`, // Use 'soft-block' class for styling
-//                 style: `grid-column-start: ${block.x + 1}; grid-row-start: ${block.y + 1};` // Set the grid position
-//             }
-//         });
-
-//         const blockElement = render(vBlockElement);
-//         // Append the soft block element to the game map
-//         document.querySelector('.gameMap').appendChild(blockElement);
-//     }
-// };
-
 export const isPositionWalkableBySoftBlocks = (x, y) => {
     return !softBlocks.some(block => block.x === x && block.y === y && !block.walkable);
 };

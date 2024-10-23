@@ -1,14 +1,10 @@
-// // # Main game logic
-
 import { spawnBomb } from "./events";
-
-// Import `isWalkable` from map.js
 import { isWalkable } from "./map.js";
 import createElement from "../../vdom/createElement";
 import render from "../../vdom/render";
-
 import { playerNum } from "../game/gameVariables";
 import { initializeWaitingRoom } from "../../index.js";
+import { handlePowerUpCollection } from "./checkCollision.js";
 
 export let gameResults = "";
 export let countdownInterval; // Declare the interval globally
@@ -195,6 +191,8 @@ const lastMoveTimes = {};
 
 //Move player with collision detection
 const movePlayer = (player, direction, players) => {
+
+  const gameMap = document.querySelector('.gameMap');
   const currentTime = Date.now();
   
   // Determine cooldown based on whether the player has the speed power-up
@@ -230,6 +228,7 @@ const movePlayer = (player, direction, players) => {
       
       // Update the last move time for this player
       lastMoveTimes[player.id] = currentTime;
+      handlePowerUpCollection(player, gameMap);
     }
   }
 };

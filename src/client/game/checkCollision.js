@@ -25,3 +25,27 @@ export function checkCollision(x, y) {
     // No collision detected
     return false;
 }
+
+
+
+export const handlePowerUpCollection = (player, gameMap) => {
+    // Find any power-up at the player's current position
+    const powerUpElement = gameMap.querySelector(
+        `.power-up[style*="grid-column-start: ${player.x + 1}"][style*="grid-row-start: ${player.y + 1}"]`
+    );
+    
+    if (powerUpElement) {
+        // Determine which type of power-up the player has collected
+        if (powerUpElement.classList.contains('hasPowerUpBomb')) {
+            player.hasPowerUpBomb = true;  // Grant the bomb power-up
+        } else if (powerUpElement.classList.contains('hasPowerUpFlames')) {
+            player.hasPowerUpFlames = true;  // Grant the flames power-up
+        } else if (powerUpElement.classList.contains('hasPowerUpSpeed')) {
+            player.hasPowerUpSpeed = true;  // Grant the speed power-up
+        }
+
+        // Remove the power-up from the map after collection
+        powerUpElement.remove();
+        console.log("this is player object", player)
+    }
+};
