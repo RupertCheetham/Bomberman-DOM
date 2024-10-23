@@ -8,14 +8,19 @@ import { spawnPlayers } from './client/game/game.js';
 import diff from './vdom/diff.js';
 import { spawnSoftBlocks } from './client/game/map.js';
 import { waitingRoomElement } from './client/components/waitingRoom.js';
-import { handleStartGame } from './client/game/events.js';
+import { initializeWebSocket } from './client/websocket/websocket.js';
+import { handleSendButton } from './client/game/events.js';
+
 
 // Application State
-let playerNum = 3
+export let playerNum = 3
 
 let $rootEl = document.getElementById('root');
 let vApp;
 let lastTime = 0;  // To track the time difference for game updates
+
+// Call this function to activate the WebSocket
+initializeWebSocket();
 
 // Getters and Setters for Virtual DOM
 export const getVApp = () => vApp;
@@ -25,8 +30,11 @@ export const setVApp = (newVApp) => {
 export const initializeWaitingRoom = () => {
 
   $rootEl = mount(waitingRoomElement(), $rootEl);
-  registerEvent('click', handleStartGame);
-  // Activate event handlers
+  // activate waiting room event listeners
+  // registerEvent('click', handleStartGame);
+ registerEvent('click', handleSendButton);
+
+  // Activate event handler
   window.onkeydown = handleEvent; // Global event handler
   window.onclick = handleEvent; // Global event handler
   window.ondblclick = handleEvent; // Global event handler
