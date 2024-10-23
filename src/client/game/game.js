@@ -7,6 +7,7 @@ import { initializeWaitingRoom } from "../../index.js";
 import { handlePowerUpCollection } from "./checkCollision.js";
 
 export let gameResults = "";
+let playerNum = 3
 
 // Define player objects with x and y coordinates
 const player1 = { x: 1, y: 3, id: "player1", lives: 3, hasPowerUpBomb:false, hasPowerUpFlames:false, hasPowerUpSpeed:false };
@@ -15,9 +16,9 @@ const player3 = { x: 1, y: 13, id: "player3", lives: 3, hasPowerUpBomb:false, ha
 const player4 = { x: 13, y: 3, id: "player4", lives: 3, hasPowerUpBomb:false, hasPowerUpFlames:false, hasPowerUpSpeed:false };
 
 export const players = [player1, player2, player3, player4]; // Define an array of players
-
+let countdownInterval
 // Function to start the game timer on page load
-const startGameTimer = (duration) => {
+export const startGameTimer = (duration) => {
   const timerDisplay = document.querySelector(".game-timer");
   let timeRemaining = duration;
 
@@ -121,10 +122,10 @@ const endGame = () => {
 };
 
 // Start the game timer for 5 minutes (300 seconds) when the page loads
-window.onload = () => {
-  const gameDuration = 60; // 5 minutes in seconds
-  startGameTimer(gameDuration);
-};
+// window.onload = () => {
+//   const gameDuration = 60; // 5 minutes in seconds
+//   startGameTimer(gameDuration);
+// };
 
 export const createLivesDisplay = (player) => {
   const livesElement = createElement("div", {

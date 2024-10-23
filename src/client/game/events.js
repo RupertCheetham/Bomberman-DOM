@@ -1,7 +1,7 @@
 
 import { bombElement } from "../components/bombElement";
 import { spawnExplosion } from "../components/explosionElement";
-import { removeLife } from "../game/game";
+import { removeLife, startGameTimer } from "../game/game";
 import { initializeApp } from "../..";
 
 export const bombLocations = []
@@ -32,7 +32,7 @@ export function spawnBomb(player) {
         return;
     }
 
-    
+
     const x = player.x + 1
     const y = player.y + 1
     console.log("player", player.id, "at tile X:", player.x + 1, " , Y:", player.y + 1)
@@ -40,9 +40,9 @@ export function spawnBomb(player) {
     console.log("Bomb location:", bombLocation);
     bombLocations.unshift(bombLocation)
     const bomb = bombElement(x, y)
-   const gameMap =  document.querySelector('.gameMap')
-   
-   gameMap.appendChild(bomb);
+    const gameMap = document.querySelector('.gameMap')
+
+    gameMap.appendChild(bomb);
 
 
     // Increase bomb count for the player
@@ -80,8 +80,7 @@ export function handleStartGame() {
     // Start the game timer for 5 minutes (300 seconds) when the page loads
 
     const gameDuration = 20; // 5 minutes in seconds
-    startGameTimer(gameDuration);
-
+    startGameTimer(gameDuration)
 
     let playerNum = 3
     initializeApp(playerNum)

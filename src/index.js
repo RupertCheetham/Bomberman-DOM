@@ -22,7 +22,7 @@ export const getVApp = () => vApp;
 export const setVApp = (newVApp) => {
   vApp = newVApp;
 };
-const initializeWaitingRoom = () => {
+export const initializeWaitingRoom = () => {
 
   $rootEl = mount(waitingRoomElement(), $rootEl);
   registerEvent('click', handleStartGame);
