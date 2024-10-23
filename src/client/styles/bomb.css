@@ -42,16 +42,17 @@
 .explosionX {
     border-top: 3px solid rgba(255, 149, 0, 0.8);
     border-bottom: 3px solid rgba(255, 149, 0, 0.8);
-    width: 100px; /* Extend horizontally */
-    height: 40px;
+    width: 50px; /* Extend horizontally */
+    height: 30px;
 }
 
 .explosionY {
     border-left: 3px solid rgba(255, 149, 0, 0.8);
     border-right: 3px solid rgba(255, 149, 0, 0.8);
-    width: 40px;
-    height: 100px; /* Extend vertically */
+    width: 30px;
+    height: 50px; /* Extend vertically */
 }
+
 
 @keyframes explode {
     0% {
@@ -78,7 +79,7 @@
         opacity: 1;
     }
 }
-
+ 
 @keyframes fadeOut {
     0% {
         opacity: 1;
