@@ -6,8 +6,6 @@ import { players } from "../game/game";
 import { removeLife } from "../game/game";
 import { createPowerUpElement } from "../game/map";
 
-import { bombLocations } from "../game/events";
-
 export function spawnExplosion(player, x, y) {
     console.log("this is player", player.id)
     const gameMap = document.querySelector('.gameMap');
@@ -118,20 +116,6 @@ function explosionY(x, y) {
     const explosionY = render(vExplosionY);
     return explosionY;
 }
-
-// function destroySoftBlock(softBlock, gameMap) {
-//     // Find and remove the soft block element
-//     const softBlockElement = gameMap.querySelector(`.soft-block.${softBlock.id}`);
-//     if (softBlockElement) {
-//         softBlockElement.remove();
-//     }
-    
-//     // Update the softBlocks array
-//     const index = softBlocks.findIndex(block => block.id === softBlock.id);
-//     if (index !== -1) {
-//         softBlocks.splice(index, 1);
-//     }
-// }
 
 function destroySoftBlock(softBlock, gameMap) {
     // Find and remove the soft block element
