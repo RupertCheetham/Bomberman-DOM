@@ -15,7 +15,7 @@ const player2 = { x: 13, y: 13, id: "player2", lives: 3, hasPowerUpBomb: false, 
 const player3 = { x: 1, y: 13, id: "player3", lives: 3, hasPowerUpBomb: false, hasPowerUpFlames: false, hasPowerUpSpeed: false };
 const player4 = { x: 13, y: 3, id: "player4", lives: 3, hasPowerUpBomb: false, hasPowerUpFlames: false, hasPowerUpSpeed: false };
 
-const allPlayers = [player1, player2, player3, player4];
+export const allPlayers = [player1, player2, player3, player4];
 
 // Use slice to limit the array to the number of players defined by playerNum
 export const players = allPlayers.slice(0, playerNum);

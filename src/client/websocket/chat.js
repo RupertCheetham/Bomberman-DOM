@@ -113,3 +113,5 @@ function sendMessage() {
     //displayMessage(messageData, "sent"); 
     input.value = ''; // Clear input field
 }
+
+
