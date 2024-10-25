@@ -38,12 +38,8 @@ export const spawnChatTopBarPlayers = () => {
             children:[`Player ${player.id[6]}`] // Add nickname later
         });
 
-        console.log("Rendering player.id:", player.id);
-
         // Render the virtual DOM element
         const playerElement = render(vChatTopBarPlayerElement);
-
-        console.log("playerElement", playerElement);
 
         // Append the rendered player element to the top-bar
         topBar.appendChild(playerElement);
