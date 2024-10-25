@@ -9,9 +9,9 @@ import diff from './vdom/diff.js';
 import { spawnSoftBlocks } from './client/game/map.js';
 import { waitingRoomElement } from './client/components/waitingRoom.js';
 import { initializeWebSocket } from './client/websocket/websocket.js';
-import { handleSendButton } from './client/game/events.js';
-
+import { handleSendButton, handleStartGame } from './client/game/events.js';
 import { spawnChatTopBarPlayers } from './client/components/chatPlayerCountAndTimer.js';
+import { $nameInputElement } from './client/components/nameInputRoom.js';
 
 // Application State
 export let playerNum = 3
@@ -28,17 +28,31 @@ export const getVApp = () => vApp;
 export const setVApp = (newVApp) => {
   vApp = newVApp;
 };
-export const initializeWaitingRoom = () => {
 
-  $rootEl = mount(waitingRoomElement(), $rootEl);
+export const initializeNameInputRoom = () => {
+
+  $rootEl = mount($nameInputElement, $rootEl);
   // activate waiting room event listeners
-  // registerEvent('click', handleStartGame);
- registerEvent('click', handleSendButton);
+  registerEvent('click', handleStartGame);
+  registerEvent('click', handleSendButton);
 
   // Activate event handler
   window.onkeydown = handleEvent; // Global event handler
   window.onclick = handleEvent; // Global event handler
   window.ondblclick = handleEvent; // Global event handler
+}
+
+export const initializeWaitingRoom = () => {
+
+  $rootEl = mount(waitingRoomElement(), $rootEl);
+  // activate waiting room event listeners
+  registerEvent('click', handleStartGame);
+  registerEvent('click', handleSendButton);
+
+  // // Activate event handler
+  // window.onkeydown = handleEvent; // Global event handler
+  // window.onclick = handleEvent; // Global event handler
+  // window.ondblclick = handleEvent; // Global event handler
 }
 
 // Initialize Application
@@ -111,6 +125,7 @@ export function updateRootEl(newRootEl) {
 }
 
 // Initialize the application
-initializeWaitingRoom()
+initializeNameInputRoom()
+// initializeWaitingRoom()
 spawnChatTopBarPlayers()
 

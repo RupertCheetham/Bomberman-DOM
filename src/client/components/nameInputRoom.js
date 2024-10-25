@@ -1,9 +1,27 @@
 import createElement from "../../vdom/createElement";
-import { spawnChatTopBarPlayers } from "./chatPlayerCountAndTimer";
 import render from "../../vdom/render";
+import logoSrc from "./images/BOMERMIN.png";
 
-export const chatContainerElement = () => {
-        // Create the top bar container for players
+const logoDisplay = createElement("img", {
+    attrs: {
+        id: "logo",
+        src: logoSrc, // Use the imported path
+        style: `
+            height: 300px; 
+            overflow-y: auto; 
+            background-color: #fff; 
+            border-radius: 8px; 
+            border: 1px solid #ddd; 
+            box-shadow: inset 0 1px 5px rgba(0, 0, 0, 0.05); 
+            color: #333;
+            margin-bottom: 10px;
+        `
+    },
+});
+
+
+const vnameInputElement = () => {
+    // Create the top bar container for players
     const playerCounterBar = createElement("div", {
         attrs: {
             id: "top-bar",
@@ -18,7 +36,7 @@ export const chatContainerElement = () => {
                 border-radius: 8px;
             `
         },
-        children: [] 
+        children: []
     });
 
     // Create the chat heading
@@ -30,25 +48,28 @@ export const chatContainerElement = () => {
                 text-align: center;
             `
         },
-        children: ["Chat"]
+        children: ["BOMERMIN"]
     });
-
     // Create the chat message display area
-    const chatDisplay = createElement("div", {
+    const logoDisplay = createElement("img", {
         attrs: {
-            id: "chat",
+            id: "logo",
+            src: logoSrc,
             style: `
                 height: 300px; 
                 overflow-y: auto; 
+                display: flex;
+                justify-content: center; 
+                align-items: center; 
                 background-color: #fff; 
                 border-radius: 8px; 
                 border: 1px solid #ddd; 
                 box-shadow: inset 0 1px 5px rgba(0, 0, 0, 0.05); 
                 color: #333;
+                margin: 0 auto;
                 margin-bottom: 10px;
             `
         },
-        children: [] // This will be dynamically populated with messages
     });
 
     // Create the input field for typing messages
@@ -56,7 +77,7 @@ export const chatContainerElement = () => {
         attrs: {
             type: "text",
             id: "message",
-            placeholder: "Type a message",
+            placeholder: "Type your nickname here",
             style: `
                 flex: 1; 
                 padding: 10px; 
@@ -82,7 +103,7 @@ export const chatContainerElement = () => {
                 transition: background-color 0.3s;
             `
         },
-        children: ["Send"]
+        children: ["Enter"]
     });
 
     // Create the container for the input and button
@@ -112,7 +133,7 @@ export const chatContainerElement = () => {
         },
         children: [] // Will be dynamically populated with 10 second countdown
     });
-    
+
 
     // Create the main chat container
     const chatContainer = createElement("div", {
@@ -125,29 +146,24 @@ export const chatContainerElement = () => {
                 padding: 15px; 
                 background-color: #f9f9f9; 
                 border-radius: 8px; 
+                align-items: center;
                 max-width: 600px; 
                 margin: 0 auto; 
                 box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             `
         },
-        children: [playerCounterBar, chatHeading, chatDisplay, inputContainer, timerBar]
+        children: [playerCounterBar, chatHeading, logoDisplay, inputContainer, timerBar]
     });
 
-       // Render the chat container and return it
-   //const renderedContainer = render(chatContainer);
-
-
-   //render(chatContainer);
-       
-//    spawnChatTopBarPlayers();
-       
-  
-      //return renderedContainer
-
-      return chatContainer;
+    return chatContainer;
 };
 
+export const $nameInputElement = render(createElement("div", {
+    attrs: {
+        id: "root",
+        class: "bomberman",
+    },
+    children: [vnameInputElement()],
+}));
 
-//original
-    // Render the chat container and return it
-    // return chatContainer;
+return $nameInputElement;

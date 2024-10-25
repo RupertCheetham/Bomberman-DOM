@@ -31,26 +31,6 @@ import { spawnChatTopBarPlayers } from "./chatPlayerCountAndTimer";
 
 // Function to create the waiting room element
 export const waitingRoomElement = () => {
-    // Generate the map elements based on the symbols
-    // const mapElements = parsedMap.flatMap((row) =>
-    //     row.map((cell) => {
-    //         const className = levelChars[cell];
-    //         // Create the individual cell
-    //         return createElement("div", {
-    //             attrs: {
-    //                 class: `cell ${className}`
-    //             }
-    //         });
-    //     })
-    // );
-
-    // Create the waiting room container with map elements
-    // const vWaitingRoom = createElement("div", {
-    //     attrs: {
-    //         class: "waitingRoom",
-    //     },
-    //     children: mapElements, 
-    // });
 
     // Wrap the waiting room inside the main root container
     const $waitingRoomElement = render(createElement("div", {
