@@ -11,6 +11,7 @@ import { waitingRoomElement } from './client/components/waitingRoom.js';
 import { initializeWebSocket } from './client/websocket/websocket.js';
 import { handleSendButton } from './client/game/events.js';
 
+import { spawnChatTopBarPlayers } from './client/components/chatPlayerCountAndTimer.js';
 
 // Application State
 export let playerNum = 3
@@ -111,4 +112,5 @@ export function updateRootEl(newRootEl) {
 
 // Initialize the application
 initializeWaitingRoom()
+spawnChatTopBarPlayers()
 

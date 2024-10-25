@@ -81,4 +81,37 @@ ws.onmessage = function (event) {
 };
 
 
+function sendMessage() {
+    const input = document.getElementById("message");
+    const messageText = input.value.trim();
+
+    if (!messageText) {
+        console.warn("Cannot send an empty message.");
+        return;
+    }
+
+    // Ensure player ID is defined before sending
+    if (!currentPlayerId) {
+        console.warn("Cannot send message: currentPlayerId is undefined.");
+        return;
+    }
+
+    // Construct the message data object
+    const messageData = {
+        playerId: currentPlayerId,
+        text: messageText
+    };
+
+    console.log("Sending message:", messageData);
+    ws.send(JSON.stringify(messageData)); // Send the message as a JSON object
+
+    // Store the last message sent
+    //lastSentMessage = messageText;
+
+    //This is displayMessage that caused the issue of double messages
+    // Display the message locally as "sent"
+    //displayMessage(messageData, "sent"); 
+    input.value = ''; // Clear input field
+}
+
 
