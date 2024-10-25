@@ -10,6 +10,7 @@ import { spawnSoftBlocks } from './client/game/map.js';
 import { waitingRoomElement } from './client/components/waitingRoom.js';
 import { handleStartGame } from './client/game/events.js';
 import { spawnChatTopBarPlayers } from './client/components/chatPlayerCountAndTimer.js';
+import { spawnChatTimerBarCountdown } from './client/components/chatPlayerCountAndTimer.js';
 
 // Application State
 let playerNum = 3
@@ -105,4 +106,5 @@ export function updateRootEl(newRootEl) {
 // Initialize the application
 initializeWaitingRoom()
 spawnChatTopBarPlayers()
+spawnChatTimerBarCountdown()
 
