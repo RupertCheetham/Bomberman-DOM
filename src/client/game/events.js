@@ -4,7 +4,8 @@ import { spawnExplosion } from "../components/explosionElement";
 import { removeLife, startGameTimer, addPlayer } from "../game/game";
 import { initializeApp, initializeWaitingRoom, playerNum } from "../..";
 import { refreshChatRoom } from "../components/chatPlayerCountAndTimer";
-import { ws } from "../websocket/websocket";
+// import { ws } from "../websocket/websocket";
+import { ws } from "../..";
 // import { currentPlayerId } from "../websocket/chat";
 
 export const bombLocations = []

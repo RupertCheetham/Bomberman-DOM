@@ -1,7 +1,6 @@
-// // chat goes here
-// // Below is copied from index.html, need (small?) refactor
+// import { parsedMap, walkableChars, isPositionWalkableBySoftBlocks } from "../game/map.js";
+// // const ws = new WebSocket("ws://localhost:8080/ws");
 
-// const ws = new WebSocket("ws://localhost:8080/ws");
 // export let currentPlayerId; // Declare without initializing
 
 // function displayMessage(messageData, messageType) {

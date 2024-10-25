@@ -1,7 +1,5 @@
 import { currentPlayerId } from "./chat";
 
-export let ws
-
 export function initializeWebSocket() {
     ws = new WebSocket("ws://localhost:8080/ws");
 

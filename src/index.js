@@ -22,7 +22,9 @@ let vApp;
 let lastTime = 0;  // To track the time difference for game updates
 
 // Call this function to activate the WebSocket
-initializeWebSocket();
+// initializeWebSocket();
+export let ws = new WebSocket("ws://localhost:8080/ws");
+
 
 // Getters and Setters for Virtual DOM
 export const getVApp = () => vApp;
