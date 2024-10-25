@@ -2,14 +2,16 @@ import { allPlayers } from "../game/game";
 import createElement from "../../vdom/createElement";
 import render from "../../vdom/render";
 import { handleStartGame } from "../game/events";
+import { players } from "../game/game";
 
-let playerNum = 3
-
+let playerNum
 let onlinePlayers = []; // Empty array to hold the online players
 
 export const spawnChatTopBarPlayers = () => {
 
-    const playerNum = 4; // Assume you have 3 players
+    playerNum = players.length
+
+
 
     const topBar = document.getElementById('top-bar'); // Get the top-bar element
     if (!topBar) {
@@ -36,7 +38,7 @@ export const spawnChatTopBarPlayers = () => {
                 justify-content: center;
                 `
             },
-            children:[`Player ${player.id[6]}`] // Add nickname later
+            children:[`${player.nickname}`] // Add nickname later
         });
 
         // Render the virtual DOM element
@@ -52,9 +54,7 @@ export const spawnChatTopBarPlayers = () => {
 //UPDATE CHATROOM FUNCTION NEEDED TO REFRESH ONLINE PLAYERS ARRAY AND TIMER RESETS
 
 export function spawnChatTimerBarCountdown() {
-
-const playerNum = 4;    
-
+console.log("playerNum", playerNum)
 const timerBar = document.getElementById('timer-bar'); // Get the top-bar element
 if (!timerBar) {
     console.error("Element with id 'timer-bar' not found!");
@@ -138,5 +138,11 @@ if (playerNum === 4) {
     timerBar.appendChild(timerElement);
     startCountdown(10, timerElement); // Start a 10-second countdown
 }
+}
+
+export function refreshChatRoom(){
+
+    spawnChatTopBarPlayers()
+    spawnChatTimerBarCountdown()
 }
 

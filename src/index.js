@@ -9,7 +9,7 @@ import diff from './vdom/diff.js';
 import { spawnSoftBlocks } from './client/game/map.js';
 import { waitingRoomElement } from './client/components/waitingRoom.js';
 import { initializeWebSocket } from './client/websocket/websocket.js';
-import { handleSendButton, handleStartGame } from './client/game/events.js';
+import { handleEnterButton, handleSendButton, handleStartGame } from './client/game/events.js';
 import { spawnChatTopBarPlayers } from './client/components/chatPlayerCountAndTimer.js';
 import { $nameInputElement } from './client/components/nameInputRoom.js';
 import { spawnChatTimerBarCountdown } from './client/components/chatPlayerCountAndTimer.js';
@@ -34,8 +34,8 @@ export const initializeNameInputRoom = () => {
 
   $rootEl = mount($nameInputElement, $rootEl);
   // activate waiting room event listeners
-  registerEvent('click', handleStartGame);
-  registerEvent('click', handleSendButton);
+  // registerEvent('click', handleStartGame);
+  registerEvent('click', handleEnterButton);
 
   // Activate event handler
   window.onkeydown = handleEvent; // Global event handler
@@ -47,8 +47,11 @@ export const initializeWaitingRoom = () => {
 
   $rootEl = mount(waitingRoomElement(), $rootEl);
   // activate waiting room event listeners
-  registerEvent('click', handleStartGame);
+  // registerEvent('click', handleStartGame);
   registerEvent('click', handleSendButton);
+
+  // spawnChatTopBarPlayers()
+  // spawnChatTimerBarCountdown()
 
   // // Activate event handler
   // window.onkeydown = handleEvent; // Global event handler
@@ -128,6 +131,4 @@ export function updateRootEl(newRootEl) {
 // Initialize the application
 initializeNameInputRoom()
 // initializeWaitingRoom()
-spawnChatTopBarPlayers()
-spawnChatTimerBarCountdown()
 

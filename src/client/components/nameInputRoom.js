@@ -32,15 +32,15 @@ const vnameInputElement = () => {
                 display: flex;
                 justify-content: space-around;
                 align-items: center;
-                margin-bottom: 10px; /* Space between the bar and chat */
+                margin-bottom: 10px; /* Space between the bar and logo */
                 border-radius: 8px;
             `
         },
         children: []
     });
 
-    // Create the chat heading
-    const chatHeading = createElement("h2", {
+    // Create the logo heading
+    const logoHeading = createElement("h2", {
         attrs: {
             style: `
                 color: #333; 
@@ -50,7 +50,7 @@ const vnameInputElement = () => {
         },
         children: ["BOMERMIN"]
     });
-    // Create the chat message display area
+    // Create the logo nickname display area
     const logoDisplay = createElement("img", {
         attrs: {
             id: "logo",
@@ -72,11 +72,11 @@ const vnameInputElement = () => {
         },
     });
 
-    // Create the input field for typing messages
-    const messageInput = createElement("input", {
+    // Create the input field for typing nicknames
+    const nicknameInput = createElement("input", {
         attrs: {
             type: "text",
-            id: "message",
+            id: "nickname",
             placeholder: "Type your nickname here",
             style: `
                 flex: 1; 
@@ -90,9 +90,9 @@ const vnameInputElement = () => {
     });
 
     // Create the send button
-    const sendButton = createElement("button", {
+    const enterButton = createElement("button", {
         attrs: {
-            class: "sendButton",
+            class: "enterButton",
             style: `
                 padding: 10px 20px; 
                 background-color: #007bff; 
@@ -111,7 +111,7 @@ const vnameInputElement = () => {
         attrs: {
             style: "display: flex;"
         },
-        children: [messageInput, sendButton]
+        children: [nicknameInput, enterButton]
     });
 
     const timerBar = createElement("div", {
@@ -124,7 +124,7 @@ const vnameInputElement = () => {
                 display: flex;
                 justify-content: space-around;
                 align-items: center;
-                margin-bottom: 10px; /* Space between the bar and chat */
+                margin-bottom: 10px; /* Space between the bar and logo */
                 border-radius: 8px;
                 margin-top: 10px;
                 margin-left: auto; 
@@ -135,10 +135,10 @@ const vnameInputElement = () => {
     });
 
 
-    // Create the main chat container
-    const chatContainer = createElement("div", {
+    // Create the main logo container
+    const logoContainer = createElement("div", {
         attrs: {
-            id: "chat-container",
+            id: "logo-container",
             style: `
             width: 600px;
 	height: 600px;
@@ -152,10 +152,10 @@ const vnameInputElement = () => {
                 box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             `
         },
-        children: [playerCounterBar, chatHeading, logoDisplay, inputContainer, timerBar]
+        children: [playerCounterBar, logoHeading, logoDisplay, inputContainer, timerBar]
     });
 
-    return chatContainer;
+    return logoContainer;
 };
 
 export const $nameInputElement = render(createElement("div", {

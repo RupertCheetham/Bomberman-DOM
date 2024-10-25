@@ -1,7 +1,9 @@
 import { currentPlayerId } from "./chat";
 
+export let ws
+
 export function initializeWebSocket() {
-    const ws = new WebSocket("ws://localhost:8080/ws");
+    ws = new WebSocket("ws://localhost:8080/ws");
 
     ws.onmessage = function (event) {
         const messageData = JSON.parse(event.data); // Expecting { "playerId": 1, "text": "Hello" }

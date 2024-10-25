@@ -1,9 +1,10 @@
 
 import { bombElement } from "../components/bombElement";
 import { spawnExplosion } from "../components/explosionElement";
-import { removeLife, startGameTimer } from "../game/game";
-import { initializeApp, playerNum } from "../..";
-import { currentPlayerId } from "../websocket/chat";
+import { removeLife, startGameTimer, addPlayer } from "../game/game";
+import { initializeApp, initializeWaitingRoom, playerNum } from "../..";
+import { refreshChatRoom } from "../components/chatPlayerCountAndTimer";
+// import { currentPlayerId } from "../websocket/chat";
 
 export const bombLocations = []
 
@@ -14,6 +15,10 @@ export const bombCooldowns = {
     player4: { count: 0, cooldown: false }
 };
 
+
+// FOR TESTING PURPOSES
+let currentPlayerId = 1
+// FOR TESTING PURPOSES
 
 //every player can drop one bomb in a 3 second period 
 //or if they have the bomb power up then they can drop 2 in that perriod
@@ -84,6 +89,35 @@ export function handleStartGame() {
     startGameTimer(gameDuration)
 
     initializeApp(playerNum)
+}
+
+export function handleEnterButton(event) {
+    if (!event.target.classList.contains("enterButton")) { return }
+    const input = document.getElementById("nickname");
+    const nicknameText = input.value.trim();
+
+    if (!nicknameText) {
+        console.warn("Cannot send an empty nickname.");
+        return;
+    }
+
+    // Ensure player ID is defined before sending
+    if (!currentPlayerId) {
+        console.warn("Cannot send nickname: currentPlayerId is undefined.");
+        return;
+    }
+
+    // Construct the nickname data object
+    const nicknameData = {
+        playerId: currentPlayerId,
+        nickname: nicknameText
+    };
+
+    addPlayer(currentPlayerId, nicknameText)
+    console.log("Sending nickname:", nicknameData);
+
+    initializeWaitingRoom()
+    refreshChatRoom()
 }
 
 export function handleSendButton(event) {
