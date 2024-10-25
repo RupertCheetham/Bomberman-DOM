@@ -139,3 +139,4 @@ if (playerNum === 4) {
     startCountdown(10, timerElement); // Start a 10-second countdown
 }
 }
+
