@@ -36,7 +36,7 @@ export const chatContainerElement = () => {
     // Create the chat message display area
     const chatDisplay = createElement("div", {
         attrs: {
-            id: "chat",
+            class: "chat",
             style: `
                 height: 300px; 
                 overflow-y: auto; 

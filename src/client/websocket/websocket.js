@@ -17,11 +17,11 @@ export function initializeWebSocket() {
             messageType = "received";
         }
 
-        // If player ID is included, update currentPlayerId
-        if (messageData.playerId && !currentPlayerId) {
-            currentPlayerId = messageData.playerId;
-            console.log("Player ID assigned:", currentPlayerId);
-        }
+        // // If player ID is included, update currentPlayerId
+        // if (messageData.playerId && !currentPlayerId) {
+        //     currentPlayerId = messageData.playerId;
+        //     console.log("Player ID assigned:", currentPlayerId);
+        // }
 
         displayMessage(messageData, messageType); // Display the message with the correct type
     };
