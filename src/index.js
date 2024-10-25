@@ -12,6 +12,7 @@ import { initializeWebSocket } from './client/websocket/websocket.js';
 import { handleSendButton, handleStartGame } from './client/game/events.js';
 import { spawnChatTopBarPlayers } from './client/components/chatPlayerCountAndTimer.js';
 import { $nameInputElement } from './client/components/nameInputRoom.js';
+import { spawnChatTimerBarCountdown } from './client/components/chatPlayerCountAndTimer.js';
 
 // Application State
 export let playerNum = 3
@@ -128,4 +129,5 @@ export function updateRootEl(newRootEl) {
 initializeNameInputRoom()
 // initializeWaitingRoom()
 spawnChatTopBarPlayers()
+spawnChatTimerBarCountdown()
 
