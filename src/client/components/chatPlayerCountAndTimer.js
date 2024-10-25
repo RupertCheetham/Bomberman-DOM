@@ -140,3 +140,9 @@ if (playerNum === 4) {
 }
 }
 
+export function refreshChatRoom() {
+
+    spawnChatTopBarPlayers();
+    spawnChatTimerBarCountdown();
+
+}
