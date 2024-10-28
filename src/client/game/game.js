@@ -7,18 +7,31 @@ import { initializeWaitingRoom } from "../../index.js";
 import { handlePowerUpCollection } from "./checkCollision.js";
 
 export let gameResults = "";
-let playerNum = 3
+//let playerNum = 3
 
 // Define player objects with x and y coordinates
-const player1 = { x: 1, y: 3, id: "player1", lives: 3, hasPowerUpBomb: false, hasPowerUpFlames: false, hasPowerUpSpeed: false };
-const player2 = { x: 13, y: 13, id: "player2", lives: 3, hasPowerUpBomb: false, hasPowerUpFlames: false, hasPowerUpSpeed: false };
-const player3 = { x: 1, y: 13, id: "player3", lives: 3, hasPowerUpBomb: false, hasPowerUpFlames: false, hasPowerUpSpeed: false };
-const player4 = { x: 13, y: 3, id: "player4", lives: 3, hasPowerUpBomb: false, hasPowerUpFlames: false, hasPowerUpSpeed: false };
+const player1 = { x: 1, y: 3, id: "player1", nickname: "", lives: 3, hasPowerUpBomb: false, hasPowerUpFlames: false, hasPowerUpSpeed: false };
+const player2 = { x: 13, y: 13, id: "player2", nickname: "", lives: 3, hasPowerUpBomb: false, hasPowerUpFlames: false, hasPowerUpSpeed: false };
+const player3 = { x: 1, y: 13, id: "player3", nickname: "", lives: 3, hasPowerUpBomb: false, hasPowerUpFlames: false, hasPowerUpSpeed: false };
+const player4 = { x: 13, y: 3, id: "player4", nickname: "", lives: 3, hasPowerUpBomb: false, hasPowerUpFlames: false, hasPowerUpSpeed: false };
 
 export const allPlayers = [player1, player2, player3, player4];
 
+
+
 // Use slice to limit the array to the number of players defined by playerNum
-export const players = allPlayers.slice(0, playerNum);
+export let players = []
+
+export const addPlayer = (playerNum, nickname) => {
+  let currentPlayer = allPlayers[playerNum-1]
+  console.log("currentPlayer", currentPlayer)
+  currentPlayer.nickname = nickname
+  console.log("updated currentPlayer", currentPlayer)
+
+  players.push(currentPlayer)
+  console.log('players array', players)
+};
+
 let countdownInterval
 // Function to start the game timer on page load
 export const startGameTimer = (duration) => {
