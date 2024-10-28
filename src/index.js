@@ -3,7 +3,7 @@ import mount from './vdom/mount';
 import { createVApp } from './vdom/createVApp';
 import { handleEvent } from './vdom/events/eventHelpers/handleEvent';
 import { registerEvent } from './vdom/events/eventHelpers/registerEvent';
-import { handleKeyPress, spawnBarPlayers } from './client/game/game.js';
+import { handleKeyPress, players, spawnBarPlayers } from './client/game/game.js';
 import { spawnPlayers } from './client/game/game.js';
 import diff from './vdom/diff.js';
 import { spawnSoftBlocks } from './client/game/map.js';
@@ -17,8 +17,7 @@ import { $nameInputElement } from './client/components/nameInputRoom.js';
 import { handleEnterButton } from './client/game/events.js';
 
 
-// Application State
-let playerNum = 3
+let playerNum = players.length
 
 let $rootEl = document.getElementById('root');
 let vApp;
@@ -56,7 +55,7 @@ export const initializeWaitingRoom = () => {
 }
 
 // Initialize Application
-export const initializeApp = (playerNum) => {
+export const initializeApp = () => {
   setVApp(createVApp(playerNum)); // Create initial VApp
   $rootEl = mount(render(vApp), $rootEl); // Mount the initial app
 
@@ -127,6 +126,5 @@ export function updateRootEl(newRootEl) {
 // Initialize the application
 // initializeWaitingRoom()
 initializeNameInputRoom()
-spawnChatTopBarPlayers()
-spawnChatTimerBarCountdown()
+
 

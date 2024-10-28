@@ -5,9 +5,9 @@ import render from "../../vdom/render";
 
 import { initializeWaitingRoom } from "../../index.js";
 import { handlePowerUpCollection } from "./checkCollision.js";
+import { refreshChatRoom } from "../components/chatPlayerCountAndTimer.js";
 
 export let gameResults = "";
-//let playerNum = 3
 
 // Define player objects with x and y coordinates
 const player1 = { x: 1, y: 3, id: "player1", nickname: "", lives: 3, hasPowerUpBomb: false, hasPowerUpFlames: false, hasPowerUpSpeed: false };
@@ -22,14 +22,19 @@ export const allPlayers = [player1, player2, player3, player4];
 // Use slice to limit the array to the number of players defined by playerNum
 export let players = []
 
-export const addPlayer = (playerNum, nickname) => {
-  let currentPlayer = allPlayers[playerNum-1]
+
+export const addPlayer = (playerId, nickname) => {
+  console.log("playerId", playerId)
+
+  let currentPlayer = allPlayers[playerId-1]
   console.log("currentPlayer", currentPlayer)
   currentPlayer.nickname = nickname
   console.log("updated currentPlayer", currentPlayer)
 
   players.push(currentPlayer)
+  
   console.log('players array', players)
+  refreshChatRoom()
 };
 
 let countdownInterval

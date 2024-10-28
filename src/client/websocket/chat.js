@@ -1,5 +1,6 @@
 // chat goes here
 // Below is copied from index.html, need (small?) refactor
+import { players } from "../game/game";
 
 export const ws = new WebSocket("ws://localhost:8080/ws");
 export let currentPlayerId; // Declare without initializing
@@ -37,7 +38,7 @@ function displayMessage(messageData, messageType) {
     //const vPlayerIdElement = createElement("strong", { attrs: { class: "chat" }, children: [`Player ${playerId}:`] })
     //const $PlayerIdElement = render(vPlayerIdElement)
     const playerIdElement = document.createElement("strong");
-    playerIdElement.innerText = `Player ${playerId}:`;
+    playerIdElement.innerText = `${players[currentPlayerId - 1].nickname}:`;
     console.log("playerIdElement", playerIdElement)
 
     currentPlayerId === playerId
@@ -90,37 +91,37 @@ ws.onmessage = function (event) {
 };
 
 
-function sendMessage() {
-    const input = document.getElementById("message");
-    const messageText = input.value.trim();
+// function sendMessage() {
+//     const input = document.getElementById("message");
+//     const messageText = input.value.trim();
 
-    if (!messageText) {
-        console.warn("Cannot send an empty message.");
-        return;
-    }
+//     if (!messageText) {
+//         console.warn("Cannot send an empty message.");
+//         return;
+//     }
 
-    // Ensure player ID is defined before sending
-    if (!currentPlayerId) {
-        console.warn("Cannot send message: currentPlayerId is undefined.");
-        return;
-    }
+//     // Ensure player ID is defined before sending
+//     if (!currentPlayerId) {
+//         console.warn("Cannot send message: currentPlayerId is undefined.");
+//         return;
+//     }
 
-    // Construct the message data object
-    const messageData = {
-        playerId: currentPlayerId,
-        text: messageText
-    };
+//     // Construct the message data object
+//     const messageData = {
+//         playerId: currentPlayerId,
+//         text: messageText
+//     };
 
-    console.log("Sending message:", messageData);
-    ws.send(JSON.stringify(messageData)); // Send the message as a JSON object
+//     console.log("Sending message:", messageData);
+//     ws.send(JSON.stringify(messageData)); // Send the message as a JSON object
 
-    // Store the last message sent
-    //lastSentMessage = messageText;
+//     // Store the last message sent
+//     //lastSentMessage = messageText;
 
-    //This is displayMessage that caused the issue of double messages
-    // Display the message locally as "sent"
-    //displayMessage(messageData, "sent"); 
-    input.value = ''; // Clear input field
-}
+//     //This is displayMessage that caused the issue of double messages
+//     // Display the message locally as "sent"
+//     //displayMessage(messageData, "sent"); 
+//     input.value = ''; // Clear input field
+// }
 
 

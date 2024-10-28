@@ -191,6 +191,8 @@ func handleConnections(w http.ResponseWriter, r *http.Request) {
 	// Send the player ID to the client
 	//initialMessage := Message{PlayerId: playerId, Text: "Welcome!"}
 	initialMessage := Message{PlayerId: playerId}
+	
+
 
 	if err := ws.WriteJSON(initialMessage); err != nil {
 		log.Printf("error: %v", err)

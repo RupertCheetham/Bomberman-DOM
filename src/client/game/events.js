@@ -1,7 +1,7 @@
 
 import { bombElement } from "../components/bombElement";
 import { spawnExplosion } from "../components/explosionElement";
-import { removeLife, startGameTimer } from "../game/game";
+import { players, removeLife, startGameTimer } from "../game/game";
 import { initializeApp } from "../..";
 import { currentPlayerId } from "../websocket/chat";
 import { ws } from "../websocket/chat";
@@ -87,7 +87,7 @@ export function handleStartGame() {
     const gameDuration = 20; // 5 minutes in seconds
     startGameTimer(gameDuration)
 
-    let playerNum = 3
+    let playerNum = players.length
     initializeApp(playerNum)
 }
 
@@ -154,4 +154,5 @@ export function handleSendButton(event) {
     // Display the message locally as "sent"
     //displayMessage(messageData, "sent"); 
     input.value = ''; // Clear input field
+    
 }

@@ -1,15 +1,11 @@
-import { allPlayers } from "../game/game";
+//import { allPlayers } from "../game/game";
 import createElement from "../../vdom/createElement";
 import render from "../../vdom/render";
 import { handleStartGame } from "../game/events";
+import { players } from "../game/game";
 
-let playerNum = 3
-
-let onlinePlayers = []; // Empty array to hold the online players
 
 export const spawnChatTopBarPlayers = () => {
-
-    const playerNum = 3; // Assume you have 3 players
 
     const topBar = document.getElementById('top-bar'); // Get the top-bar element
     if (!topBar) {
@@ -18,11 +14,8 @@ export const spawnChatTopBarPlayers = () => {
     }
 
     // Loop through the players and add them to the top bar
-    for (let i = 0; i < playerNum; i++) {
-        const player = allPlayers[i]; // Get each player from allPlayers array
-
-        // Add player to the onlinePlayers array
-        onlinePlayers.push(player);
+    for (let i = 0; i < players.length; i++) {
+        const player = players[i]; // Get each player from players array
 
         // Create a virtual element for the top-bar player
         const vChatTopBarPlayerElement = createElement("div", {
@@ -36,7 +29,7 @@ export const spawnChatTopBarPlayers = () => {
                 justify-content: center;
                 `
             },
-            children:[`Player ${player.id[6]}`] // Add nickname later
+            children:[`${player.nickname}`] // Add nickname later
         });
 
         // Render the virtual DOM element
@@ -46,14 +39,15 @@ export const spawnChatTopBarPlayers = () => {
         topBar.appendChild(playerElement);
     }
 
-    console.log("Online players:", onlinePlayers); // Log the populated onlinePlayers array
+    
 };
 
 //UPDATE CHATROOM FUNCTION NEEDED TO REFRESH ONLINE PLAYERS ARRAY AND TIMER RESETS
 
 export function spawnChatTimerBarCountdown() {
 
-const playerNum = 3;    
+let playerNum = players.length;    
+console.log("players.length is", players.length);
 
 const timerBar = document.getElementById('timer-bar'); // Get the top-bar element
 if (!timerBar) {
@@ -145,4 +139,9 @@ export function refreshChatRoom() {
     spawnChatTopBarPlayers();
     spawnChatTimerBarCountdown();
 
+    console.log("players.length is", players.length);
+
 }
+
+
+//need to change these timers back to 30 seconds (line 118) and 10 seconds (line 139)
