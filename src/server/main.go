@@ -60,76 +60,107 @@ func main() {
 	}
 }
 
+// Function to get all player IDs with nicknames
+func getAllPlayerInfo() []PlayerInfo {
+	var allPlayers []PlayerInfo
+	for client := range clients {
+		allPlayers = append(allPlayers, PlayerInfo{
+			PlayerId: client.playerId,
+			Nickname: client.nickname,
+		})
+
+	}
+	return allPlayers
+}
+
 // Handle incoming WebSocket connections
 func handleConnections(w http.ResponseWriter, r *http.Request) {
 	if len(clients) >= maxClients {
 		http.Error(w, "Server full", http.StatusForbidden)
-		return // Reject new connections if max clients reached
+		return
 	}
 
-	// Upgrade initial GET request to a WebSocket
 	ws, err := upgrader.Upgrade(w, r, nil)
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer ws.Close()
 
-	// Assign an available player ID
 	var playerId int
 	if len(availablePlayerIds) > 0 {
-		playerId = availablePlayerIds[0]            // Get the first available ID
-		availablePlayerIds = availablePlayerIds[1:] // Remove it from the list
+		playerId = availablePlayerIds[0]
+		availablePlayerIds = availablePlayerIds[1:]
 	} else {
 		return
 	}
 
-	// Register the new client
 	client := &Client{conn: ws, playerId: playerId}
 	clients[client] = true
-
-	log.Println("clients", clients)
-
-	// Log the connection
 	log.Printf("Player %d connected", playerId)
 
-	// Send the player ID to the client
-	//initialMessage := Message{PlayerId: playerId, Text: "Welcome!"}
 	initialMessage := Message{PlayerId: playerId}
-
 	if err := ws.WriteJSON(initialMessage); err != nil {
 		log.Printf("error: %v", err)
 		return
 	}
 
-	// Listen for messages
 	for {
 		_, msg, err := ws.ReadMessage()
 		if err != nil {
 			log.Printf("error: %v", err)
 			delete(clients, client)
-			availablePlayerIds = append(availablePlayerIds, playerId) // Make the ID available again
+			availablePlayerIds = append(availablePlayerIds, playerId)
 			break
 		}
 
-		log.Printf("Broadcasting message: %+v", msg)
-
 		var decodedMSG CodedMessage
-		err = json.Unmarshal(msg, &decodedMSG) // Pass a pointer to the struct
+		err = json.Unmarshal(msg, &decodedMSG)
 		if err != nil {
-			log.Println("Aaw:", err) // Include the error message
+			log.Println("Error decoding message:", err)
 			return
 		}
 
 		var playerInfo PlayerInfo
 
 		if decodedMSG.Code == 1 {
-			log.Println("yay")
+			err := json.Unmarshal([]byte(decodedMSG.Wsm), &playerInfo)
+			if err != nil {
+				log.Println("Error decoding player info:", err)
+				return
+			}
 
-			json.Unmarshal([]byte(decodedMSG.Wsm), &playerInfo)
-			log.Println("playerInfo", playerInfo)
+			// Update the client's nickname
+			client.nickname = playerInfo.Nickname
+			log.Printf("Player %d set nickname to %s", client.playerId, client.nickname)
+
+			// Get the list of all players and their nicknames
+			allPlayers := getAllPlayerInfo()
+
+			// Create the response message with the updated list
+			playerListMessage := struct {
+				Code    int          `json:"code"`
+				Players []PlayerInfo `json:"players"`
+			}{
+				Code:    2, // Define 2 as the code for broadcasting player lists
+				Players: allPlayers,
+			}
+
+			// Send the list to all clients except the sender
+			for c := range clients {
+
+				err := c.conn.WriteJSON(playerListMessage)
+				if err != nil {
+					log.Printf("error: %v", err)
+					c.conn.Close()
+					delete(clients, c)
+					availablePlayerIds = append(availablePlayerIds, c.playerId)
+				}
+
+			}
+			continue
 		}
 
-		// Send the received message to the broadcast channel
+		// Normal message broadcast
 		broadcast <- Message{PlayerId: client.playerId, Text: string(msg)}
 	}
 }

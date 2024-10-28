@@ -1,6 +1,6 @@
 // chat goes here
 // Below is copied from index.html, need (small?) refactor
-import { players } from "../game/game";
+import { addPlayer, players } from "../game/game";
 
 export const ws = new WebSocket("ws://localhost:8080/ws");
 export let currentPlayerId; // Declare without initializing
@@ -75,6 +75,31 @@ function displayMessage(messageData, messageType) {
 ws.onmessage = function (event) {
     const messageData = JSON.parse(event.data); // Expecting { "playerId": 1, "text": "Hello" }
     console.log("Message received:", messageData); // Log the incoming message
+
+
+    switch (messageData.code) {
+        case 1:
+            let playerData = JSON.parse(event.data)
+            if (playerData.playerId !== currentPlayerId) {
+                addPlayer(playerData.playerId, playerData.nickname)
+            }
+            return
+        case 2:
+            let allPlayerData = JSON.parse(event.data)
+            console.log("allPlayerData", allPlayerData)
+            // if (playerData.playerId !== currentPlayerId) {
+            //     addPlayer(playerData.playerId, playerData.nickname)
+            // }
+            return
+        case 3:
+
+            break;
+        default:
+            break;
+    }
+
+
+
 
     // Determine if the message is "sent" or "received"
     let messageType;
