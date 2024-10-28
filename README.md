@@ -1,4 +1,11 @@
 bomberman-dom/
+
+Websocket Codes
+
+1 - Adding/Receiving Player
+3 - Chat Message
+
+
 │
 ├── public/
 │   ├── index.html                # Entry point for the game

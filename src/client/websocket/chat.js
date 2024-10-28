@@ -25,12 +25,12 @@ function displayMessage(messageData, messageType) {
     }
 
 
-   // const vChat = createElement("div", { attrs: { class: "chat" } })
-   // const $Chat = render(vChat)
+    // const vChat = createElement("div", { attrs: { class: "chat" } })
+    // const $Chat = render(vChat)
     const chat = document.getElementById("chat");
 
-   // const vMessage = createElement("div", { attrs: { class: "message" } })
-   // const $Message = render(vMessage)
+    // const vMessage = createElement("div", { attrs: { class: "message" } })
+    // const $Message = render(vMessage)
     const message = document.createElement("div");
     message.classList.add("message", messageType); // Use messageType for styling
 
@@ -38,7 +38,10 @@ function displayMessage(messageData, messageType) {
     //const vPlayerIdElement = createElement("strong", { attrs: { class: "chat" }, children: [`Player ${playerId}:`] })
     //const $PlayerIdElement = render(vPlayerIdElement)
     const playerIdElement = document.createElement("strong");
-    playerIdElement.innerText = `${players[currentPlayerId - 1].nickname}:`;
+    const player = players.find(p => p.id === `player${currentPlayerId}`);
+    playerIdElement.innerText = `${player.nickname}:`;
+
+    playerIdElement.innerText = `${player.nickname}:`;
     console.log("playerIdElement", playerIdElement)
 
     currentPlayerId === playerId
@@ -58,7 +61,7 @@ function displayMessage(messageData, messageType) {
 
     console.log("playerIdElement", playerIdElement)
     console.log("messageContent", messageContent)
-    
+
 
     chat.appendChild(message);
     console.log("message", message)
@@ -89,39 +92,4 @@ ws.onmessage = function (event) {
 
     displayMessage(messageData, messageType); // Display the message with the correct type
 };
-
-
-// function sendMessage() {
-//     const input = document.getElementById("message");
-//     const messageText = input.value.trim();
-
-//     if (!messageText) {
-//         console.warn("Cannot send an empty message.");
-//         return;
-//     }
-
-//     // Ensure player ID is defined before sending
-//     if (!currentPlayerId) {
-//         console.warn("Cannot send message: currentPlayerId is undefined.");
-//         return;
-//     }
-
-//     // Construct the message data object
-//     const messageData = {
-//         playerId: currentPlayerId,
-//         text: messageText
-//     };
-
-//     console.log("Sending message:", messageData);
-//     ws.send(JSON.stringify(messageData)); // Send the message as a JSON object
-
-//     // Store the last message sent
-//     //lastSentMessage = messageText;
-
-//     //This is displayMessage that caused the issue of double messages
-//     // Display the message locally as "sent"
-//     //displayMessage(messageData, "sent"); 
-//     input.value = ''; // Clear input field
-// }
-
 

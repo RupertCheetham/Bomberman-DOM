@@ -6,6 +6,7 @@ import render from "../../vdom/render";
 import { initializeWaitingRoom } from "../../index.js";
 import { handlePowerUpCollection } from "./checkCollision.js";
 import { refreshChatRoom } from "../components/chatPlayerCountAndTimer.js";
+import { ws } from "../websocket/chat.js";
 
 export let gameResults = "";
 
@@ -26,15 +27,31 @@ export let players = []
 export const addPlayer = (playerId, nickname) => {
   console.log("playerId", playerId)
 
-  let currentPlayer = allPlayers[playerId-1]
+  let currentPlayer = allPlayers[playerId - 1]
   console.log("currentPlayer", currentPlayer)
   currentPlayer.nickname = nickname
   console.log("updated currentPlayer", currentPlayer)
 
   players.push(currentPlayer)
-  
+
   console.log('players array', players)
-  refreshChatRoom()
+  // refreshChatRoom()
+  const playerData = {
+    playerId: playerId,
+    nickname: currentPlayer.nickname
+  };
+
+  console.log("playerData", playerData)
+  let playerJSON = JSON.stringify(playerData)
+
+  // Adds Code to player data so that the backend will know where to send it
+  let codedPlayerData = {
+    Code: 1,
+    wsm: playerJSON
+  }
+
+  // console.log("Sending message:", messageData);
+  ws.send(JSON.stringify(codedPlayerData));
 };
 
 let countdownInterval

@@ -147,12 +147,6 @@ export function handleSendButton(event) {
     console.log("Sending message:", messageData);
     ws.send(JSON.stringify(messageData)); // Send the message as a JSON object
 
-    // Store the last message sent
-    //lastSentMessage = messageText;
-
-    //This is displayMessage that caused the issue of double messages
-    // Display the message locally as "sent"
-    //displayMessage(messageData, "sent"); 
     input.value = ''; // Clear input field
     
 }
