@@ -11,6 +11,8 @@ import { waitingRoomElement } from './client/components/waitingRoom.js';
 import { handleStartGame } from './client/game/events.js';
 import { spawnChatTopBarPlayers } from './client/components/chatPlayerCountAndTimer.js';
 import { spawnChatTimerBarCountdown } from './client/components/chatPlayerCountAndTimer.js';
+import { sendMessage} from './client/websocket/chat.js';
+import { handleSendButton } from './client/game/events.js';
 
 // Application State
 let playerNum = 3
@@ -27,11 +29,13 @@ export const setVApp = (newVApp) => {
 export const initializeWaitingRoom = () => {
 
   $rootEl = mount(waitingRoomElement(), $rootEl);
-  registerEvent('click', handleStartGame);
+  //registerEvent('click', handleStartGame);
   // Activate event handlers
   window.onkeydown = handleEvent; // Global event handler
   window.onclick = handleEvent; // Global event handler
   window.ondblclick = handleEvent; // Global event handler
+  // window.onmessage = handleEvent; // Global event handler
+  registerEvent('click', handleSendButton); 
 }
 
 // Initialize Application
@@ -53,7 +57,7 @@ export const initializeApp = (playerNum) => {
   // registerEvent('dblclick', (event) => handleDoubleClickEdit(event, toDoList)); // example double click event
 
 
-
+  
   // Start the game loop
   requestAnimationFrame(gameLoop);
 };

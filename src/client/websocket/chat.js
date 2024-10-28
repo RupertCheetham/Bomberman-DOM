@@ -1,8 +1,8 @@
 // chat goes here
 // Below is copied from index.html, need (small?) refactor
 
-const ws = new WebSocket("ws://localhost:8080/ws");
-let currentPlayerId; // Declare without initializing
+export const ws = new WebSocket("ws://localhost:8080/ws");
+export let currentPlayerId; // Declare without initializing
 
 function displayMessage(messageData, messageType) {
     // Parse messageData.text if it's in stringified JSON format
@@ -26,7 +26,7 @@ function displayMessage(messageData, messageType) {
 
    // const vChat = createElement("div", { attrs: { class: "chat" } })
    // const $Chat = render(vChat)
-    const chat = document.getElementsByClassName("chat")[0];
+    const chat = document.getElementById("chat");
 
    // const vMessage = createElement("div", { attrs: { class: "message" } })
    // const $Message = render(vMessage)
@@ -38,6 +38,10 @@ function displayMessage(messageData, messageType) {
     //const $PlayerIdElement = render(vPlayerIdElement)
     const playerIdElement = document.createElement("strong");
     playerIdElement.innerText = `Player ${playerId}:`;
+    console.log("playerIdElement", playerIdElement)
+
+    currentPlayerId === playerId
+    console.log("currentPlayerID", currentPlayerId)
 
     // Add a line break for better formatting
     const lineBreak = document.createElement("br");
@@ -51,7 +55,12 @@ function displayMessage(messageData, messageType) {
     message.appendChild(lineBreak);
     message.appendChild(messageContent);
 
+    console.log("playerIdElement", playerIdElement)
+    console.log("messageContent", messageContent)
+    
+
     chat.appendChild(message);
+    console.log("message", message)
     chat.scrollTop = chat.scrollHeight; // Auto-scroll to the bottom
 
     // Log details for debugging

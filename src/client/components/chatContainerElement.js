@@ -71,7 +71,8 @@ export const chatContainerElement = () => {
     // Create the send button
     const sendButton = createElement("button", {
         attrs: {
-            onclick: "sendMessage()",
+            // onclick: "sendMessage()",
+            id: "sendButton",
             style: `
                 padding: 10px 20px; 
                 background-color: #007bff; 

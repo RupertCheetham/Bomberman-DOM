@@ -9,7 +9,7 @@ let onlinePlayers = []; // Empty array to hold the online players
 
 export const spawnChatTopBarPlayers = () => {
 
-    const playerNum = 4; // Assume you have 3 players
+    const playerNum = 3; // Assume you have 3 players
 
     const topBar = document.getElementById('top-bar'); // Get the top-bar element
     if (!topBar) {
@@ -53,7 +53,7 @@ export const spawnChatTopBarPlayers = () => {
 
 export function spawnChatTimerBarCountdown() {
 
-const playerNum = 4;    
+const playerNum = 3;    
 
 const timerBar = document.getElementById('timer-bar'); // Get the top-bar element
 if (!timerBar) {
