@@ -14,9 +14,6 @@ import { handleEnterButton } from './client/game/events.js';
 import { spawnChatTimerBarCountdown } from './client/components/chatPlayerTimerBarCountdown.js';
 import { spawnChatTopBarPlayers } from './client/components/chatTopBarPlayers.js';
 
-
-let playerNum = players.length
-
 let $rootEl = document.getElementById('root');
 let vApp;
 let lastTime = 0;  // To track the time difference for game updates
@@ -29,6 +26,8 @@ export const setVApp = (newVApp) => {
 
 export const initializeNameInputRoom = () => {
 
+  $rootEl.innerHTML = ""
+console.log("here")
   $rootEl = mount($nameInputElement, $rootEl);
   // activate waiting room event listeners
   // registerEvent('click', handleStartGame);
@@ -56,13 +55,13 @@ export const initializeWaitingRoom = () => {
 
 // Initialize Application
 export const initializeApp = () => {
-  setVApp(createVApp(playerNum)); // Create initial VApp
+  setVApp(createVApp(players.length)); // Create initial VApp
   $rootEl = mount(render(vApp), $rootEl); // Mount the initial app
 
-  spawnPlayers(playerNum);
-  console.log("playerNum", playerNum)
+  spawnPlayers(players.length);
+  console.log("playerNum", players.length)
   spawnSoftBlocks();
-  spawnBarPlayers(playerNum);
+  spawnBarPlayers(players.length);
 
   // Register events
   // Keydown

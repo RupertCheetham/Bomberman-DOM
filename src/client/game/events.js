@@ -130,7 +130,7 @@ export function handleEnterButton(event) {
       ws.send(JSON.stringify(codedPlayerData));
 
     initializeWaitingRoom()
-    refreshChatRoom()
+    // refreshChatRoom()
 }
 
 export function handleSendButton(event) {

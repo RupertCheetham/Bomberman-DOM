@@ -3,7 +3,7 @@ import { isWalkable } from "./map.js";
 import createElement from "../../vdom/createElement";
 import render from "../../vdom/render";
 
-import { initializeWaitingRoom } from "../../index.js";
+import { initializeNameInputRoom, initializeWaitingRoom } from "../../index.js";
 import { handlePowerUpCollection } from "./checkCollision.js";
 import { refreshChatRoom } from "../components/chatPlayerTimerBarCountdown.js";
 import { ws } from "../websocket/chat.js";
@@ -20,7 +20,7 @@ export const allPlayers = [player1, player2, player3, player4];
 
 
 
-// Use slice to limit the array to the number of players defined by playerNum
+// empty array that active (nicknamed) players gets added to
 export let players = []
 
 
@@ -69,22 +69,9 @@ export const startGameTimer = (duration) => {
 
 // Function to handle game end
 const endGame = () => {
-  console.log("playerNum", playerNum);
-
-  // Declare spawnedPlayers variable outside the if statements
-  let spawnedPlayers;
-
-  // Determine the spawnedPlayers based on playerNum
-  if (playerNum === 4) {
-    spawnedPlayers = players; // All players
-  } else if (playerNum === 3) {
-    spawnedPlayers = players.slice(0, 3); // First 3 players
-  } else if (playerNum === 2) {
-    spawnedPlayers = players.slice(0, 2); // First 2 players
-  }
 
   // Filter out players who still have lives
-  const activePlayers = spawnedPlayers.filter((player) => player.lives > 0);
+  const activePlayers = players.filter((player) => player.lives > 0);
   console.log("Active players:", activePlayers);
   const eliminatedPlayers = players.filter((player) => player.lives === 0);
 
@@ -466,7 +453,9 @@ function announceResults(results) {
   setTimeout(() => {
     document.body.removeChild(resultsDiv); // Remove after 10 seconds
 
-    // restart game after 10 seconds
-    initializeWaitingRoom();
+    // resets players
+    players = []
+    // restart back to name input room after 10 seconds
+    initializeNameInputRoom()
   }, 10000);
 }
