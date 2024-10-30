@@ -8,13 +8,11 @@ import { spawnPlayers } from './client/game/game.js';
 import diff from './vdom/diff.js';
 import { spawnSoftBlocks } from './client/game/map.js';
 import { waitingRoomElement } from './client/components/waitingRoom.js';
-import { handleStartGame } from './client/game/events.js';
-import { spawnChatTopBarPlayers } from './client/components/chatPlayerCountAndTimer.js';
-import { spawnChatTimerBarCountdown } from './client/components/chatPlayerCountAndTimer.js';
-import { sendMessage} from './client/websocket/chat.js';
 import { handleSendButton } from './client/game/events.js';
 import { $nameInputElement } from './client/components/nameInputRoom.js';
 import { handleEnterButton } from './client/game/events.js';
+import { spawnChatTimerBarCountdown } from './client/components/chatPlayerTimerBarCountdown.js';
+import { spawnChatTopBarPlayers } from './client/components/chatTopBarPlayers.js';
 
 
 let playerNum = players.length
@@ -51,7 +49,9 @@ export const initializeWaitingRoom = () => {
   window.onclick = handleEvent; // Global event handler
   window.ondblclick = handleEvent; // Global event handler
   // window.onmessage = handleEvent; // Global event handler
-  registerEvent('click', handleSendButton); 
+  registerEvent('click', handleSendButton);
+  spawnChatTopBarPlayers()
+  spawnChatTimerBarCountdown()
 }
 
 // Initialize Application
@@ -70,10 +70,8 @@ export const initializeApp = () => {
   // // Click
   // registerEvent('click', (event) => handleClickDelete(event, toDoList))
   // // Double Click
-  // registerEvent('dblclick', (event) => handleDoubleClickEdit(event, toDoList)); // example double click event
+  // registerEvent('dblclick', (event) => handleDoubleClickEdit(event, toDoList));
 
-
-  
   // Start the game loop
   requestAnimationFrame(gameLoop);
 };

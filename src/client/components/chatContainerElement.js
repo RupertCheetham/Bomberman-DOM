@@ -1,9 +1,8 @@
 import createElement from "../../vdom/createElement";
-import { spawnChatTopBarPlayers } from "./chatPlayerCountAndTimer";
 import render from "../../vdom/render";
 
 export const chatContainerElement = () => {
-        // Create the top bar container for players
+    // Create the top bar container for players
     const playerCounterBar = createElement("div", {
         attrs: {
             id: "top-bar",
@@ -18,7 +17,7 @@ export const chatContainerElement = () => {
                 border-radius: 8px;
             `
         },
-        children: [] 
+        children: []
     });
 
     // Create the chat heading
@@ -113,7 +112,7 @@ export const chatContainerElement = () => {
         },
         children: [] // Will be dynamically populated with 10 second countdown
     });
-    
+
 
     // Create the main chat container
     const chatContainer = createElement("div", {
@@ -134,21 +133,9 @@ export const chatContainerElement = () => {
         children: [playerCounterBar, chatHeading, chatDisplay, inputContainer, timerBar]
     });
 
-       // Render the chat container and return it
-   const renderedContainer = render(chatContainer);
-
-
-   //render(chatContainer);
-       
-//    spawnChatTopBarPlayers();
-       
-  
-      //return renderedContainer
-
-      return chatContainer;
-};
-
-
-//original
     // Render the chat container and return it
-    // return chatContainer;
+    const renderedContainer = render(chatContainer);
+
+
+    return chatContainer;
+};

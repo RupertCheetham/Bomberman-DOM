@@ -7,7 +7,7 @@ import { currentPlayerId } from "../websocket/chat";
 import { ws } from "../websocket/chat";
 import { addPlayer } from "../game/game";
 import { initializeWaitingRoom } from "../../index.js";
-import { refreshChatRoom } from "../components/chatPlayerCountAndTimer.js";
+import { refreshChatRoom } from "../components/chatPlayerTimerBarCountdown.js";
 
 export const bombLocations = []
 

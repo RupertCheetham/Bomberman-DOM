@@ -5,7 +5,7 @@ import render from "../../vdom/render";
 
 import { initializeWaitingRoom } from "../../index.js";
 import { handlePowerUpCollection } from "./checkCollision.js";
-import { refreshChatRoom } from "../components/chatPlayerCountAndTimer.js";
+import { refreshChatRoom } from "../components/chatPlayerTimerBarCountdown.js";
 import { ws } from "../websocket/chat.js";
 
 export let gameResults = "";

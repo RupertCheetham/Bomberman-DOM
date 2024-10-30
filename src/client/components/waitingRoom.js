@@ -1,7 +1,6 @@
 import createElement from "../../vdom/createElement";
 import render from "../../vdom/render";
 import { chatContainerElement } from "./chatContainerElement";
-import { spawnChatTopBarPlayers } from "./chatPlayerCountAndTimer";
 
 // const waitingRoomMap = `
 // +++++++++++++++

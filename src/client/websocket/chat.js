@@ -86,8 +86,6 @@ ws.onmessage = function (event) {
             }
             return
         case 2:
-            //  let allPlayerData = JSON.parse(messageData.players);
-            //  console.log("allPlayerData", allPlayerData)
             messageData.players.forEach(newPlayer => {
                 console.log("newPlayer", newPlayer)
                 const playerExists = players.some(player => player.id === `player${newPlayer.playerId}`);
