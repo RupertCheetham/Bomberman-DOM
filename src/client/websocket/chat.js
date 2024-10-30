@@ -79,18 +79,24 @@ ws.onmessage = function (event) {
 
     switch (messageData.code) {
         case 1:
+            console.log(1)
             let playerData = JSON.parse(event.data)
             if (playerData.playerId !== currentPlayerId) {
                 addPlayer(playerData.playerId, playerData.nickname)
             }
             return
         case 2:
-            let allPlayerData = JSON.parse(event.data)
-            console.log("allPlayerData", allPlayerData)
-            // if (playerData.playerId !== currentPlayerId) {
-            //     addPlayer(playerData.playerId, playerData.nickname)
-            // }
-            return
+            //  let allPlayerData = JSON.parse(messageData.players);
+            //  console.log("allPlayerData", allPlayerData)
+            messageData.players.forEach(newPlayer => {
+                console.log("newPlayer", newPlayer)
+                const playerExists = players.some(player => player.id === `player${newPlayer.playerId}`);
+                if (!playerExists) {
+                    addPlayer(newPlayer.playerId, newPlayer.nickname);
+                }
+
+            });
+            return;
         case 3:
 
             break;

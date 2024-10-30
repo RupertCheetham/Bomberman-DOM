@@ -107,14 +107,27 @@ export function handleEnterButton(event) {
         return;
     }
 
-    // Construct the nickname data object
-    const nicknameData = {
+    const playerData = {
         playerId: currentPlayerId,
         nickname: nicknameText
-    };
+      };
 
     addPlayer(currentPlayerId, nicknameText)
-    console.log("Sending nickname:", nicknameData);
+    console.log("Sending nickname:", playerData);
+
+   
+    
+      console.log("playerData", playerData)
+      let playerJSON = JSON.stringify(playerData)
+    
+      // Adds Code to player data so that the backend will know where to send it
+      let codedPlayerData = {
+        Code: 1,
+        wsm: playerJSON
+      }
+    
+      // console.log("Sending message:", messageData);
+      ws.send(JSON.stringify(codedPlayerData));
 
     initializeWaitingRoom()
     refreshChatRoom()

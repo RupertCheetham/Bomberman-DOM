@@ -35,23 +35,8 @@ export const addPlayer = (playerId, nickname) => {
   players.push(currentPlayer)
 
   console.log('players array', players)
-  // refreshChatRoom()
-  const playerData = {
-    playerId: playerId,
-    nickname: currentPlayer.nickname
-  };
+  refreshChatRoom()
 
-  console.log("playerData", playerData)
-  let playerJSON = JSON.stringify(playerData)
-
-  // Adds Code to player data so that the backend will know where to send it
-  let codedPlayerData = {
-    Code: 1,
-    wsm: playerJSON
-  }
-
-  // console.log("Sending message:", messageData);
-  ws.send(JSON.stringify(codedPlayerData));
 };
 
 let countdownInterval

@@ -64,10 +64,13 @@ func main() {
 func getAllPlayerInfo() []PlayerInfo {
 	var allPlayers []PlayerInfo
 	for client := range clients {
-		allPlayers = append(allPlayers, PlayerInfo{
-			PlayerId: client.playerId,
-			Nickname: client.nickname,
-		})
+		// holds off on adding client data if they haven't chosen a nickname yet
+		if client.nickname != "" {
+			allPlayers = append(allPlayers, PlayerInfo{
+				PlayerId: client.playerId,
+				Nickname: client.nickname,
+			})
+		}
 
 	}
 	return allPlayers
