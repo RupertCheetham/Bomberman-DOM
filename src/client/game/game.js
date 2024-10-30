@@ -335,7 +335,7 @@ export const handleKeyPress = (event) => {
 const barPlayer1 = { x: 0, y: 0, id: "player1", lives: 3 };
 const barPlayer2 = { x: 0, y: 1, id: "player2", lives: 3 };
 const barPlayer3 = { x: 9, y: 0, id: "player3", lives: 3 };
-const barPlayer4 = { x: 9, y: 2, id: "player4", lives: 3 };
+const barPlayer4 = { x: 9, y: 1, id: "player4", lives: 3 };
 
 export const barPlayers = [barPlayer1, barPlayer2, barPlayer3, barPlayer4];
 
