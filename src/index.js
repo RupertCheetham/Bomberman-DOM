@@ -27,7 +27,7 @@ export const setVApp = (newVApp) => {
 export const initializeNameInputRoom = () => {
 
   $rootEl.innerHTML = ""
-console.log("here")
+  console.log("here")
   $rootEl = mount($nameInputElement, $rootEl);
   // activate waiting room event listeners
   // registerEvent('click', handleStartGame);

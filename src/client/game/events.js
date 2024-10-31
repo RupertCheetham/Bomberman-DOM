@@ -129,6 +129,7 @@ export function handleEnterButton(event) {
       // console.log("Sending message:", messageData);
       ws.send(JSON.stringify(codedPlayerData));
 
+      input.value = '';
     initializeWaitingRoom()
     // refreshChatRoom()
 }

@@ -39,11 +39,17 @@ export const addPlayer = (playerId, nickname) => {
 
 };
 
-let countdownInterval
+let countdownInterval; // Declare globally to track the interval
+
 // Function to start the game timer on page load
 export const startGameTimer = (duration) => {
   const timerDisplay = document.querySelector(".game-timer");
   let timeRemaining = duration;
+
+  // Clear any existing interval to avoid multiple timers running
+  if (countdownInterval) {
+    clearInterval(countdownInterval);
+  }
 
   countdownInterval = setInterval(() => {
     // Update the timer display
@@ -51,21 +57,50 @@ export const startGameTimer = (duration) => {
     const seconds = timeRemaining % 60;
 
     // Format minutes and seconds (e.g., 1:05)
-    timerDisplay.innerHTML = `Time Remaining: ${minutes}:${seconds < 10 ? "0" : ""
-      }${seconds}`;
+    timerDisplay.innerHTML = `Time Remaining: ${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
 
     if (timeRemaining <= 0) {
-      clearInterval(countdownInterval);
+      clearInterval(countdownInterval); // Clear the interval when time is up
       timerDisplay.innerHTML = "Time's up! Game Over!";
 
       // Trigger any game-ending logic here
       endGame();
-      // initializeWaitingRoom();
+      //initializeWaitingRoom();
     }
 
     timeRemaining -= 1;
   }, 1000);
 };
+
+
+
+// let countdownInterval
+// // Function to start the game timer on page load
+// export const startGameTimer = (duration) => {
+//   const timerDisplay = document.querySelector(".game-timer");
+//   let timeRemaining = duration;
+
+//   countdownInterval = setInterval(() => {
+//     // Update the timer display
+//     const minutes = Math.floor(timeRemaining / 60);
+//     const seconds = timeRemaining % 60;
+
+//     // Format minutes and seconds (e.g., 1:05)
+//     timerDisplay.innerHTML = `Time Remaining: ${minutes}:${seconds < 10 ? "0" : ""
+//       }${seconds}`;
+
+//     if (timeRemaining <= 0) {
+//       clearInterval(countdownInterval);
+//       timerDisplay.innerHTML = "Time's up! Game Over!";
+
+//       // Trigger any game-ending logic here
+//       endGame();
+//       // initializeWaitingRoom();
+//     }
+
+//     timeRemaining -= 1;
+//   }, 1000);
+// };
 
 // Function to handle game end
 const endGame = () => {
@@ -445,9 +480,12 @@ function announceResults(results) {
 
   // Append the results text to the results div
   resultsDiv.appendChild(resultsText);
+  console.log("body", document.body)
 
   // Append the results div to the body
   document.body.appendChild(resultsDiv);
+
+  
 
   // Remove the results div after 10 seconds
   setTimeout(() => {
@@ -455,7 +493,15 @@ function announceResults(results) {
 
     // resets players
     players = []
+    console.log("players should be empty here", players)
+
+    //try this 
+    //players.length = 0
+
     // restart back to name input room after 10 seconds
     initializeNameInputRoom()
+    refreshChatRoom()
   }, 10000);
+ 
+ // 
 }

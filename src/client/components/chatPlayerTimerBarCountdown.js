@@ -106,4 +106,3 @@ spawnChatTopBarPlayers()
 }
 
 
-//need to change these timers back to 30 seconds (line 118) and 10 seconds (line 139)
