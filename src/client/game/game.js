@@ -489,7 +489,7 @@ export function removeLife(player, gameMap) {
   const playerLivesElement = document.querySelector(`.${player.id}-lives`);
   if (playerLivesElement) {
     // Update the lives text inside the element, keeping the format
-    playerLivesElement.textContent = `Player ${player.id[6]} - Lives: ${players[playerIndex].lives}`;
+    playerLivesElement.textContent = `${player.nickname} - Lives: ${players[playerIndex].lives}`;
   }
 
   // Check if the player's lives are zero
