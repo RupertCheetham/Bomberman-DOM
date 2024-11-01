@@ -310,7 +310,7 @@ func handleConnections(w http.ResponseWriter, r *http.Request) {
 			}
 			// Broadcast bomb location to all clients
 			for c := range clients {
-				err := c.conn.WriteJSON(bomb)
+				err := c.conn.WriteJSON(decodedMSG)
 				if err != nil {
 					log.Printf("error: %v", err)
 					c.conn.Close()

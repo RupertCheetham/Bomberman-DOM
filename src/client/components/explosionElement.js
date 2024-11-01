@@ -7,7 +7,6 @@ import { removeLife } from "../game/game";
 import { createPowerUpElement } from "../game/map";
 
 export function spawnExplosion(player, x, y) {
-    console.log("this is player", player.id)
     const gameMap = document.querySelector('.gameMap');
 
     // Check if the player has the flame power-up

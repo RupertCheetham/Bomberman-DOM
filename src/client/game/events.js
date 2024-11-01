@@ -86,7 +86,7 @@ let gameStarted = false;
 export function handleStartGame() {
     // Start the game timer for 5 minutes (300 seconds) when the page loads
     if (!gameStarted) {
-    const gameDuration = 20; // 5 minutes in seconds
+    const gameDuration = 300; // 5 minutes in seconds
     startGameTimer(gameDuration)
 
     // Only initialize the app if it hasn't started yet

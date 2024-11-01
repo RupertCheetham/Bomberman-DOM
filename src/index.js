@@ -62,7 +62,6 @@ export const initializeApp = () => {
 console.log("initializeApp is called")
 
   spawnPlayers(players.length);
-  console.log("playerNum", players.length)
   spawnSoftBlocks();
   spawnBarPlayers(players.length);
 

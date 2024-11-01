@@ -100,14 +100,20 @@ ws.onmessage = function (event) {
             let playerPOSObject = JSON.parse(messageData.wsm)
             let playerId = playerPOSObject.playerId
             console.log("player", playerId, "is at X:", playerPOSObject.x, " Y: ", playerPOSObject.y)
-            const foundPlayer = players.find(player => player.id === playerId);
+            let foundPlayer = players.find(player => player.id === playerId);
             foundPlayer.x = playerPOSObject.x
             foundPlayer.y = playerPOSObject.y
             updatePlayerPosition(foundPlayer)
             return;
         case 4:
             // player drop bomb
+            let playerBombObject = JSON.parse(messageData.wsm)
+             playerId = playerBombObject.playerId
+             console.log("bomb wsm", messageData.wsm)
+
+console.log("BOMB")
             foundPlayer = players.find(player => player.id === playerId);
+            console.log("foundPlayer", foundPlayer)
             spawnBomb(foundPlayer)
             return;
         case 5:

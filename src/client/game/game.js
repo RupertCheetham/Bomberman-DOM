@@ -212,18 +212,12 @@ export const updatePlayerPosition = (player) => {
 
   // Log the grid position before moving to a new place
   if (playerElement) {
-    console.log(
-      `Before move: Player ${player.id} at grid position X = ${player.x}, Y = ${player.y}`
-    );
-
+  
     // Apply the grid position to the CSS grid properties
     playerElement.style.gridColumnStart = player.x + 1; // Add 1 since grid starts at 1
     playerElement.style.gridRowStart = player.y + 1; // Add 1 since grid starts at 1
 
-    // Log the player and its updated grid position for debugging
-    console.log(
-      `After move: Player ${player.id} moved to grid position X = ${player.x}, Y = ${player.y}`
-    );
+   
 
 
 
@@ -332,6 +326,16 @@ export const handleKeyPress = (event) => {
       break;
     case " ":
       if (isPlayer1Active) spawnBomb(player1);
+      let playerId = player1.id
+      let playerJSON = JSON.stringify({playerId})
+
+      let codedPlayerData = {
+        Code: 4,
+        wsm: playerJSON
+      }
+
+      // console.log("Sending message:", messageData);
+      ws.send(JSON.stringify(codedPlayerData));
       break;
 
     // Player 2 Controls (WASD + F for bomb)
@@ -349,6 +353,16 @@ export const handleKeyPress = (event) => {
       break;
     case "f":
       if (isPlayer2Active) spawnBomb(player2);
+      playerId = player2.id
+      playerJSON = JSON.stringify({playerId})
+
+       codedPlayerData = {
+        Code: 4,
+        wsm: playerJSON
+      }
+
+      // console.log("Sending message:", messageData);
+      ws.send(JSON.stringify(codedPlayerData));
       break;
 
     // Player 3 Controls (IJKL + ; for bomb)
@@ -366,6 +380,16 @@ export const handleKeyPress = (event) => {
       break;
     case ";":
       if (isPlayer3Active) spawnBomb(player3);
+      playerId = player3.id
+      playerJSON = JSON.stringify({playerId})
+
+      codedPlayerData = {
+       Code: 4,
+       wsm: playerJSON
+     }
+
+     // console.log("Sending message:", messageData);
+     ws.send(JSON.stringify(codedPlayerData));
       break;
 
     // Player 4 Controls (5RTY + U for bomb)
@@ -383,6 +407,16 @@ export const handleKeyPress = (event) => {
       break;
     case "u":
       if (isPlayer4Active) spawnBomb(player4);
+      playerId = player4.id
+      playerJSON = JSON.stringify({playerId})
+
+      codedPlayerData = {
+       Code: 4,
+       wsm: playerJSON
+     }
+
+     // console.log("Sending message:", messageData);
+     ws.send(JSON.stringify(codedPlayerData));
       break;
 
     default:
@@ -439,9 +473,6 @@ export function removeLife(player, gameMap) {
   if (playerIndex !== -1) {
     // Decrease the player's lives
     players[playerIndex].lives--;
-
-    x = players[playerIndex].x;
-    y = players[playerIndex].y;
 
     //add playerHit(x, y) and it's styling and setTimeout(() => , 200);
     const hitElement = playerHit(
