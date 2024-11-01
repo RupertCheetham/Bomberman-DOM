@@ -58,6 +58,8 @@ export const initializeApp = () => {
   setVApp(createVApp(players.length)); // Create initial VApp
   $rootEl = mount(render(vApp), $rootEl); // Mount the initial app
 
+console.log("initializeApp is called")
+
   spawnPlayers(players.length);
   console.log("playerNum", players.length)
   spawnSoftBlocks();
