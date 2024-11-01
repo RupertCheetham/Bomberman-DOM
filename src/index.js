@@ -26,6 +26,7 @@ export const setVApp = (newVApp) => {
 };
 
 export const initializeNameInputRoom = () => {
+  console.log("Stopping animation frame:", animationFrameId);
   cancelAnimationFrame(animationFrameId); // Stop any ongoing game loop
   $rootEl.innerHTML = ""
   console.log("here")
@@ -75,12 +76,13 @@ export const initializeApp = () => {
 
 // Game loop function using requestAnimationFrame
 const gameLoop = (timestamp) => {
-  const deltaTime = timestamp - lastTime; // Calculate the time difference
+  const deltaTime = timestamp - lastTime;
   lastTime = timestamp;
-  updateGameState(deltaTime);  // Update the game state
-  renderFrame();  // Re-render the virtual DOM
+  updateGameState(deltaTime);
+  renderFrame();
+
   // Request the next frame and save its ID
-  animationFrameId = requestAnimationFrame(gameLoop);
+  animationFrameId = requestAnimationFrame(gameLoop); // Make sure animationFrameId is updated
 };
 
 // Function to update the game state
