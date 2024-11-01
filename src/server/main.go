@@ -46,24 +46,24 @@ type Message struct {
 }
 
 type PlayerPosition struct {
-	PlayerId int `json:"playerId"` // Use JSON struct tags to match JSON keys
-	X        int `json:"x"`        // Use JSON struct tags to match JSON keys
-	Y        int `json:"y"`        // Use JSON struct tags to match JSON keys
+	PlayerId string `json:"playerId"` // Use JSON struct tags to match JSON keys
+	X        int    `json:"x"`        // Use JSON struct tags to match JSON keys
+	Y        int    `json:"y"`        // Use JSON struct tags to match JSON keys
 }
 
 type BombData struct {
-	PlayerId int `json:"playerId"`
+	PlayerId string `json:"playerId"`
 }
 
 type PlayerLives struct {
-	PlayerId int `json:"playerId"`
+	PlayerId string `json:"playerId"`
 }
 
 type PowerUpData struct {
-	PlayerId            int  `json:"playerId"`
-	HandleasPowerUpBomb bool `json:"hasPowerUpBomb"`
-	HasPowerUpFlames    bool `json:"hasPowerUpFlames"`
-	HasPowerUpSpeed     bool `json:"hasPowerUpSpeed"`
+	PlayerId            string `json:"playerId"`
+	HandleasPowerUpBomb bool   `json:"hasPowerUpBomb"`
+	HasPowerUpFlames    bool   `json:"hasPowerUpFlames"`
+	HasPowerUpSpeed     bool   `json:"hasPowerUpSpeed"`
 }
 
 func main() {
@@ -292,7 +292,7 @@ func handleConnections(w http.ResponseWriter, r *http.Request) {
 			}
 			// Broadcast position to all clients
 			for c := range clients {
-				err := c.conn.WriteJSON(position)
+				err := c.conn.WriteJSON(decodedMSG)
 				if err != nil {
 					log.Printf("error: %v", err)
 					c.conn.Close()

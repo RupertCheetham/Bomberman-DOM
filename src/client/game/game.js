@@ -226,21 +226,7 @@ export const updatePlayerPosition = (player) => {
     );
 
 
-    const playermovementJSON = JSON.stringify({
-      playerId: player.id,
-      x: player.x,
-      y: player.y,
-    })
 
-    let codedplayerMovementData = {
-      Code: 3,
-      wsm: playermovementJSON
-    }
-
-
-
-    // console.log("Sending message:", messageData);
-    ws.send(JSON.stringify(codedplayerMovementData));
   } else {
     console.warn(`Player element with id ${player.id} not found`);
   }
@@ -295,6 +281,23 @@ const movePlayer = (player, direction, players) => {
       handlePowerUpCollection(player, gameMap);
     }
   }
+
+  const playermovementJSON = JSON.stringify({
+    playerId: player.id,
+    x: player.x,
+    y: player.y,
+  })
+
+  let codedplayerMovementData = {
+    Code: 3,
+    wsm: playermovementJSON
+  }
+
+
+
+  // console.log("Sending message:", messageData);
+  ws.send(JSON.stringify(codedplayerMovementData));
+
 };
 
 

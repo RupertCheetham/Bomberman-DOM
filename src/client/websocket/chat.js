@@ -97,12 +97,12 @@ ws.onmessage = function (event) {
             return;
         case 3:
             // player position
-
-            let playerId = messageData.playerId
-            console.log("player", playerId, "is at X:", messageData.x, " Y: ", messageData.y)
+            let playerPOSObject = JSON.parse(messageData.wsm)
+            let playerId = playerPOSObject.playerId
+            console.log("player", playerId, "is at X:", playerPOSObject.x, " Y: ", playerPOSObject.y)
             const foundPlayer = players.find(player => player.id === playerId);
-            foundPlayer.x = messageData.x
-            foundPlayer.y = messageData.y
+            foundPlayer.x = playerPOSObject.x
+            foundPlayer.y = playerPOSObject.y
             updatePlayerPosition(foundPlayer)
             return;
         case 4:
