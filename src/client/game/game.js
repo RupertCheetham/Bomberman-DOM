@@ -35,8 +35,12 @@ export const addPlayer = (playerId, nickname) => {
   players.push(currentPlayer)
 
   console.log('players array', players)
-  refreshChatRoom()
 
+  let currentBarPlayer = barPlayers[playerId - 1]
+  currentBarPlayer.nickname = nickname
+  barPlayers.push(currentBarPlayer)
+
+  refreshChatRoom()
 };
 
 let countdownInterval; // Declare globally to track the interval
@@ -116,8 +120,8 @@ const endGame = () => {
     gameResults += "Game over! All players have been eliminated. It's a draw!";
   } else if (activePlayers.length === 1) {
     // If there's only one active player, they win
-    console.log(`Game over! Player ${activePlayers[0].id[6]} wins!`);
-    gameResults += "Game over! Player " + activePlayers[0].id[6] + " wins!";
+    console.log(`Game over! Player ${activePlayers[0].nickname} wins!`);
+    gameResults += "Game over! Player " + activePlayers[0].nickname + " wins!";
   } else {
     // Check if all active players have the same number of lives
     const sameLives = activePlayers.every(
@@ -126,8 +130,8 @@ const endGame = () => {
 
     if (sameLives) {
       // All active players draw
-      const playerIds = activePlayers
-        .map((player) => `Player ${player.id[6]}`)
+      const playerNicknames = activePlayers
+        .map((player) => `Player ${player.nickname}`)
         .join(", ");
       console.log(`Game over! All players draw!`);
       gameResults += "Game over! All players draw!";
@@ -141,24 +145,24 @@ const endGame = () => {
       );
 
       if (winners.length === 1) {
-        console.log(`Game over! Player ${winners[0].id[6]} wins!`);
-        gameResults += "Game over! Player " + winners[0].id[6] + " wins!";
+        console.log(`Game over! Player ${winners[0].nickname} wins!`);
+        gameResults += "Game over! Player " + winners[0].nickname + " wins!";
       } else {
         // Specific players who draw with the highest lives
-        const playerIds = winners
-          .map((player) => `Player ${player.id[6]}`)
+        const winnerNicknames = winners
+          .map((player) => `Player ${player.nickname}`)
           .join(" and ");
-        console.log(`Game over! ${playerIds} draw!`);
-        gameResults += "Game over! " + playerIds + " draw!";
+        console.log(`Game over! ${winnerNicknames} draw!`);
+        gameResults += "Game over! " + winnerNicknames + " draw!";
       }
     }
 
     // Announce players who have been eliminated
     if (eliminatedPlayers.length > 0) {
-      const eliminatedIds = eliminatedPlayers
-        .map((player) => `Player ${player.id[6]}`)
+      const eliminatedNicknames = eliminatedPlayers
+        .map((player) => `Player ${player.nickname}`)
         .join(", ");
-      console.log(`Eliminated: ${eliminatedIds}`);
+      console.log(`Eliminated: ${eliminatedNicknames}`);
     }
   }
 
@@ -367,16 +371,17 @@ export const handleKeyPress = (event) => {
   }
 };
 
-const barPlayer1 = { x: 0, y: 0, id: "player1", lives: 3 };
-const barPlayer2 = { x: 0, y: 1, id: "player2", lives: 3 };
-const barPlayer3 = { x: 9, y: 0, id: "player3", lives: 3 };
-const barPlayer4 = { x: 9, y: 1, id: "player4", lives: 3 };
+const barPlayer1 = { x: 0, y: 0, id: "player1", lives: 3, nickname: player1.nickname };
+const barPlayer2 = { x: 0, y: 1, id: "player2", lives: 3, nickname: player2.nickname };
+const barPlayer3 = { x: 9, y: 0, id: "player3", lives: 3, nickname: player3.nickname };
+const barPlayer4 = { x: 9, y: 1, id: "player4", lives: 3, nickname: player4.nickname };
 
 export const barPlayers = [barPlayer1, barPlayer2, barPlayer3, barPlayer4];
 
 export const spawnBarPlayers = (playerNum) => {
   for (let i = 0; i < playerNum; i++) {
     const player = barPlayers[i];
+    console.log("player.nickname", player.nickname)
     const vPlayerElement = createElement("div", {
       attrs: {
         class: `${player.id}`, // Give the player a unique class
@@ -385,6 +390,7 @@ export const spawnBarPlayers = (playerNum) => {
       },
     });
 
+    console.log("player.nickname", player.nickname)
     // Create the lives text element, positioned one space to the right (x + 2)
     const vLivesText = createElement("div", {
       attrs: {
@@ -392,7 +398,7 @@ export const spawnBarPlayers = (playerNum) => {
         style: `grid-column-start: ${player.x + 2}; grid-row-start: ${player.y + 1
           }; position: absolute;`, // Position the text one column to the right
       },
-      children: [`Player ${player.id[6]} - Lives: ${player.lives}`], // Display initial lives
+      children: [`${player.nickname} - Lives: ${player.lives}`], // Display initial lives
     });
 
     // Render and append both player and lives elements to the game map
