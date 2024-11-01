@@ -1,6 +1,7 @@
 // chat goes here
 // Below is copied from index.html, need (small?) refactor
-import { addPlayer, players } from "../game/game";
+import { spawnBomb } from "../game/events";
+import { addPlayer, players, updatePlayerPosition } from "../game/game";
 
 export const ws = new WebSocket("ws://localhost:8080/ws");
 export let currentPlayerId; // Declare without initializing
@@ -96,8 +97,26 @@ ws.onmessage = function (event) {
             });
             return;
         case 3:
+            // player position
 
-            break;
+            let playerId = messageData.playerId
+            console.log("player", playerId, "is at X:", messageData.x, " Y: ", messageData.y)
+            const foundPlayer = players.find(player => player.id === playerId);
+            foundPlayer.x = messageData.x
+            foundPlayer.y = messageData.y
+            updatePlayerPosition(foundPlayer)
+            return;
+        case 4:
+            // player drop bomb
+            foundPlayer = players.find(player => player.id === playerId);
+            spawnBomb(foundPlayer)
+            return;
+        case 5:
+            // player lives... May be unnecessary 
+            return;
+        case 6:
+            // player power up data
+            return;
         default:
             break;
     }

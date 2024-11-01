@@ -233,7 +233,7 @@ const speedPowerUpCooldown = 100; // 100ms with power-up
 const lastMoveTimes = {};
 
 //Move player with collision detection
-const movePlayer = (player, direction, players) => {
+ const movePlayer = (player, direction, players) => {
 
   const gameMap = document.querySelector('.gameMap');
   const currentTime = Date.now();
@@ -406,7 +406,7 @@ export const spawnBarPlayers = (playerNum) => {
 
 // function to remove player lives if hit by explosion, if all lives lost then removal from map
 // also updates the scoreboard and players array and triggers endGame if a winner is found
-export function removeLife(player, gameMap, x, y) {
+export function removeLife(player, gameMap) {
   // Find the player in the players array
   const playerIndex = players.findIndex((p) => p.id === player.id);
 
