@@ -1,4 +1,4 @@
-export const eventRegistry = {}; // Object to store event listeners
+export let eventRegistry = {}; // Object to store event listeners
 
 // Function to register events and their handlers
 export const registerEvent = (eventType, handler) => {

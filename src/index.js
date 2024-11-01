@@ -2,7 +2,7 @@ import render from './vdom/render';
 import mount from './vdom/mount';
 import { createVApp } from './vdom/createVApp';
 import { handleEvent } from './vdom/events/eventHelpers/handleEvent';
-import { registerEvent } from './vdom/events/eventHelpers/registerEvent';
+import { eventRegistry, registerEvent } from './vdom/events/eventHelpers/registerEvent';
 import { handleKeyPress, players, spawnBarPlayers } from './client/game/game.js';
 import { spawnPlayers } from './client/game/game.js';
 import diff from './vdom/diff.js';
@@ -26,6 +26,10 @@ export const setVApp = (newVApp) => {
 };
 
 export const initializeNameInputRoom = () => {
+  Object.keys(eventRegistry).forEach(key => {
+    delete eventRegistry[key];
+  });
+  console.log("initializeNameInputRoom: eventRegistry.length", Object.keys(eventRegistry).length)
   console.log("Stopping animation frame:", animationFrameId);
   cancelAnimationFrame(animationFrameId); // Stop any ongoing game loop
   $rootEl.innerHTML = ""
@@ -41,6 +45,11 @@ export const initializeNameInputRoom = () => {
 }
 
 export const initializeWaitingRoom = () => {
+  Object.keys(eventRegistry).forEach(key => {
+    delete eventRegistry[key];
+  });  
+  console.log("initializeWaitingRoom: eventRegistry.length", Object.keys(eventRegistry).length)
+
 
   $rootEl = mount(waitingRoomElement(), $rootEl);
   //registerEvent('click', handleStartGame);
@@ -56,6 +65,11 @@ export const initializeWaitingRoom = () => {
 
 // Initialize Application
 export const initializeApp = () => {
+  Object.keys(eventRegistry).forEach(key => {
+    delete eventRegistry[key];
+  });  console.log("initializeApp: eventRegistry.length", Object.keys(eventRegistry).length)
+
+
   setVApp(createVApp(players.length)); // Create initial VApp
   $rootEl = mount(render(vApp), $rootEl); // Mount the initial app
 
