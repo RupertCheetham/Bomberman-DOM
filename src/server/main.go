@@ -97,98 +97,6 @@ func getAllPlayerInfo() []PlayerInfo {
 	return allPlayers
 }
 
-// Handle incoming WebSocket connections
-// func handleConnections(w http.ResponseWriter, r *http.Request) {
-// 	if len(clients) >= maxClients {
-// 		http.Error(w, "Server full", http.StatusForbidden)
-// 		return
-// 	}
-
-// 	ws, err := upgrader.Upgrade(w, r, nil)
-// 	if err != nil {
-// 		log.Fatal(err)
-// 	}
-// 	defer ws.Close()
-
-// 	var playerId int
-// 	if len(availablePlayerIds) > 0 {
-// 		playerId = availablePlayerIds[0]
-// 		availablePlayerIds = availablePlayerIds[1:]
-// 	} else {
-// 		return
-// 	}
-
-// 	client := &Client{conn: ws, playerId: playerId}
-// 	clients[client] = true
-// 	log.Printf("Player %d connected", playerId)
-
-// 	initialMessage := Message{PlayerId: playerId}
-// 	if err := ws.WriteJSON(initialMessage); err != nil {
-// 		log.Printf("error: %v", err)
-// 		return
-// 	}
-
-// 	for {
-// 		_, msg, err := ws.ReadMessage()
-// 		if err != nil {
-// 			log.Printf("error: %v", err)
-// 			delete(clients, client)
-// 			availablePlayerIds = append(availablePlayerIds, playerId)
-// 			break
-// 		}
-
-// 		var decodedMSG CodedMessage
-// 		err = json.Unmarshal(msg, &decodedMSG)
-// 		if err != nil {
-// 			log.Println("Error decoding message:", err)
-// 			return
-// 		}
-
-// 		var playerInfo PlayerInfo
-
-// 		if decodedMSG.Code == 1 {
-// 			err := json.Unmarshal([]byte(decodedMSG.Wsm), &playerInfo)
-// 			if err != nil {
-// 				log.Println("Error decoding player info:", err)
-// 				return
-// 			}
-
-// 			// Update the client's nickname
-// 			client.nickname = playerInfo.Nickname
-// 			log.Printf("Player %d set nickname to %s", client.playerId, client.nickname)
-
-// 			// Get the list of all players and their nicknames
-// 			allPlayers := getAllPlayerInfo()
-
-// 			// Create the response message with the updated list
-// 			playerListMessage := struct {
-// 				Code    int          `json:"code"`
-// 				Players []PlayerInfo `json:"players"`
-// 			}{
-// 				Code:    2, // Define 2 as the code for broadcasting player lists
-// 				Players: allPlayers,
-// 			}
-
-// 			// Send the list to all clients except the sender
-// 			for c := range clients {
-
-// 				err := c.conn.WriteJSON(playerListMessage)
-// 				if err != nil {
-// 					log.Printf("error: %v", err)
-// 					c.conn.Close()
-// 					delete(clients, c)
-// 					availablePlayerIds = append(availablePlayerIds, c.playerId)
-// 				}
-
-// 			}
-// 			continue
-// 		}
-
-// 		// Normal message broadcast
-// 		broadcast <- Message{PlayerId: client.playerId, Text: string(msg)}
-// 	}
-// }
-
 // Handle broadcasting messages to all clients
 func handleMessages() {
 	for {
@@ -308,7 +216,7 @@ func handleConnections(w http.ResponseWriter, r *http.Request) {
 				log.Println("Error decoding bomb data:", err)
 				return
 			}
-			// Broadcast bomb location to all clients
+			// Broadcast player dropping bomb to all clients
 			for c := range clients {
 				err := c.conn.WriteJSON(decodedMSG)
 				if err != nil {
