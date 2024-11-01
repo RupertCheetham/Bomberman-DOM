@@ -493,10 +493,8 @@ function announceResults(results) {
 
     // resets players
     players = []
-    console.log("players should be empty here", players)
+    console.log("players should be empty here:", players)
 
-    //try this 
-    //players.length = 0
 
     // restart back to name input room after 10 seconds
     initializeNameInputRoom()
