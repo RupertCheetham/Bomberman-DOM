@@ -147,20 +147,27 @@ export const isPositionWalkableBySoftBlocks = (x, y) => {
 // Array to store power-up types
 const powerUps = ['hasPowerUpBomb', 'hasPowerUpFlames', 'hasPowerUpSpeed'];
 
-// Function to randomly assign power-ups to 3 soft blocks
+// Function to assign power-ups to 3 soft blocks
 export const assignPowerUpsToSoftBlocks = () => {
-    // Shuffle the softBlocks array and pick the first 3 blocks
-    const shuffledBlocks = softBlocks.sort(() => Math.random() - 0.5);
-    const selectedBlocks = shuffledBlocks.slice(0, 3); // Pick 3 random soft blocks
+    // Directly assign power-ups to specific soft blocks by index or ID
+    const powerUpAssignments = [
+        { blockIndex: 3, powerUp: 'hasPowerUpBomb' },
+        { blockIndex: 6, powerUp: 'hasPowerUpFlames' },
+        { blockIndex: 9, powerUp: 'hasPowerUpSpeed' }
+    ];
 
-    // Assign each block a power-up
-    selectedBlocks.forEach((block, index) => {
-        block.powerUp = powerUps[index]; // Assign one of the power-ups
+    // Apply the power-up to each specified soft block
+    powerUpAssignments.forEach(({ blockIndex, powerUp }) => {
+        const block = softBlocks[blockIndex];
+        if (block) {
+            block.powerUp = powerUp;
+        }
     });
 
-    console.log("Power-ups assigned to soft blocks:", selectedBlocks);
-    return selectedBlocks; // Return blocks with power-ups
+    console.log("Power-ups assigned to soft blocks:", powerUpAssignments);
+    return powerUpAssignments; // Return the list of blocks with assigned power-ups
 };
+
 
 
 // Function to create a power-up element based on the type
