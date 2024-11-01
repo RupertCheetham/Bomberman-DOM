@@ -17,6 +17,7 @@ import { spawnChatTopBarPlayers } from './client/components/chatTopBarPlayers.js
 let $rootEl = document.getElementById('root');
 let vApp;
 let lastTime = 0;  // To track the time difference for game updates
+let animationFrameId;
 
 // Getters and Setters for Virtual DOM
 export const getVApp = () => vApp;
@@ -25,7 +26,7 @@ export const setVApp = (newVApp) => {
 };
 
 export const initializeNameInputRoom = () => {
-
+  cancelAnimationFrame(animationFrameId); // Stop any ongoing game loop
   $rootEl.innerHTML = ""
   console.log("here")
   $rootEl = mount($nameInputElement, $rootEl);
@@ -36,7 +37,6 @@ export const initializeNameInputRoom = () => {
   // Activate event handler
   window.onkeydown = handleEvent; // Global event handler
   window.onclick = handleEvent; // Global event handler
-  window.ondblclick = handleEvent; // Global event handler
 }
 
 export const initializeWaitingRoom = () => {
@@ -66,10 +66,7 @@ export const initializeApp = () => {
   // Register events
   // Keydown
   registerEvent('keydown', handleKeyPress); // Keydown for Enter key to add items
-  // // Click
-  // registerEvent('click', (event) => handleClickDelete(event, toDoList))
-  // // Double Click
-  // registerEvent('dblclick', (event) => handleDoubleClickEdit(event, toDoList));
+
 
   // Start the game loop
   requestAnimationFrame(gameLoop);
@@ -82,8 +79,8 @@ const gameLoop = (timestamp) => {
   lastTime = timestamp;
   updateGameState(deltaTime);  // Update the game state
   renderFrame();  // Re-render the virtual DOM
-  // Recursively call gameLoop for the next frame
-  requestAnimationFrame(gameLoop);
+  // Request the next frame and save its ID
+  animationFrameId = requestAnimationFrame(gameLoop);
 };
 
 // Function to update the game state
@@ -99,26 +96,28 @@ const updateGameState = (deltaTime) => {
 
 // Function to render the current frame
 const renderFrame = () => {
-  let currentVApp = getVApp()
-  const newVApp = createVApp(); // Create new virtual DOM representation based on updated state
-  let patch = diff(currentVApp, newVApp)
+  const currentVApp = getVApp();
+  const newVApp = createVApp(); // Re-create VApp with the updated state
 
+  const patch = diff(currentVApp, newVApp);
   const newRootEl = patch($rootEl);
-  setVApp(newVApp);  // Update the virtual DOM
-  updateRootEl(newRootEl);  // Update the DOM
+
+  setVApp(newVApp);  // Update to the latest VApp state
+  updateRootEl(newRootEl);  // Refresh root element in DOM
 };
 
 // Update the root element in the DOM
 export function updateRootEl(newRootEl) {
-  let $rootEl = newRootEl; // Update the reference
-  const oldRoot = document.getElementById('root');
+  $rootEl = newRootEl; // Remove `let` to ensure `$rootEl` is updated globally
 
+  const oldRoot = document.getElementById('root');
   if (oldRoot && oldRoot.parentNode) {
-    oldRoot.parentNode.replaceChild($rootEl, oldRoot); // Replace the old root element with the new one
+    oldRoot.parentNode.replaceChild($rootEl, oldRoot);
   } else {
     console.warn("Could not find old root element to replace");
   }
 }
+
 
 // Initialize the application
 // initializeWaitingRoom()
