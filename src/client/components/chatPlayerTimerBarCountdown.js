@@ -8,7 +8,6 @@ import { spawnChatTopBarPlayers } from "./chatTopBarPlayers";
 export function spawnChatTimerBarCountdown() {
 
     let playerNum = players.length;
-    console.log("players.length is", players.length);
 
     const timerBar = document.getElementById('timer-bar'); // Get the top-bar element
     if (!timerBar) {
@@ -101,7 +100,6 @@ export function refreshChatRoom() {
 
 spawnChatTimerBarCountdown()
 spawnChatTopBarPlayers()
-    console.log("players.length is", players.length);
 
 }
 

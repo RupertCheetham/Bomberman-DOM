@@ -3,7 +3,7 @@ import { isWalkable } from "./map.js";
 import createElement from "../../vdom/createElement";
 import render from "../../vdom/render";
 
-import { initializeNameInputRoom, initializeWaitingRoom } from "../../index.js";
+import { initializeNameInputRoom } from "../../index.js";
 import { handlePowerUpCollection } from "./checkCollision.js";
 import { refreshChatRoom } from "../components/chatPlayerTimerBarCountdown.js";
 import { ws } from "../websocket/chat.js";
@@ -220,6 +220,23 @@ export const updatePlayerPosition = (player) => {
     console.log(
       `After move: Player ${player.id} moved to grid position X = ${player.x}, Y = ${player.y}`
     );
+
+
+    const playermovementJSON = JSON.stringify({
+      playerId: player.id,
+      x: player.x,
+      y: player.y,
+    })
+
+    let codedplayerMovementData = {
+      Code: 3,
+      wsm: playermovementJSON
+    }
+
+
+
+    // console.log("Sending message:", messageData);
+    ws.send(JSON.stringify(codedplayerMovementData));
   } else {
     console.warn(`Player element with id ${player.id} not found`);
   }
@@ -233,7 +250,7 @@ const speedPowerUpCooldown = 100; // 100ms with power-up
 const lastMoveTimes = {};
 
 //Move player with collision detection
- const movePlayer = (player, direction, players) => {
+const movePlayer = (player, direction, players) => {
 
   const gameMap = document.querySelector('.gameMap');
   const currentTime = Date.now();
@@ -485,7 +502,7 @@ function announceResults(results) {
   // Append the results div to the body
   document.body.appendChild(resultsDiv);
 
-  
+
 
   // Remove the results div after 10 seconds
   setTimeout(() => {
@@ -500,6 +517,6 @@ function announceResults(results) {
     initializeNameInputRoom()
     refreshChatRoom()
   }, 10000);
- 
- // 
+
+  // 
 }

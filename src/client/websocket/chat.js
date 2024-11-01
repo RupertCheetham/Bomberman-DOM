@@ -88,7 +88,6 @@ ws.onmessage = function (event) {
             return
         case 2:
             messageData.players.forEach(newPlayer => {
-                console.log("newPlayer", newPlayer)
                 const playerExists = players.some(player => player.id === `player${newPlayer.playerId}`);
                 if (!playerExists) {
                     addPlayer(newPlayer.playerId, newPlayer.nickname);

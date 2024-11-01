@@ -46,14 +46,13 @@ type Message struct {
 }
 
 type PlayerPosition struct {
-	PlayerId int     `json:"playerId"`	// Use JSON struct tags to match JSON keys
-	X        int `json:"x"`			// Use JSON struct tags to match JSON keys						
-	Y        int `json:"y"`			// Use JSON struct tags to match JSON keys							
+	PlayerId int `json:"playerId"` // Use JSON struct tags to match JSON keys
+	X        int `json:"x"`        // Use JSON struct tags to match JSON keys
+	Y        int `json:"y"`        // Use JSON struct tags to match JSON keys
 }
 
 type BombData struct {
 	PlayerId int `json:"playerId"`
-	Code int `json:"code"`
 }
 
 type PlayerLives struct {
@@ -61,11 +60,11 @@ type PlayerLives struct {
 }
 
 type PowerUpData struct {
-	PlayerId int `json:"playerId"`
+	PlayerId            int  `json:"playerId"`
 	HandleasPowerUpBomb bool `json:"hasPowerUpBomb"`
-	HasPowerUpFlames bool `json:"hasPowerUpFlames"`
-	HasPowerUpSpeed bool `json:"hasPowerUpSpeed"`
-}	
+	HasPowerUpFlames    bool `json:"hasPowerUpFlames"`
+	HasPowerUpSpeed     bool `json:"hasPowerUpSpeed"`
+}
 
 func main() {
 	// Start WebSocket server on /ws endpoint
@@ -338,7 +337,7 @@ func handleConnections(w http.ResponseWriter, r *http.Request) {
 				}
 			}
 
-			case 6: // Code for bomb explosion
+		case 6: // Code for bomb explosion
 			var powerUpData PowerUpData
 			err := json.Unmarshal([]byte(decodedMSG.Wsm), &powerUpData)
 			if err != nil {
