@@ -133,9 +133,5 @@ export const chatContainerElement = () => {
         children: [playerCounterBar, chatHeading, chatDisplay, inputContainer, timerBar]
     });
 
-    // Render the chat container and return it
-    const renderedContainer = render(chatContainer);
-
-
     return chatContainer;
 };
