@@ -108,20 +108,25 @@ ws.onmessage = function (event) {
         case 4:
             // player drop bomb
             let playerBombObject = JSON.parse(messageData.wsm)
-             playerId = playerBombObject.playerId
-             console.log("bomb wsm", messageData.wsm)
+            playerId = playerBombObject.playerId
 
-console.log("BOMB")
             foundPlayer = players.find(player => player.id === playerId);
-            console.log("foundPlayer", foundPlayer)
             spawnBomb(foundPlayer)
             return;
         case 5:
-            // player lives... May be unnecessary 
+            // player power ups
+            let playerPowerUpObject = JSON.parse(messageData.wsm)
+            playerId = playerPowerUpObject.playerId
+
+            foundPlayer = players.find(player => player.id === playerId);
+            console.log("Before power up:", foundPlayer)
+            foundPlayer.hasPowerUpBomb = playerPowerUpObject.hasPowerUpBomb
+            foundPlayer.hasPowerUpFlames = playerPowerUpObject.hasPowerUpFlames
+            foundPlayer.hasPowerUpSpeed = playerPowerUpObject.hasPowerUpSpeed
+            console.log("After power up:", foundPlayer)
+
             return;
-        case 6:
-            // player power up data
-            return;
+
         default:
             break;
     }
