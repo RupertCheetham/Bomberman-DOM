@@ -1,6 +1,6 @@
 import render from './vdom/render';
 import mount from './vdom/mount';
-import { createVApp } from './vdom/createVApp';
+import { createGameMap } from './vdom/createGameMap';
 import { handleEvent } from './vdom/events/eventHelpers/handleEvent';
 import { eventRegistry, registerEvent } from './vdom/events/eventHelpers/registerEvent';
 import { handleKeyPress, players, spawnBarPlayers } from './client/game/game.js';
@@ -29,11 +29,9 @@ export const initializeNameInputRoom = () => {
   Object.keys(eventRegistry).forEach(key => {
     delete eventRegistry[key];
   });
-  console.log("initializeNameInputRoom: eventRegistry.length", Object.keys(eventRegistry).length)
   console.log("Stopping animation frame:", animationFrameId);
   cancelAnimationFrame(animationFrameId); // Stop any ongoing game loop
   $rootEl.innerHTML = ""
-  console.log("here")
   $rootEl = mount($nameInputElement, $rootEl);
   // activate waiting room event listeners
   // registerEvent('click', handleStartGame);
@@ -47,8 +45,7 @@ export const initializeNameInputRoom = () => {
 export const initializeWaitingRoom = () => {
   Object.keys(eventRegistry).forEach(key => {
     delete eventRegistry[key];
-  });  
-  console.log("initializeWaitingRoom: eventRegistry.length", Object.keys(eventRegistry).length)
+  });
 
 
   $rootEl = mount(waitingRoomElement(), $rootEl);
@@ -64,18 +61,18 @@ export const initializeWaitingRoom = () => {
 }
 
 // Initialize Application
-export const initializeApp = () => {
+export const initializeGame = () => {
   Object.keys(eventRegistry).forEach(key => {
     delete eventRegistry[key];
-  });  console.log("initializeApp: eventRegistry.length", Object.keys(eventRegistry).length)
+  });
 
 
-  setVApp(createVApp(players.length)); // Create initial VApp
+  setVApp(createGameMap(players.length)); // Create initial VApp
   $rootEl = mount(render(vApp), $rootEl); // Mount the initial app
 
-console.log("initializeApp is called")
+  console.log("initializeGame is called")
 
-  spawnPlayers(players.length);
+  //spawnPlayers(players.length);
   spawnSoftBlocks();
   spawnBarPlayers(players.length);
 
@@ -85,16 +82,16 @@ console.log("initializeApp is called")
 
 
   // Start the game loop
-  requestAnimationFrame(gameLoop);
+  // requestAnimationFrame(gameLoop);
 };
 
 
 // Game loop function using requestAnimationFrame
 const gameLoop = (timestamp) => {
-  const deltaTime = timestamp - lastTime;
+  // const deltaTime = timestamp - lastTime;
   lastTime = timestamp;
   updateGameState(deltaTime);
-  renderFrame();
+
 
   // Request the next frame and save its ID
   animationFrameId = requestAnimationFrame(gameLoop); // Make sure animationFrameId is updated
@@ -102,19 +99,14 @@ const gameLoop = (timestamp) => {
 
 // Function to update the game state
 const updateGameState = (deltaTime) => {
-  // Handle game logic based on time passed (deltaTime)
-  // Example: Move player, handle physics, check for collisions, etc.
-  // Your game state updates would go here
-
-  // Example: If using a player object
-  // player.update(deltaTime);
+  renderFrame();
 };
 
 
 // Function to render the current frame
 const renderFrame = () => {
   const currentVApp = getVApp();
-  const newVApp = createVApp(); // Re-create VApp with the updated state
+  const newVApp = createGameMap(); // Re-create VApp with the updated state
 
   const patch = diff(currentVApp, newVApp);
   const newRootEl = patch($rootEl);

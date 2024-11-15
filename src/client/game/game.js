@@ -76,36 +76,6 @@ export const startGameTimer = (duration) => {
   }, 1000);
 };
 
-
-
-// let countdownInterval
-// // Function to start the game timer on page load
-// export const startGameTimer = (duration) => {
-//   const timerDisplay = document.querySelector(".game-timer");
-//   let timeRemaining = duration;
-
-//   countdownInterval = setInterval(() => {
-//     // Update the timer display
-//     const minutes = Math.floor(timeRemaining / 60);
-//     const seconds = timeRemaining % 60;
-
-//     // Format minutes and seconds (e.g., 1:05)
-//     timerDisplay.innerHTML = `Time Remaining: ${minutes}:${seconds < 10 ? "0" : ""
-//       }${seconds}`;
-
-//     if (timeRemaining <= 0) {
-//       clearInterval(countdownInterval);
-//       timerDisplay.innerHTML = "Time's up! Game Over!";
-
-//       // Trigger any game-ending logic here
-//       endGame();
-//       // initializeWaitingRoom();
-//     }
-
-//     timeRemaining -= 1;
-//   }, 1000);
-// };
-
 // Function to handle game end
 const endGame = () => {
 
@@ -169,11 +139,6 @@ const endGame = () => {
   announceResults(gameResults);
 };
 
-// Start the game timer for 5 minutes (300 seconds) when the page loads
-// window.onload = () => {
-//   const gameDuration = 60; // 5 minutes in seconds
-//   startGameTimer(gameDuration);
-// };
 
 export const createLivesDisplay = (player) => {
   const livesElement = createElement("div", {
@@ -186,25 +151,46 @@ export const createLivesDisplay = (player) => {
 };
 
 // Function to create and spawn players
-export const spawnPlayers = (playerNum) => {
+// export const spawnPlayers = (playerNum) => {
   // Loop through the players array and add players to the game map based on playerNum
+ // for (let i = 0; i < playerNum; i++) {
+   // const player = players[i];
+    // const vPlayerElement = createElement("div", {
+    //   attrs: {
+    //     class: `${player.id}`, // Give the player a unique class
+    //     style: `grid-column-start: ${player.x + 1}; grid-row-start: ${player.y + 1
+    //       };`, // Set the grid position
+    //   },
+    // });
+
+    // const playerElement = render(vPlayerElement);
+    // // Append the player element to the game map
+    // document.querySelector(".gameMap").appendChild(playerElement);
+
+    // Create lives display for each player
+    //createLivesDisplay(player);
+//   }
+// };
+
+// Function to create and spawn players
+export const spawnVPlayers = (playerNum) => {
+  // Loop through the players array and add players to the game map based on playerNum
+  let vPlayerArray = []
   for (let i = 0; i < playerNum; i++) {
     const player = players[i];
     const vPlayerElement = createElement("div", {
       attrs: {
-        class: `${player.id}`, // Give the player a unique class
+        id: `${player.id}`, // Give the player a unique class
         style: `grid-column-start: ${player.x + 1}; grid-row-start: ${player.y + 1
           };`, // Set the grid position
       },
     });
 
-    const playerElement = render(vPlayerElement);
-    // Append the player element to the game map
-    document.querySelector(".gameMap").appendChild(playerElement);
-
-    // Create lives display for each player
-    createLivesDisplay(player);
+    vPlayerArray.push(vPlayerElement)
+    //createLivesDisplay(player);
   }
+  console.log("vPlayerArray", vPlayerArray)
+  return vPlayerArray
 };
 
 export const updatePlayerPosition = (player) => {
@@ -212,12 +198,12 @@ export const updatePlayerPosition = (player) => {
 
   // Log the grid position before moving to a new place
   if (playerElement) {
-  
+
     // Apply the grid position to the CSS grid properties
     playerElement.style.gridColumnStart = player.x + 1; // Add 1 since grid starts at 1
     playerElement.style.gridRowStart = player.y + 1; // Add 1 since grid starts at 1
 
-   
+
 
 
 
@@ -327,7 +313,7 @@ export const handleKeyPress = (event) => {
     case " ":
       if (isPlayer1Active) spawnBomb(player1);
       let playerId = player1.id
-      let playerJSON = JSON.stringify({playerId})
+      let playerJSON = JSON.stringify({ playerId })
 
       let codedPlayerData = {
         Code: 4,
@@ -354,9 +340,9 @@ export const handleKeyPress = (event) => {
     case "f":
       if (isPlayer2Active) spawnBomb(player2);
       playerId = player2.id
-      playerJSON = JSON.stringify({playerId})
+      playerJSON = JSON.stringify({ playerId })
 
-       codedPlayerData = {
+      codedPlayerData = {
         Code: 4,
         wsm: playerJSON
       }
@@ -381,15 +367,15 @@ export const handleKeyPress = (event) => {
     case ";":
       if (isPlayer3Active) spawnBomb(player3);
       playerId = player3.id
-      playerJSON = JSON.stringify({playerId})
+      playerJSON = JSON.stringify({ playerId })
 
       codedPlayerData = {
-       Code: 4,
-       wsm: playerJSON
-     }
+        Code: 4,
+        wsm: playerJSON
+      }
 
-     // console.log("Sending message:", messageData);
-     ws.send(JSON.stringify(codedPlayerData));
+      // console.log("Sending message:", messageData);
+      ws.send(JSON.stringify(codedPlayerData));
       break;
 
     // Player 4 Controls (5RTY + U for bomb)
@@ -408,15 +394,15 @@ export const handleKeyPress = (event) => {
     case "u":
       if (isPlayer4Active) spawnBomb(player4);
       playerId = player4.id
-      playerJSON = JSON.stringify({playerId})
+      playerJSON = JSON.stringify({ playerId })
 
       codedPlayerData = {
-       Code: 4,
-       wsm: playerJSON
-     }
+        Code: 4,
+        wsm: playerJSON
+      }
 
-     // console.log("Sending message:", messageData);
-     ws.send(JSON.stringify(codedPlayerData));
+      // console.log("Sending message:", messageData);
+      ws.send(JSON.stringify(codedPlayerData));
       break;
 
     default:
@@ -439,8 +425,8 @@ export const spawnBarPlayers = (playerNum) => {
     const vPlayerElement = createElement("div", {
       attrs: {
         class: `${player.id}`, // Give the player a unique class
-        style: `grid-column-start: ${player.x + 1}; grid-row-start: ${player.y + 1
-          };`, // Set the grid position
+       style: `grid-column-start: ${player.x + 1}; grid-row-start: ${player.y + 1
+         };`, // Set the grid position
       },
     });
 

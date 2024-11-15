@@ -1,6 +1,7 @@
 import createElement from "../../vdom/createElement";
 import render from "../../vdom/render";
 import { bombLocations } from "./events";
+import { spawnVPlayers } from "./game";
 
 const map = `
 +++++++++++++++
@@ -33,13 +34,12 @@ export const parsedMap = map.trim().split("\n").map((line) => [...line]);
 
 // Function to create the gameMap element
 export const gameMap = (playerNum) => {
-    
+
     // Generate the map elements based on the symbols
     const mapElements = parsedMap.flatMap((row) =>
         row.map((cell) => {
             let className = levelChars[cell];
-            if (playerNum < 4 && className === "player4") className = "ground";
-            if (playerNum < 3 && className === "player3") className = "ground";
+
             // Create the individual cell
             return createElement("div", {
                 attrs: {
@@ -48,6 +48,10 @@ export const gameMap = (playerNum) => {
             });
         })
     );
+
+    let vPlayerElements = spawnVPlayers(playerNum)
+    mapElements.concat(vPlayerElements)
+    console.log("mapElements", mapElements)
 
     // Create the full map container with direct child cells
     return createElement("div", {
@@ -128,7 +132,7 @@ export const spawnSoftBlocks = () => {
 
         const blockElement = render(vBlockElement);
         document.querySelector('.gameMap').appendChild(blockElement);
-        
+
         // Listen for soft block destruction and reveal power-up
         blockElement.addEventListener('destroyed', () => {
             // Check if this block had a power-up
@@ -143,9 +147,6 @@ export const spawnSoftBlocks = () => {
 export const isPositionWalkableBySoftBlocks = (x, y) => {
     return !softBlocks.some(block => block.x === x && block.y === y && !block.walkable);
 };
-
-// Array to store power-up types
-const powerUps = ['hasPowerUpBomb', 'hasPowerUpFlames', 'hasPowerUpSpeed'];
 
 // Function to assign power-ups to 3 soft blocks
 export const assignPowerUpsToSoftBlocks = () => {

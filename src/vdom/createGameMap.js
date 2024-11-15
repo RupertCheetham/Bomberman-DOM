@@ -1,6 +1,6 @@
 import { gameMap } from "../client/game/map";
 
-export const createVApp = (playerNum) => {
+export const createGameMap = (playerNum) => {
     return {
         tagName: 'div',
         attrs: {

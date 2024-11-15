@@ -2,7 +2,7 @@
 import { bombElement } from "../components/bombElement";
 import { spawnExplosion } from "../components/explosionElement";
 import { players, removeLife, startGameTimer } from "../game/game";
-import { initializeApp } from "../..";
+import { initializeGame } from "../..";
 import { currentPlayerId } from "../websocket/chat";
 import { ws } from "../websocket/chat";
 import { addPlayer } from "../game/game";
@@ -93,7 +93,7 @@ export function handleStartGame() {
     
         gameStarted = true;
         let playerNum = players.length;
-        initializeApp(playerNum);
+        initializeGame(playerNum);
     }
 }
 
