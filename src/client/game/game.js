@@ -203,7 +203,7 @@ export const spawnPlayers = (playerNum) => {
     document.querySelector(".gameMap").appendChild(playerElement);
 
     // Create lives display for each player
-    createLivesDisplay(player);
+   // createLivesDisplay(player);
   }
 };
 
