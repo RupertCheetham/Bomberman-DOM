@@ -143,6 +143,7 @@ const endGame = () => {
 
 // Function to create and spawn players
 export const spawnPlayers = (playerNum) => {
+  let vPlayers = []
   // Loop through the players array and add players to the game map based on playerNum
   for (let i = 0; i < playerNum; i++) {
     const player = players[i];
@@ -154,12 +155,13 @@ export const spawnPlayers = (playerNum) => {
           };`, // Set the grid position
       },
     });
-
-    const playerElement = render(vPlayerElement);
+    vPlayers.push(vPlayerElement)
+    //const playerElement = render(vPlayerElement);
     // Append the player element to the game map
-    document.querySelector(".gameMap").appendChild(playerElement);
+    //document.querySelector(".gameMap").appendChild(playerElement);
 
   }
+  return vPlayers
 };
 
 export const updatePlayerPosition = (player) => {
@@ -167,12 +169,12 @@ export const updatePlayerPosition = (player) => {
 
   // Log the grid position before moving to a new place
   if (playerElement) {
-  
+
     // Apply the grid position to the CSS grid properties
     playerElement.style.gridColumnStart = player.x + 1; // Add 1 since grid starts at 1
     playerElement.style.gridRowStart = player.y + 1; // Add 1 since grid starts at 1
 
-   
+
 
 
 
@@ -223,7 +225,7 @@ const movePlayer = (player, direction, players) => {
       // Move the player if the new position is valid
       player.x = newX;
       player.y = newY;
-      updatePlayerPosition(player); // Update DOM to reflect new position
+      //updatePlayerPosition(player); // Update DOM to reflect new position
 
       // Update the last move time for this player
       lastMoveTimes[player.id] = currentTime;
@@ -282,7 +284,7 @@ export const handleKeyPress = (event) => {
     case " ":
       if (isPlayer1Active) spawnBomb(player1);
       let playerId = player1.id
-      let playerJSON = JSON.stringify({playerId})
+      let playerJSON = JSON.stringify({ playerId })
 
       let codedPlayerData = {
         Code: 4,
@@ -309,9 +311,9 @@ export const handleKeyPress = (event) => {
     case "f":
       if (isPlayer2Active) spawnBomb(player2);
       playerId = player2.id
-      playerJSON = JSON.stringify({playerId})
+      playerJSON = JSON.stringify({ playerId })
 
-       codedPlayerData = {
+      codedPlayerData = {
         Code: 4,
         wsm: playerJSON
       }
@@ -336,15 +338,15 @@ export const handleKeyPress = (event) => {
     case ";":
       if (isPlayer3Active) spawnBomb(player3);
       playerId = player3.id
-      playerJSON = JSON.stringify({playerId})
+      playerJSON = JSON.stringify({ playerId })
 
       codedPlayerData = {
-       Code: 4,
-       wsm: playerJSON
-     }
+        Code: 4,
+        wsm: playerJSON
+      }
 
-     // console.log("Sending message:", messageData);
-     ws.send(JSON.stringify(codedPlayerData));
+      // console.log("Sending message:", messageData);
+      ws.send(JSON.stringify(codedPlayerData));
       break;
 
     // Player 4 Controls (5RTY + U for bomb)
@@ -363,15 +365,15 @@ export const handleKeyPress = (event) => {
     case "u":
       if (isPlayer4Active) spawnBomb(player4);
       playerId = player4.id
-      playerJSON = JSON.stringify({playerId})
+      playerJSON = JSON.stringify({ playerId })
 
       codedPlayerData = {
-       Code: 4,
-       wsm: playerJSON
-     }
+        Code: 4,
+        wsm: playerJSON
+      }
 
-     // console.log("Sending message:", messageData);
-     ws.send(JSON.stringify(codedPlayerData));
+      // console.log("Sending message:", messageData);
+      ws.send(JSON.stringify(codedPlayerData));
       break;
 
     default:
@@ -450,7 +452,8 @@ export function removeLife(player, gameMap) {
   if (players[playerIndex].lives <= 0) {
     // Remove the player from the game map if lives are zero
     const playerElement = document.getElementById(`${player.id}`);
-    if (playerElement) {`${player.id}`
+    if (playerElement) {
+      `${player.id}`
       //add playerHit(x, y) and it's styling and setTimeout(() => , 200);
 
       playerElement.remove();

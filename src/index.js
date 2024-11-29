@@ -96,7 +96,7 @@ const gameLoop = () => {
 // Function to render the current frame
 const renderFrame = () => {
   const currentGameApp = getGameApp();
-  const newGameApp = createGameApp(); // Re-create gameApp with the updated state
+  const newGameApp = createGameApp(players.length); // Re-create gameApp with the updated state
 
   const patch = diff(currentGameApp, newGameApp);
   const newRootEl = patch($rootEl);

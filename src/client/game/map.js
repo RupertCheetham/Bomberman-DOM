@@ -1,6 +1,7 @@
 import createElement from "../../vdom/createElement";
 import render from "../../vdom/render";
 import { bombLocations } from "./events";
+import { spawnPlayers } from "./game";
 
 const map = `
 +++++++++++++++
@@ -33,7 +34,7 @@ export const parsedMap = map.trim().split("\n").map((line) => [...line]);
 
 // Function to create the gameMap element
 export const gameMap = (playerNum) => {
-    
+
     // Generate the map elements based on the symbols
     const mapElements = parsedMap.flatMap((row) =>
         row.map((cell) => {
@@ -49,12 +50,15 @@ export const gameMap = (playerNum) => {
         })
     );
 
+    let vPlayers = spawnPlayers(playerNum)
+    const combinedElements = mapElements.concat(vPlayers);
+
     // Create the full map container with direct child cells
     return createElement("div", {
         attrs: {
             class: "gameMap",
         },
-        children: mapElements
+        children: combinedElements
     });
 };
 
@@ -128,7 +132,7 @@ export const spawnSoftBlocks = () => {
 
         const blockElement = render(vBlockElement);
         document.querySelector('.gameMap').appendChild(blockElement);
-        
+
         // Listen for soft block destruction and reveal power-up
         blockElement.addEventListener('destroyed', () => {
             // Check if this block had a power-up
