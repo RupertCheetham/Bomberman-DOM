@@ -28,11 +28,9 @@ export const initializeNameInputRoom = () => {
   Object.keys(eventRegistry).forEach(key => {
     delete eventRegistry[key];
   });
-  console.log("initializeNameInputRoom: eventRegistry.length", Object.keys(eventRegistry).length)
-  console.log("Stopping animation frame:", animationFrameId);
+
   cancelAnimationFrame(animationFrameId); // Stop any ongoing game loop
   $rootEl.innerHTML = ""
-  console.log("here")
   $rootEl = mount($nameInputElement, $rootEl);
   // activate waiting room event listeners
   // registerEvent('click', handleStartGame);
@@ -47,7 +45,6 @@ export const initializeWaitingRoom = () => {
   Object.keys(eventRegistry).forEach(key => {
     delete eventRegistry[key];
   });  
-  console.log("initializeWaitingRoom: eventRegistry.length", Object.keys(eventRegistry).length)
 
 
   $rootEl = mount(waitingRoomElement(), $rootEl);
@@ -66,13 +63,11 @@ export const initializeWaitingRoom = () => {
 export const initializeApp = () => {
   Object.keys(eventRegistry).forEach(key => {
     delete eventRegistry[key];
-  });  console.log("initializeApp: eventRegistry.length", Object.keys(eventRegistry).length)
+  }); 
 
 
   setGameApp(createGameApp(players.length)); // Create initial gameApp
   $rootEl = mount(render(gameApp), $rootEl); // Mount the initial app
-
-console.log("initializeApp is called")
 
   spawnPlayers(players.length);
   spawnSoftBlocks();
