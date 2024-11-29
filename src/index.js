@@ -1,6 +1,6 @@
 import render from './vdom/render';
 import mount from './vdom/mount';
-import { createVApp } from './vdom/createVApp';
+import { createGameApp } from './vdom/createGameApp';
 import { handleEvent } from './vdom/events/eventHelpers/handleEvent';
 import { eventRegistry, registerEvent } from './vdom/events/eventHelpers/registerEvent';
 import { handleKeyPress, players, spawnBarPlayers } from './client/game/game.js';
@@ -70,7 +70,7 @@ export const initializeApp = () => {
   });  console.log("initializeApp: eventRegistry.length", Object.keys(eventRegistry).length)
 
 
-  setVApp(createVApp(players.length)); // Create initial VApp
+  setVApp(createGameApp(players.length)); // Create initial VApp
   $rootEl = mount(render(vApp), $rootEl); // Mount the initial app
 
 console.log("initializeApp is called")
@@ -114,7 +114,7 @@ const updateGameState = (deltaTime) => {
 // Function to render the current frame
 const renderFrame = () => {
   const currentVApp = getVApp();
-  const newVApp = createVApp(); // Re-create VApp with the updated state
+  const newVApp = createGameApp(); // Re-create VApp with the updated state
 
   const patch = diff(currentVApp, newVApp);
   const newRootEl = patch($rootEl);

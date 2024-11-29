@@ -1,12 +1,12 @@
 import { getVApp, setVApp, $rootEl, updateRootEl } from "..";
-import { createVApp } from "./createVApp";
+import { createGameApp } from "./createGameApp";
 import diff from "./diff";
 
 export function updateVApp(...toDoList) {
 
     // Generate the new virtual DOM representation
     const currentVApp = getVApp();
-    const vNewApp = createVApp([...toDoList]);
+    const vNewApp = createGameApp([...toDoList]);
 
     // Calculate the difference and patch the DOM
     const patch = diff(currentVApp, vNewApp);
