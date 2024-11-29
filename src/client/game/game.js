@@ -450,7 +450,7 @@ export function removeLife(player, gameMap) {
   if (players[playerIndex].lives <= 0) {
     // Remove the player from the game map if lives are zero
     const playerElement = document.getElementById(`${player.id}`);
-    if (playerElement) {
+    if (playerElement) {`${player.id}`
       //add playerHit(x, y) and it's styling and setTimeout(() => , 200);
 
       playerElement.remove();
@@ -491,7 +491,6 @@ function announceResults(results) {
 
   // Append the results text to the results div
   resultsDiv.appendChild(resultsText);
-  console.log("body", document.body)
 
   // Append the results div to the body
   document.body.appendChild(resultsDiv);

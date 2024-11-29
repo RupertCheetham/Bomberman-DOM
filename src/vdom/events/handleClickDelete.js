@@ -1,4 +1,4 @@
-import { updateVApp } from "../updateVApp";
+import { updateGameApp } from "../updateGameApp";
 
 export const handleClickDelete = (event, toDoList) => {
 
@@ -21,7 +21,7 @@ export const handleClickDelete = (event, toDoList) => {
     // This cheeky line solves a bug where the completed class was
     // incorrectly getting applied to the next item on the list
     listItem.remove();
-    updateVApp(...toDoList)
+    updateGameApp(...toDoList)
   }
 }
 

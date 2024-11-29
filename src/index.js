@@ -15,14 +15,13 @@ import { spawnChatTimerBarCountdown } from './client/components/chatPlayerTimerB
 import { spawnChatTopBarPlayers } from './client/components/chatTopBarPlayers.js';
 
 let $rootEl = document.getElementById('root');
-let vApp;
-let lastTime = 0;  // To track the time difference for game updates
+let gameApp;
 let animationFrameId;
 
 // Getters and Setters for Virtual DOM
-export const getVApp = () => vApp;
-export const setVApp = (newVApp) => {
-  vApp = newVApp;
+export const getGameApp = () => gameApp;
+export const setGameApp = (newGameApp) => {
+  gameApp = newGameApp;
 };
 
 export const initializeNameInputRoom = () => {
@@ -70,8 +69,8 @@ export const initializeApp = () => {
   });  console.log("initializeApp: eventRegistry.length", Object.keys(eventRegistry).length)
 
 
-  setVApp(createGameApp(players.length)); // Create initial VApp
-  $rootEl = mount(render(vApp), $rootEl); // Mount the initial app
+  setGameApp(createGameApp(players.length)); // Create initial gameApp
+  $rootEl = mount(render(gameApp), $rootEl); // Mount the initial app
 
 console.log("initializeApp is called")
 
@@ -90,36 +89,24 @@ console.log("initializeApp is called")
 
 
 // Game loop function using requestAnimationFrame
-const gameLoop = (timestamp) => {
-  const deltaTime = timestamp - lastTime;
-  lastTime = timestamp;
-  updateGameState(deltaTime);
+const gameLoop = () => {
   renderFrame();
 
   // Request the next frame and save its ID
   animationFrameId = requestAnimationFrame(gameLoop); // Make sure animationFrameId is updated
 };
 
-// Function to update the game state
-const updateGameState = (deltaTime) => {
-  // Handle game logic based on time passed (deltaTime)
-  // Example: Move player, handle physics, check for collisions, etc.
-  // Your game state updates would go here
-
-  // Example: If using a player object
-  // player.update(deltaTime);
-};
 
 
 // Function to render the current frame
 const renderFrame = () => {
-  const currentVApp = getVApp();
-  const newVApp = createGameApp(); // Re-create VApp with the updated state
+  const currentGameApp = getGameApp();
+  const newGameApp = createGameApp(); // Re-create gameApp with the updated state
 
-  const patch = diff(currentVApp, newVApp);
+  const patch = diff(currentGameApp, newGameApp);
   const newRootEl = patch($rootEl);
 
-  setVApp(newVApp);  // Update to the latest VApp state
+  setGameApp(newGameApp);  // Update to the latest gameApp state
   updateRootEl(newRootEl);  // Refresh root element in DOM
 };
 

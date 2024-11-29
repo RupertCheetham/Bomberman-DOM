@@ -1,7 +1,7 @@
 import { toDoList } from "../..";
 import { createListItem } from "../components/createListItem";
 import { routing } from "../routing/routing";
-import { updateVApp } from "../updateVApp";
+import { updateGameApp } from "../updateGameApp";
 
 export const handleEnterKeySubmit = (event) => {
 
@@ -21,8 +21,8 @@ export const handleEnterKeySubmit = (event) => {
     const toDoItem = createListItem(todoInputValue);
     toDoList.push(toDoItem);
 
-    // updateVApp
-    updateVApp(...toDoList)
+    // updateGameApp
+    updateGameApp(...toDoList)
 
     input.value = "";
     
@@ -37,7 +37,7 @@ export const handleEnterKeySubmit = (event) => {
       const index = toDoList.findIndex(item => item.tagName === "div");
 
       toDoList[index] = createListItem(input.value)
-      updateVApp(...toDoList)
+      updateGameApp(...toDoList)
     };
   }
   
