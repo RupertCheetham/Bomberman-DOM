@@ -15,13 +15,19 @@ import { spawnChatTimerBarCountdown } from './client/components/chatPlayerTimerB
 import { spawnChatTopBarPlayers } from './client/components/chatTopBarPlayers.js';
 
 let $rootEl = document.getElementById('root');
-let gameApp;
 let animationFrameId;
 
 // Getters and Setters for Virtual DOM
+let gameApp;
 export const getGameApp = () => gameApp;
 export const setGameApp = (newGameApp) => {
   gameApp = newGameApp;
+};
+
+let gameStateNeedsUpdating = false
+export const getGameStateNeedsUpdating = () => gameStateNeedsUpdating;
+export const setGameStateNeedsUpdating = (newGameUpdateState) => {
+  gameStateNeedsUpdating = newGameUpdateState;
 };
 
 export const initializeNameInputRoom = () => {
@@ -44,7 +50,7 @@ export const initializeNameInputRoom = () => {
 export const initializeWaitingRoom = () => {
   Object.keys(eventRegistry).forEach(key => {
     delete eventRegistry[key];
-  });  
+  });
 
 
   $rootEl = mount(waitingRoomElement(), $rootEl);
@@ -63,7 +69,7 @@ export const initializeWaitingRoom = () => {
 export const initializeApp = () => {
   Object.keys(eventRegistry).forEach(key => {
     delete eventRegistry[key];
-  }); 
+  });
 
 
   setGameApp(createGameApp(players.length)); // Create initial gameApp
@@ -85,7 +91,20 @@ export const initializeApp = () => {
 
 // Game loop function using requestAnimationFrame
 const gameLoop = () => {
-  renderFrame();
+
+
+  // something like
+  if (getGameStateNeedsUpdating) {
+    renderFrame();
+    setGameStateNeedsUpdating(false)
+  }
+
+
+  // make variable to renderframe *only* when changes have actually happened
+
+  // Look in to what I can strip out of (or decrease) in the gameloop
+
+  // requestIdleCallback
 
   // Request the next frame and save its ID
   animationFrameId = requestAnimationFrame(gameLoop); // Make sure animationFrameId is updated

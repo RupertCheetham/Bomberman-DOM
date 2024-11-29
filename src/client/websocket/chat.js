@@ -1,5 +1,6 @@
 // chat goes here
 // Below is copied from index.html, need (small?) refactor
+import { setGameStateNeedsUpdating } from "../..";
 import { spawnBomb } from "../game/events";
 import { addPlayer, players, updatePlayerPosition } from "../game/game";
 
@@ -43,10 +44,8 @@ function displayMessage(messageData, messageType) {
     playerIdElement.innerText = `${player.nickname}:`;
 
     playerIdElement.innerText = `${player.nickname}:`;
-    console.log("playerIdElement", playerIdElement)
 
     currentPlayerId === playerId
-    console.log("currentPlayerID", currentPlayerId)
 
     // Add a line break for better formatting
     const lineBreak = document.createElement("br");
@@ -60,27 +59,20 @@ function displayMessage(messageData, messageType) {
     message.appendChild(lineBreak);
     message.appendChild(messageContent);
 
-    console.log("playerIdElement", playerIdElement)
-    console.log("messageContent", messageContent)
-
 
     chat.appendChild(message);
-    console.log("message", message)
     chat.scrollTop = chat.scrollHeight; // Auto-scroll to the bottom
 
     // Log details for debugging
-    console.log(`Message displayed [${messageType}]:`, `Player ${playerId}: ${messageText}`);
 }
 
 
 ws.onmessage = function (event) {
     const messageData = JSON.parse(event.data); // Expecting { "playerId": 1, "text": "Hello" }
-    console.log("Message received:", messageData); // Log the incoming message
 
 
     switch (messageData.code) {
         case 1:
-            console.log(1)
             let playerData = JSON.parse(event.data)
             if (playerData.playerId !== currentPlayerId) {
                 addPlayer(playerData.playerId, playerData.nickname)
@@ -99,11 +91,11 @@ ws.onmessage = function (event) {
             // player position
             let playerPOSObject = JSON.parse(messageData.wsm)
             let playerId = playerPOSObject.playerId
-            console.log("player", playerId, "is at X:", playerPOSObject.x, " Y: ", playerPOSObject.y)
             let foundPlayer = players.find(player => player.id === playerId);
             foundPlayer.x = playerPOSObject.x
             foundPlayer.y = playerPOSObject.y
             updatePlayerPosition(foundPlayer)
+            setGameStateNeedsUpdating(true)
             return;
         case 4:
             // player drop bomb
@@ -119,11 +111,9 @@ ws.onmessage = function (event) {
             playerId = playerPowerUpObject.playerId
 
             foundPlayer = players.find(player => player.id === playerId);
-            console.log("Before power up:", foundPlayer)
             foundPlayer.hasPowerUpBomb = playerPowerUpObject.hasPowerUpBomb
             foundPlayer.hasPowerUpFlames = playerPowerUpObject.hasPowerUpFlames
             foundPlayer.hasPowerUpSpeed = playerPowerUpObject.hasPowerUpSpeed
-            console.log("After power up:", foundPlayer)
 
             return;
 
@@ -145,7 +135,6 @@ ws.onmessage = function (event) {
     // If player ID is included, update currentPlayerId
     if (messageData.playerId && !currentPlayerId) {
         currentPlayerId = messageData.playerId;
-        console.log("Player ID assigned:", currentPlayerId);
     }
 
     displayMessage(messageData, messageType); // Display the message with the correct type

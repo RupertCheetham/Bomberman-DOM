@@ -3,7 +3,7 @@ import { isWalkable } from "./map.js";
 import createElement from "../../vdom/createElement";
 import render from "../../vdom/render";
 
-import { initializeNameInputRoom } from "../../index.js";
+import { initializeNameInputRoom, setGameStateNeedsUpdating } from "../../index.js";
 import { handlePowerUpCollection } from "./checkCollision.js";
 import { refreshChatRoom } from "../components/chatPlayerTimerBarCountdown.js";
 import { ws } from "../websocket/chat.js";
@@ -230,24 +230,28 @@ const movePlayer = (player, direction, players) => {
       // Update the last move time for this player
       lastMoveTimes[player.id] = currentTime;
       handlePowerUpCollection(player, gameMap);
+
+      const playermovementJSON = JSON.stringify({
+        playerId: player.id,
+        x: player.x,
+        y: player.y,
+      })
+
+      let codedplayerMovementData = {
+        Code: 3,
+        wsm: playermovementJSON
+      }
+
+
+
+      // console.log("Sending message:", messageData);
+      ws.send(JSON.stringify(codedplayerMovementData));
+
+      setGameStateNeedsUpdating(true)
     }
   }
 
-  const playermovementJSON = JSON.stringify({
-    playerId: player.id,
-    x: player.x,
-    y: player.y,
-  })
 
-  let codedplayerMovementData = {
-    Code: 3,
-    wsm: playermovementJSON
-  }
-
-
-
-  // console.log("Sending message:", messageData);
-  ws.send(JSON.stringify(codedplayerMovementData));
 
 };
 
