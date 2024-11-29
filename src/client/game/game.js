@@ -76,36 +76,6 @@ export const startGameTimer = (duration) => {
   }, 1000);
 };
 
-
-
-// let countdownInterval
-// // Function to start the game timer on page load
-// export const startGameTimer = (duration) => {
-//   const timerDisplay = document.querySelector(".game-timer");
-//   let timeRemaining = duration;
-
-//   countdownInterval = setInterval(() => {
-//     // Update the timer display
-//     const minutes = Math.floor(timeRemaining / 60);
-//     const seconds = timeRemaining % 60;
-
-//     // Format minutes and seconds (e.g., 1:05)
-//     timerDisplay.innerHTML = `Time Remaining: ${minutes}:${seconds < 10 ? "0" : ""
-//       }${seconds}`;
-
-//     if (timeRemaining <= 0) {
-//       clearInterval(countdownInterval);
-//       timerDisplay.innerHTML = "Time's up! Game Over!";
-
-//       // Trigger any game-ending logic here
-//       endGame();
-//       // initializeWaitingRoom();
-//     }
-
-//     timeRemaining -= 1;
-//   }, 1000);
-// };
-
 // Function to handle game end
 const endGame = () => {
 
@@ -169,21 +139,7 @@ const endGame = () => {
   announceResults(gameResults);
 };
 
-// Start the game timer for 5 minutes (300 seconds) when the page loads
-// window.onload = () => {
-//   const gameDuration = 60; // 5 minutes in seconds
-//   startGameTimer(gameDuration);
-// };
 
-export const createLivesDisplay = (player) => {
-  const livesElement = createElement("div", {
-    attrs: {
-      class: `${player.id}-lives`, // Unique class for each player's lives display
-      style: "margin: 10px;", // You can customize the style as needed
-    },
-    children: [`Player ${player.id} Lives: ${player.lives}`], // Display initial lives
-  });
-};
 
 // Function to create and spawn players
 export const spawnPlayers = (playerNum) => {
@@ -193,6 +149,7 @@ export const spawnPlayers = (playerNum) => {
     const vPlayerElement = createElement("div", {
       attrs: {
         class: `${player.id}`, // Give the player a unique class
+        id: `${player.id}`,
         style: `grid-column-start: ${player.x + 1}; grid-row-start: ${player.y + 1
           };`, // Set the grid position
       },
@@ -202,13 +159,11 @@ export const spawnPlayers = (playerNum) => {
     // Append the player element to the game map
     document.querySelector(".gameMap").appendChild(playerElement);
 
-    // Create lives display for each player
-   // createLivesDisplay(player);
   }
 };
 
 export const updatePlayerPosition = (player) => {
-  const playerElement = document.querySelector(`.${player.id}`);
+  const playerElement = document.getElementById(`${player.id}`);
 
   // Log the grid position before moving to a new place
   if (playerElement) {
@@ -444,7 +399,6 @@ export const spawnBarPlayers = (playerNum) => {
       },
     });
 
-    console.log("player.nickname", player.nickname)
     // Create the lives text element, positioned one space to the right (x + 2)
     const vLivesText = createElement("div", {
       attrs: {
@@ -495,7 +449,7 @@ export function removeLife(player, gameMap) {
   // Check if the player's lives are zero
   if (players[playerIndex].lives <= 0) {
     // Remove the player from the game map if lives are zero
-    const playerElement = document.querySelector(`.${player.id}`);
+    const playerElement = document.getElementById(`${player.id}`);
     if (playerElement) {
       //add playerHit(x, y) and it's styling and setTimeout(() => , 200);
 

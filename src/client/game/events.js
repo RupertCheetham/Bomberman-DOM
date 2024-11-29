@@ -27,13 +27,11 @@ export function spawnBomb(player) {
 
     // If the player is on cooldown and has no bombs left to drop, block bomb placement
     if (playerCooldown.cooldown && playerCooldown.count === 1 && !player.hasPowerUpBomb) {
-        console.log(`${player.id} is on cooldown! Wait 3 seconds to drop another bomb.`);
         return;
     }
 
     // If player hasPowerUpBomb and is allowed to drop a second bomb
     if (player.hasPowerUpBomb && playerCooldown.count >= 2) {
-        console.log(`${player.id} can only drop a maximum of 2 bombs within 3 seconds.`);
         return;
     }
 
@@ -61,7 +59,6 @@ export function spawnBomb(player) {
             // Reset the player's bomb count and cooldown after 3 seconds
             playerCooldown.cooldown = false;
             playerCooldown.count = 0;
-            console.log(`${player.id} can now drop a new bomb.`);
         }, 3000);
     }
 

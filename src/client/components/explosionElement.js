@@ -12,7 +12,6 @@ export function spawnExplosion(player, x, y) {
   // Check if the player has the flame power-up
   const explosionRange = player.hasPowerUpFlames ? 3 : 2; // Default range is 2, extended to 3 if power-up is active
   console.log(
-    `${player.id} has flame power-up: ${player.hasPowerUpFlames}. Explosion range: ${explosionRange}`
   );
 
   // Center explosion
