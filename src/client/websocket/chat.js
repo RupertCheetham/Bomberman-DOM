@@ -4,7 +4,9 @@ import { setGameStateNeedsUpdating } from "../..";
 import { spawnBomb } from "../game/events";
 import { addPlayer, players, updatePlayerPosition } from "../game/game";
 
-export const ws = new WebSocket("ws://localhost:8080/ws");
+export const ws = new WebSocket('ws://192.168.153.149:8080/ws');
+//export const ws = new WebSocket("ws://localhost:8080/ws");
+
 export let currentPlayerId; // Declare without initializing
 
 function displayMessage(messageData, messageType) {
