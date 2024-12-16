@@ -148,9 +148,6 @@ export const isPositionWalkableBySoftBlocks = (x, y) => {
     return !softBlocks.some(block => block.x === x && block.y === y && !block.walkable);
 };
 
-// Array to store power-up types
-const powerUps = ['hasPowerUpBomb', 'hasPowerUpFlames', 'hasPowerUpSpeed'];
-
 // Function to assign power-ups to 3 soft blocks
 export const assignPowerUpsToSoftBlocks = () => {
     // Directly assign power-ups to specific soft blocks by index or ID
@@ -185,30 +182,3 @@ export const createPowerUpElement = (powerUpType, x, y) => {
 
     return render(powerUpElement); // Render and return the power-up element
 };
-
-// export const spawnPowerUps = () => {
-//     // Randomly pick 3 different soft blocks to hide the power-ups
-//     const chosenSoftBlocks = pickRandomSoftBlocks(3);
-
-//     // Loop through the selected blocks to place the power-ups
-//     chosenSoftBlocks.forEach((softBlock, index) => {
-//         const powerUpElement = document.createElement("div");
-//         powerUpElement.classList.add("power-up");
-
-//         // Assign the correct power-up type and styling
-//         if (index === 0) {
-//             powerUpElement.classList.add("hasPowerUpBomb"); // Bomb power-up styling
-//         } else if (index === 1) {
-//             powerUpElement.classList.add("hasPowerUpFlames"); // Flames power-up styling
-//         } else if (index === 2) {
-//             powerUpElement.classList.add("hasPowerUpSpeed"); // Speed power-up styling
-//         }
-
-//         // Position the power-up in the same location as the soft block
-//         powerUpElement.style.gridColumnStart = softBlock.x + 1;
-//         powerUpElement.style.gridRowStart = softBlock.y + 1;
-
-//         // Append the power-up to the game map
-//         document.querySelector('.gameMap').appendChild(powerUpElement);
-//     });
-// };

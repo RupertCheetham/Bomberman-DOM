@@ -7,8 +7,8 @@ export function checkCollision(x, y) {
         return true; // Out of bounds, collision exists
     }
 
-  x = x-1
-  y = y-1
+    x = x - 1
+    y = y - 1
     // Check if the tile is a hard block (non-walkable)
     if (!walkableChars.includes(parsedMap[y][x])) {
         return true; // Collision exists
@@ -31,18 +31,24 @@ export const handlePowerUpCollection = (player, gameMap) => {
     const powerUpElement = gameMap.querySelector(
         `.power-up[style*="grid-column-start: ${player.x + 1}"][style*="grid-row-start: ${player.y + 1}"]`
     );
-    
+
     if (powerUpElement) {
         // Determine which type of power-up the player has collected
         if (powerUpElement.classList.contains('hasPowerUpBomb')) {
             player.hasPowerUpBomb = true;  // Grant the bomb power-up
+            powerUpElement.remove();
+            return "hasPowerUpBomb"
         } else if (powerUpElement.classList.contains('hasPowerUpFlames')) {
             player.hasPowerUpFlames = true;  // Grant the flames power-up
+            powerUpElement.remove();
+            return "hasPowerUpFlames"
         } else if (powerUpElement.classList.contains('hasPowerUpSpeed')) {
             player.hasPowerUpSpeed = true;  // Grant the speed power-up
+            // Remove the power-up from the map after collection
+            powerUpElement.remove();
+            return "hasPowerUpSpeed"
         }
-
-        // Remove the power-up from the map after collection
-        powerUpElement.remove();
     }
+
+    return "noPowerUp"
 };

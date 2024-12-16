@@ -4,7 +4,17 @@ import { setGameStateNeedsUpdating } from "../..";
 import { spawnBomb } from "../game/events";
 import { addPlayer, players, updatePlayerPosition } from "../game/game";
 
-export const ws = new WebSocket('ws://192.168.153.149:8080/ws');
+
+// const serverIP = location.hostname === 'localhost' ? '192.168.153.149' : location.hostname;
+// export const ws = new WebSocket(`ws://${serverIP}:8080/ws`);
+export const ws = new WebSocket(`ws://${location.hostname}:8080/ws`);
+
+console.log("location.hostname", location.hostname)
+console.log(`ws://${location.hostname}:8080/ws`)
+
+// export const ws = new WebSocket('ws://192.168.153.149:8080/ws');
+
+
 //export const ws = new WebSocket("ws://localhost:8080/ws");
 
 export let currentPlayerId; // Declare without initializing

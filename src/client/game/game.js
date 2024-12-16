@@ -229,7 +229,11 @@ const movePlayer = (player, direction, players) => {
 
       // Update the last move time for this player
       lastMoveTimes[player.id] = currentTime;
-      handlePowerUpCollection(player, gameMap);
+      const playerPowerUp = handlePowerUpCollection(player, gameMap);
+
+      if (playerPowerUp !== "noPowerUp") {
+
+      }
 
       const playermovementJSON = JSON.stringify({
         playerId: player.id,
@@ -241,8 +245,6 @@ const movePlayer = (player, direction, players) => {
         Code: 3,
         wsm: playermovementJSON
       }
-
-
 
       // console.log("Sending message:", messageData);
       ws.send(JSON.stringify(codedplayerMovementData));
