@@ -174,10 +174,6 @@ export const updatePlayerPosition = (player) => {
     playerElement.style.gridColumnStart = player.x + 1; // Add 1 since grid starts at 1
     playerElement.style.gridRowStart = player.y + 1; // Add 1 since grid starts at 1
 
-
-
-
-
   } else {
     console.warn(`Player element with id ${player.id} not found`);
   }
@@ -232,6 +228,16 @@ const movePlayer = (player, direction, players) => {
       const playerPowerUp = handlePowerUpCollection(player, gameMap);
 
       if (playerPowerUp !== "noPowerUp") {
+        const playerPowerUpJSON = JSON.stringify({
+          playerId: player.id,
+          powerUp: playerPowerUp
+        })
+
+        let codedPlayerPowerUpJSON = {
+          Code: 5,
+          wsm: playerPowerUpJSON
+        }
+        ws.send(JSON.stringify(codedPlayerPowerUpJSON));
 
       }
 

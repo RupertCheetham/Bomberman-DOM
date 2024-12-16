@@ -119,14 +119,28 @@ ws.onmessage = function (event) {
             return;
         case 5:
             // player power ups
+            console.log(5)
             let playerPowerUpObject = JSON.parse(messageData.wsm)
             playerId = playerPowerUpObject.playerId
-
+            console.log("playerId", playerId)
+            console.log("powerUp", playerPowerUpObject.powerUp)
             foundPlayer = players.find(player => player.id === playerId);
-            foundPlayer.hasPowerUpBomb = playerPowerUpObject.hasPowerUpBomb
-            foundPlayer.hasPowerUpFlames = playerPowerUpObject.hasPowerUpFlames
-            foundPlayer.hasPowerUpSpeed = playerPowerUpObject.hasPowerUpSpeed
+            const powerUpElement = document.getElementsByClassName(playerPowerUpObject.powerUp)[0]
 
+            switch (playerPowerUpObject.powerUp) {
+                case "hasPowerUpBomb":
+                    foundPlayer.hasPowerUpBomb = true
+                    break;
+                case "hasPowerUpFlames":
+                    foundPlayer.hasPowerUpFlames = true
+                    break;
+                case "hasPowerUpSpeed":
+                    foundPlayer.hasPowerUpSpeed = true
+                    break;
+                default:
+                    break;
+            }
+            powerUpElement.remove()
             return;
 
         default:

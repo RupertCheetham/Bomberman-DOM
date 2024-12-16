@@ -2,8 +2,11 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
+	"strconv"
+	"strings"
 
 	"github.com/gorilla/websocket"
 )
@@ -60,10 +63,8 @@ type PlayerLives struct {
 }
 
 type PowerUpData struct {
-	PlayerId            string `json:"playerId"`
-	HandleasPowerUpBomb bool   `json:"hasPowerUpBomb"`
-	HasPowerUpFlames    bool   `json:"hasPowerUpFlames"`
-	HasPowerUpSpeed     bool   `json:"hasPowerUpSpeed"`
+	PlayerId string `json:"playerId"`
+	PowerUp  string `json:"powerUp"`
 }
 
 func main() {
@@ -227,40 +228,36 @@ func handleConnections(w http.ResponseWriter, r *http.Request) {
 				}
 			}
 
-		case 5: // Code for bomb explosion
-			var playerLives PlayerLives
-			err := json.Unmarshal([]byte(decodedMSG.Wsm), &playerLives)
-			if err != nil {
-				log.Println("Error decoding explosion data:", err)
-				return
-			}
-			// Broadcast explosion effect to all clients
-			for c := range clients {
-				err := c.conn.WriteJSON(playerLives)
-				if err != nil {
-					log.Printf("error: %v", err)
-					c.conn.Close()
-					delete(clients, c)
-					availablePlayerIds = append(availablePlayerIds, c.playerId)
-				}
-			}
-
-		case 6: // Code for bomb explosion
+		case 5: // Code for handling power ups
 			var powerUpData PowerUpData
 			err := json.Unmarshal([]byte(decodedMSG.Wsm), &powerUpData)
 			if err != nil {
-				log.Println("Error decoding explosion data:", err)
+				log.Println("Error decoding powerup data:", err)
+				return
+			}
+
+			playerIdString := powerUpData.PlayerId
+			// Remove the "player" prefix
+			numberStr := strings.TrimPrefix(playerIdString, "player")
+
+			// Convert the remaining string to an integer
+			playerNumber, err := strconv.Atoi(numberStr)
+			if err != nil {
+				fmt.Println("Error converting to number:", err)
 				return
 			}
 			// Broadcast explosion effect to all clients
 			for c := range clients {
-				err := c.conn.WriteJSON(powerUpData)
-				if err != nil {
-					log.Printf("error: %v", err)
-					c.conn.Close()
-					delete(clients, c)
-					availablePlayerIds = append(availablePlayerIds, c.playerId)
+				if c.playerId != playerNumber {
+					err := c.conn.WriteJSON(decodedMSG)
+					if err != nil {
+						log.Printf("error: %v", err)
+						c.conn.Close()
+						delete(clients, c)
+						availablePlayerIds = append(availablePlayerIds, c.playerId)
+					}
 				}
+
 			}
 
 		default:
