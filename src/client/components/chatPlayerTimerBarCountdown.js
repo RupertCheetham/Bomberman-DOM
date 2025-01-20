@@ -71,18 +71,8 @@ export function spawnChatTimerBarCountdown() {
     // Append the rendered player element to the top-bar
     timerBar.appendChild(timerElement);
 
-    ////
-    ////
-    ////
-    ////
-    ////
-    startCountdown(5, timerElement); // Start a 30-second countdown
-    ////
-    ////
-    ////
-    ////
-    ////
-    ////
+    startCountdown(30, timerElement); // Start a 30-second countdown
+ 
   }
 
   if (playerNum === 4) {

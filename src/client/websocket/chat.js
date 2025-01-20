@@ -28,8 +28,9 @@ function displayMessage(messageData, messageType) {
         console.warn("Message is not in JSON format:", messageData.text);
         parsedMessage = { playerId: messageData.playerId, text: messageData.text }; // Fallback to use messageData directly
     }
-
+console.log("messageData:", messageData)
     const playerId = parsedMessage.playerId || messageData.playerId;
+    const playerNickname = parsedMessage.playerNickname || messageData.playerNickname;
     const messageText = parsedMessage.text || messageData.text;
 
     // Prevent displaying empty messages
@@ -52,10 +53,7 @@ function displayMessage(messageData, messageType) {
     //const vPlayerIdElement = createElement("strong", { attrs: { class: "chat" }, children: [`Player ${playerId}:`] })
     //const $PlayerIdElement = render(vPlayerIdElement)
     const playerIdElement = document.createElement("strong");
-    const player = players.find(p => p.id === `player${currentPlayerId}`);
-    playerIdElement.innerText = `${player.nickname}:`;
-
-    playerIdElement.innerText = `${player.nickname}:`;
+    playerIdElement.innerText = `${playerNickname}:`;
 
     currentPlayerId === playerId
 

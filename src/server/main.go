@@ -44,8 +44,9 @@ var availablePlayerIds = []int{1, 2, 3, 4} // List of available player IDs
 
 // Message struct to handle structured messages
 type Message struct {
-	PlayerId int    `json:"playerId"`
-	Text     string `json:"text"`
+	PlayerId       int    `json:"playerId"`
+	PlayerNickname string `json:"playerNickname"`
+	Text           string `json:"text"`
 }
 
 type PlayerPosition struct {
@@ -262,7 +263,8 @@ func handleConnections(w http.ResponseWriter, r *http.Request) {
 
 		default:
 			// Handle any other message types as needed
-			broadcast <- Message{PlayerId: client.playerId, Text: string(msg)}
+			broadcast <- Message{PlayerId: client.playerId, PlayerNickname: client.nickname, Text: string(msg)}
+			log.Println(Message{PlayerId: client.playerId, PlayerNickname: client.nickname, Text: string(msg)})
 		}
 	}
 }
