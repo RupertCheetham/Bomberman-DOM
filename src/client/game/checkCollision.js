@@ -48,9 +48,7 @@ export const handlePowerUpCollection = (player, gameMap) => {
             powerUpElement.remove();
             return "hasPowerUpSpeed"
         }
-    } else {
-        console.warn("Failed to find powerUp elelement");
-    }
+    } 
 
     return "noPowerUp"
 };

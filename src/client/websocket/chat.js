@@ -13,7 +13,7 @@ console.log("location.hostname", location.hostname)
 console.log(`ws://${location.hostname}:8080/ws`)
 
 // export const ws = new WebSocket('ws://192.168.153.149:8080/ws');
-
+// 192.168.6.149
 
 //export const ws = new WebSocket("ws://localhost:8080/ws");
 
@@ -56,7 +56,7 @@ console.log("messageData:", messageData)
     playerIdElement.innerText = `${playerNickname}:`;
 
     currentPlayerId === playerId
-
+console.log("currentPlayerId", currentPlayerId)
     // Add a line break for better formatting
     const lineBreak = document.createElement("br");
 

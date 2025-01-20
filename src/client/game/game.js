@@ -6,7 +6,7 @@ import render from "../../vdom/render";
 import { initializeNameInputRoom, setGameStateNeedsUpdating } from "../../index.js";
 import { handlePowerUpCollection } from "./checkCollision.js";
 import { refreshChatRoom } from "../components/chatPlayerTimerBarCountdown.js";
-import { ws } from "../websocket/chat.js";
+import { currentPlayerId, ws } from "../websocket/chat.js";
 
 export let gameResults = "";
 
@@ -25,16 +25,12 @@ export let players = []
 
 
 export const addPlayer = (playerId, nickname) => {
-  console.log("playerId", playerId)
 
   let currentPlayer = allPlayers[playerId - 1]
-  console.log("currentPlayer", currentPlayer)
   currentPlayer.nickname = nickname
-  console.log("updated currentPlayer", currentPlayer)
 
   players.push(currentPlayer)
 
-  console.log('players array', players)
 
   let currentBarPlayer = barPlayers[playerId - 1]
   currentBarPlayer.nickname = nickname
@@ -81,7 +77,6 @@ const endGame = () => {
 
   // Filter out players who still have lives
   const activePlayers = players.filter((player) => player.lives > 0);
-  console.log("Active players:", activePlayers);
   const eliminatedPlayers = players.filter((player) => player.lives === 0);
 
   // If no active players, all have been eliminated
@@ -221,7 +216,6 @@ const movePlayer = (player, direction, players) => {
       // Move the player if the new position is valid
       player.x = newX;
       player.y = newY;
-      //updatePlayerPosition(player); // Update DOM to reflect new position
 
       // Update the last move time for this player
       lastMoveTimes[player.id] = currentTime;
@@ -252,7 +246,6 @@ const movePlayer = (player, direction, players) => {
         wsm: playermovementJSON
       }
 
-      // console.log("Sending message:", messageData);
       ws.send(JSON.stringify(codedplayerMovementData));
 
       setGameStateNeedsUpdating(true)
@@ -273,29 +266,25 @@ export const handleKeyPress = (event) => {
     event.preventDefault();
   }
 
-  // Check if the player is present in the players array and on the map
-  const isPlayer1Active = players.some((p) => p.id === "player1");
-  const isPlayer2Active = players.some((p) => p.id === "player2");
-  const isPlayer3Active = players.some((p) => p.id === "player3");
-  const isPlayer4Active = players.some((p) => p.id === "player4");
+  const activePlayer = players.find((p) => p.id === `player${currentPlayerId}`);
 
   switch (event.key) {
     // Player 1 Controls
     case "ArrowUp":
-      if (isPlayer1Active) movePlayer(player1, "up", players);
+      movePlayer(activePlayer, "up", players);
       break;
     case "ArrowDown":
-      if (isPlayer1Active) movePlayer(player1, "down", players);
+      movePlayer(activePlayer, "down", players);
       break;
     case "ArrowLeft":
-      if (isPlayer1Active) movePlayer(player1, "left", players);
+      movePlayer(activePlayer, "left", players);
       break;
     case "ArrowRight":
-      if (isPlayer1Active) movePlayer(player1, "right", players);
+  movePlayer(activePlayer, "right", players);
       break;
     case " ":
-      if (isPlayer1Active) spawnBomb(player1);
-      let playerId = player1.id
+      spawnBomb(activePlayer);
+      let playerId = activePlayer.id
       let playerJSON = JSON.stringify({ playerId })
 
       let codedPlayerData = {
@@ -303,91 +292,10 @@ export const handleKeyPress = (event) => {
         wsm: playerJSON
       }
 
-      // console.log("Sending message:", messageData);
       ws.send(JSON.stringify(codedPlayerData));
       break;
 
-    // Player 2 Controls (WASD + F for bomb)
-    case "w":
-      if (isPlayer2Active) movePlayer(player2, "up", players);
-      break;
-    case "s":
-      if (isPlayer2Active) movePlayer(player2, "down", players);
-      break;
-    case "a":
-      if (isPlayer2Active) movePlayer(player2, "left", players);
-      break;
-    case "d":
-      if (isPlayer2Active) movePlayer(player2, "right", players);
-      break;
-    case "f":
-      if (isPlayer2Active) spawnBomb(player2);
-      playerId = player2.id
-      playerJSON = JSON.stringify({ playerId })
-
-      codedPlayerData = {
-        Code: 4,
-        wsm: playerJSON
-      }
-
-      // console.log("Sending message:", messageData);
-      ws.send(JSON.stringify(codedPlayerData));
-      break;
-
-    // Player 3 Controls (IJKL + ; for bomb)
-    case "i":
-      if (isPlayer3Active) movePlayer(player3, "up", players);
-      break;
-    case "k":
-      if (isPlayer3Active) movePlayer(player3, "down", players);
-      break;
-    case "j":
-      if (isPlayer3Active) movePlayer(player3, "left", players);
-      break;
-    case "l":
-      if (isPlayer3Active) movePlayer(player3, "right", players);
-      break;
-    case ";":
-      if (isPlayer3Active) spawnBomb(player3);
-      playerId = player3.id
-      playerJSON = JSON.stringify({ playerId })
-
-      codedPlayerData = {
-        Code: 4,
-        wsm: playerJSON
-      }
-
-      // console.log("Sending message:", messageData);
-      ws.send(JSON.stringify(codedPlayerData));
-      break;
-
-    // Player 4 Controls (5RTY + U for bomb)
-    case "5":
-      if (isPlayer4Active) movePlayer(player4, "up", players);
-      break;
-    case "t":
-      if (isPlayer4Active) movePlayer(player4, "down", players);
-      break;
-    case "r":
-      if (isPlayer4Active) movePlayer(player4, "left", players);
-      break;
-    case "y":
-      if (isPlayer4Active) movePlayer(player4, "right", players);
-      break;
-    case "u":
-      if (isPlayer4Active) spawnBomb(player4);
-      playerId = player4.id
-      playerJSON = JSON.stringify({ playerId })
-
-      codedPlayerData = {
-        Code: 4,
-        wsm: playerJSON
-      }
-
-      // console.log("Sending message:", messageData);
-      ws.send(JSON.stringify(codedPlayerData));
-      break;
-
+    
     default:
       console.log(`Key "${event.key}" pressed, but no action is assigned.`);
       break;
@@ -404,7 +312,6 @@ export const barPlayers = [barPlayer1, barPlayer2, barPlayer3, barPlayer4];
 export const spawnBarPlayers = (playerNum) => {
   for (let i = 0; i < playerNum; i++) {
     const player = barPlayers[i];
-    console.log("player.nickname", player.nickname)
     const vPlayerElement = createElement("div", {
       attrs: {
         class: `${player.id}`, // Give the player a unique class
@@ -518,7 +425,6 @@ function announceResults(results) {
 
     // resets players
     players = []
-    console.log("players should be empty here:", players)
 
 
     // restart back to name input room after 10 seconds
