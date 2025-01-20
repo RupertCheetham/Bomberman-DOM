@@ -110,4 +110,9 @@ export function spawnChatTimerBarCountdown() {
 export function refreshChatRoom() {
   spawnChatTimerBarCountdown();
   spawnChatTopBarPlayers();
+
+  const playerCountElement = document.getElementById("playerCount")
+  playerCountElement.textContent = `Players: ${players.length}`
+  playerCountElement.style.display = "block"
+
 }

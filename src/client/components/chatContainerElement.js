@@ -1,5 +1,5 @@
 import createElement from "../../vdom/createElement";
-import render from "../../vdom/render";
+import { players } from "../game/game";
 
 export const chatContainerElement = () => {
     // Create the top bar container for players
@@ -20,16 +20,16 @@ export const chatContainerElement = () => {
         children: []
     });
 
-    // Create the chat heading
-    const chatHeading = createElement("h2", {
-        attrs: {
+    const vPlayerCountElement = createElement("h3", {
+         attrs: {
+            id: "playerCount",
             style: `
                 color: #333; 
                 font-family: Arial, sans-serif; 
                 text-align: center;
             `
         },
-        children: ["Chat"]
+        children: [`Players: ${players.length}`]
     });
 
     // Create the chat message display area
@@ -130,7 +130,7 @@ export const chatContainerElement = () => {
                 box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             `
         },
-        children: [playerCounterBar, chatHeading, chatDisplay, inputContainer, timerBar]
+        children: [playerCounterBar, vPlayerCountElement, chatDisplay, inputContainer, timerBar]
     });
 
     return chatContainer;

@@ -1,9 +1,10 @@
 import createElement from "../../vdom/createElement";
 import render from "../../vdom/render";
 import logoSrc from "./images/BOMERMIN.png";
+import { players } from "../game/game";
 
 const vnameInputElement = () => {
-    
+
   // Create the top bar container for players
   const playerCounterBar = createElement("div", {
     attrs: {
@@ -22,16 +23,18 @@ const vnameInputElement = () => {
     children: [],
   });
 
-  // Create the logo heading
-  const logoHeading = createElement("h2", {
+
+  const vPlayerCountElement = createElement("h3", {
     attrs: {
+      id: "playerCount",
       style: `
                 color: #333; 
                 font-family: Arial, sans-serif; 
                 text-align: center;
-            `,
+                display:none
+            `
     },
-    children: ["BOMERMIN"],
+    children: [`Players: ${players.length}`]
   });
 
   // Create the logo nickname display area
@@ -137,7 +140,7 @@ const vnameInputElement = () => {
     },
     children: [
       playerCounterBar,
-      logoHeading,
+      vPlayerCountElement,
       logoDisplay,
       inputContainer,
       timerBar,

@@ -32,8 +32,23 @@ export const spawnChatTopBarPlayers = () => {
 
     // Render the virtual DOM element
     const playerElement = render(vChatTopBarPlayerElement);
-
     // Append the rendered player element to the top-bar
     topBar.appendChild(playerElement);
+
+
+    // const vPlayerCount = createElement("h2", {
+    //   attrs: {
+    //     id: "playerCount",
+    //     style: `
+    //             color: #333; 
+    //             font-family: Arial, sans-serif; 
+    //             text-align: center;
+    //         `
+    //   },
+    //   children: [`Players: ${players.length}`]
+    // });
+
+    // const playerCountElement = render(vPlayerCount);
+    // topBar.appendChild(playerCountElement)
   }
 };
